@@ -1,0 +1,361 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB9A96BC1CFC2EE80066030C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BB1CFC2EE80066030C /* main.m */; };
+		AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BE1CFC2EE80066030C /* AppDelegate.m */; };
+		AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96C11CFC2EE80066030C /* ViewController.m */; };
+		AB9A96C51CFC2EE80066030C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96C31CFC2EE80066030C /* Main.storyboard */; };
+		AB9A96C71CFC2EE80066030C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96C61CFC2EE80066030C /* Assets.xcassets */; };
+		AB9A96CA1CFC2EE80066030C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96C81CFC2EE80066030C /* LaunchScreen.storyboard */; };
+		AB9A96D41CFC2F480066030C /* LSYReadPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D31CFC2F480066030C /* LSYReadPageViewController.m */; };
+		AB9A96D71CFC2F6C0066030C /* LSYReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */; };
+		AB9A96DA1CFC39290066030C /* LSYReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D91CFC39290066030C /* LSYReadView.m */; };
+		AB9A96DE1CFC3A4D0066030C /* LSYReadConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96DD1CFC3A4D0066030C /* LSYReadConfig.m */; };
+		AB9A96E11CFC3A6A0066030C /* LSYReadParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96E01CFC3A6A0066030C /* LSYReadParser.m */; };
+		AB9A96E41CFC4C8F0066030C /* Chapter1.txt in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96E31CFC4C8F0066030C /* Chapter1.txt */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AB9A96B71CFC2EE70066030C /* LSYReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSYReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB9A96BB1CFC2EE80066030C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AB9A96BD1CFC2EE80066030C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AB9A96BE1CFC2EE80066030C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AB9A96C01CFC2EE80066030C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		AB9A96C11CFC2EE80066030C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		AB9A96C41CFC2EE80066030C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AB9A96C61CFC2EE80066030C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB9A96C91CFC2EE80066030C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AB9A96CB1CFC2EE80066030C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB9A96D21CFC2F480066030C /* LSYReadPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadPageViewController.h; sourceTree = "<group>"; };
+		AB9A96D31CFC2F480066030C /* LSYReadPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadPageViewController.m; sourceTree = "<group>"; };
+		AB9A96D51CFC2F6C0066030C /* LSYReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadViewController.h; sourceTree = "<group>"; };
+		AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadViewController.m; sourceTree = "<group>"; };
+		AB9A96D81CFC39290066030C /* LSYReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadView.h; sourceTree = "<group>"; };
+		AB9A96D91CFC39290066030C /* LSYReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadView.m; sourceTree = "<group>"; };
+		AB9A96DC1CFC3A4D0066030C /* LSYReadConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadConfig.h; sourceTree = "<group>"; };
+		AB9A96DD1CFC3A4D0066030C /* LSYReadConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadConfig.m; sourceTree = "<group>"; };
+		AB9A96DF1CFC3A6A0066030C /* LSYReadParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadParser.h; sourceTree = "<group>"; };
+		AB9A96E01CFC3A6A0066030C /* LSYReadParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadParser.m; sourceTree = "<group>"; };
+		AB9A96E21CFC3AC60066030C /* LSYReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LSYReader-Prefix.pch"; sourceTree = "<group>"; };
+		AB9A96E31CFC4C8F0066030C /* Chapter1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter1.txt; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB9A96B41CFC2EE70066030C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB9A96AE1CFC2EE70066030C = {
+			isa = PBXGroup;
+			children = (
+				AB9A96B91CFC2EE80066030C /* LSYReader */,
+				AB9A96B81CFC2EE70066030C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AB9A96B81CFC2EE70066030C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB9A96B71CFC2EE70066030C /* LSYReader.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB9A96B91CFC2EE80066030C /* LSYReader */ = {
+			isa = PBXGroup;
+			children = (
+				AB9A96D11CFC2F1F0066030C /* Reader */,
+				AB9A96BD1CFC2EE80066030C /* AppDelegate.h */,
+				AB9A96BE1CFC2EE80066030C /* AppDelegate.m */,
+				AB9A96E31CFC4C8F0066030C /* Chapter1.txt */,
+				AB9A96C01CFC2EE80066030C /* ViewController.h */,
+				AB9A96C11CFC2EE80066030C /* ViewController.m */,
+				AB9A96E21CFC3AC60066030C /* LSYReader-Prefix.pch */,
+				AB9A96C31CFC2EE80066030C /* Main.storyboard */,
+				AB9A96C61CFC2EE80066030C /* Assets.xcassets */,
+				AB9A96C81CFC2EE80066030C /* LaunchScreen.storyboard */,
+				AB9A96CB1CFC2EE80066030C /* Info.plist */,
+				AB9A96BA1CFC2EE80066030C /* Supporting Files */,
+			);
+			path = LSYReader;
+			sourceTree = "<group>";
+		};
+		AB9A96BA1CFC2EE80066030C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AB9A96BB1CFC2EE80066030C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AB9A96D11CFC2F1F0066030C /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				AB9A96DB1CFC39680066030C /* Core */,
+				AB9A96D21CFC2F480066030C /* LSYReadPageViewController.h */,
+				AB9A96D31CFC2F480066030C /* LSYReadPageViewController.m */,
+				AB9A96D51CFC2F6C0066030C /* LSYReadViewController.h */,
+				AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */,
+				AB9A96D81CFC39290066030C /* LSYReadView.h */,
+				AB9A96D91CFC39290066030C /* LSYReadView.m */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
+		AB9A96DB1CFC39680066030C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AB9A96DC1CFC3A4D0066030C /* LSYReadConfig.h */,
+				AB9A96DD1CFC3A4D0066030C /* LSYReadConfig.m */,
+				AB9A96DF1CFC3A6A0066030C /* LSYReadParser.h */,
+				AB9A96E01CFC3A6A0066030C /* LSYReadParser.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB9A96B61CFC2EE70066030C /* LSYReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB9A96CE1CFC2EE80066030C /* Build configuration list for PBXNativeTarget "LSYReader" */;
+			buildPhases = (
+				AB9A96B31CFC2EE70066030C /* Sources */,
+				AB9A96B41CFC2EE70066030C /* Frameworks */,
+				AB9A96B51CFC2EE70066030C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LSYReader;
+			productName = LSYReader;
+			productReference = AB9A96B71CFC2EE70066030C /* LSYReader.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB9A96AF1CFC2EE70066030C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = okwei;
+				TargetAttributes = {
+					AB9A96B61CFC2EE70066030C = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = AB9A96B21CFC2EE70066030C /* Build configuration list for PBXProject "LSYReader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AB9A96AE1CFC2EE70066030C;
+			productRefGroup = AB9A96B81CFC2EE70066030C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AB9A96B61CFC2EE70066030C /* LSYReader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB9A96B51CFC2EE70066030C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB9A96CA1CFC2EE80066030C /* LaunchScreen.storyboard in Resources */,
+				AB9A96C71CFC2EE80066030C /* Assets.xcassets in Resources */,
+				AB9A96E41CFC4C8F0066030C /* Chapter1.txt in Resources */,
+				AB9A96C51CFC2EE80066030C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB9A96B31CFC2EE70066030C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */,
+				AB9A96DA1CFC39290066030C /* LSYReadView.m in Sources */,
+				AB9A96D71CFC2F6C0066030C /* LSYReadViewController.m in Sources */,
+				AB9A96E11CFC3A6A0066030C /* LSYReadParser.m in Sources */,
+				AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */,
+				AB9A96D41CFC2F480066030C /* LSYReadPageViewController.m in Sources */,
+				AB9A96BC1CFC2EE80066030C /* main.m in Sources */,
+				AB9A96DE1CFC3A4D0066030C /* LSYReadConfig.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AB9A96C31CFC2EE80066030C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB9A96C41CFC2EE80066030C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AB9A96C81CFC2EE80066030C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB9A96C91CFC2EE80066030C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AB9A96CC1CFC2EE80066030C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AB9A96CD1CFC2EE80066030C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AB9A96CF1CFC2EE80066030C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "LSYReader/LSYReader-Prefix.pch";
+				INFOPLIST_FILE = LSYReader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.okwei.LSYReader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB9A96D01CFC2EE80066030C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "LSYReader/LSYReader-Prefix.pch";
+				INFOPLIST_FILE = LSYReader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.okwei.LSYReader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB9A96B21CFC2EE70066030C /* Build configuration list for PBXProject "LSYReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB9A96CC1CFC2EE80066030C /* Debug */,
+				AB9A96CD1CFC2EE80066030C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB9A96CE1CFC2EE80066030C /* Build configuration list for PBXNativeTarget "LSYReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB9A96CF1CFC2EE80066030C /* Debug */,
+				AB9A96D01CFC2EE80066030C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AB9A96AF1CFC2EE70066030C /* Project object */;
+}

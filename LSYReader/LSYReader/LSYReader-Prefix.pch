@@ -1,0 +1,19 @@
+//
+//  LSYReader-Prefix.pch
+//  LSYReader
+//
+//  Created by Labanotation on 16/5/30.
+//  Copyright © 2016年 okwei. All rights reserved.
+//
+
+#ifndef LSYReader_Prefix_pch
+#define LSYReader_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* LSYReader_Prefix_pch */
+
+#import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
+#define RGB(R, G, B)    [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:1.0]
