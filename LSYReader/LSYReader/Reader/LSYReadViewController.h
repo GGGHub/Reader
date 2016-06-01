@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LSYRecordModel.h"
 @interface LSYReadViewController : UIViewController
-@property (nonatomic,strong) NSString *content;
+@property (nonatomic,strong) NSString *content; //显示的内容
+@property (nonatomic,strong) LSYRecordModel *recordModel;   //阅读进度
 @end

@@ -12,5 +12,6 @@
 +(instancetype)shareInstance;
 @property (nonatomic) CGFloat fontSize;
 @property (nonatomic) CGFloat lineSpace;
-@property (nonatomic) UIColor *fontColor;
+@property (nonatomic,strong) UIColor *fontColor;
+@property (nonatomic,strong) UIColor *theme;
 @end

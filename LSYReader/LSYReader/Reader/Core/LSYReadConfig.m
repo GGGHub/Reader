@@ -24,7 +24,8 @@
     if (self) {
         _lineSpace = 10.0f;
         _fontSize = 14.0f;
-        _fontColor = [UIColor whiteColor];
+        _fontColor = [UIColor blackColor];
+        _theme = [UIColor whiteColor];
     }
     return self;
 }
