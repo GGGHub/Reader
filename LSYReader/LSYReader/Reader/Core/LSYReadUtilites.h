@@ -11,4 +11,7 @@
 @interface LSYReadUtilites : NSObject
 +(void)separateChapter:(NSMutableArray **)chapters content:(NSString *)content;
 +(NSString *)encodeWithURL:(NSURL *)url;
++(UIButton *)commonButtonSEL:(SEL)sel target:(id)target;
++(UIViewController *)getCurrentVC;
++(void)showAlert:(NSString *)string;
 @end

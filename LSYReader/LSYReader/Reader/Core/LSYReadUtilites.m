@@ -66,4 +66,52 @@
     return content;
     
 }
++(UIButton *)commonButtonSEL:(SEL)sel target:(id)target
+{
+    UIButton *button = [[UIButton alloc] init];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [button setTintColor:[UIColor whiteColor]];
+    [button addTarget:target action:sel forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
++(UIViewController *)getCurrentVC
+{
+    UIViewController *result = nil;
+    
+    
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (window.windowLevel != UIWindowLevelNormal)
+    {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow * tmpWin in windows)
+        {
+            if (tmpWin.windowLevel == UIWindowLevelNormal)
+            {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    
+    UIView *frontView = [[window subviews] objectAtIndex:0];
+    id nextResponder = [frontView nextResponder];
+    
+    
+    if ([nextResponder isKindOfClass:[UIViewController class]])
+        result = nextResponder;
+    else
+        result = window.rootViewController;
+    
+    return result;
+}
++(void)showAlert:(NSString *)string
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:string delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+#pragma clang diagnostic pop
+    
+}
 @end
