@@ -9,10 +9,11 @@
 #import "LSYReadPageViewController.h"
 #import "LSYReadViewController.h"
 #import "LSYChapterModel.h"
-
-@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
+#import "LSYMenuView.h"
+@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate>
 @property (nonatomic,strong) UIPageViewController *pageViewController;
 @property (nonatomic,getter=isShowBar) BOOL showBar; //是否显示状态栏
+@property (nonatomic,strong) LSYMenuView *menuView; //菜单栏
 @end
 
 @implementation LSYReadPageViewController
@@ -23,21 +24,36 @@
     [self addChildViewController:self.pageViewController];
     [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showToolMenu)]];
+    [self.view addSubview:self.menuView];
 }
 -(BOOL)prefersStatusBarHidden
 {
     return !_showBar;
 }
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 -(void)showToolMenu
 {
-    _showBar = !_showBar;
-    [self setNeedsStatusBarAppearanceUpdate];
+    
+    [self.menuView showAnimation:YES];
+    
 }
 -(void)fetchData
 {
     if (!_model) {
         _model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:_resourceURL]];
     }
+}
+-(LSYMenuView *)menuView
+{
+    if (!_menuView) {
+        _menuView = [[LSYMenuView alloc] init];
+        _menuView.hidden = YES;
+        _menuView.delegate = self;
+    }
+    return _menuView;
 }
 -(UIPageViewController *)pageViewController
 {
@@ -48,6 +64,18 @@
         [self.view addSubview:_pageViewController.view];
     }
     return _pageViewController;
+}
+#pragma mark - Menu View Delegate
+-(void)menuViewDidHidden:(LSYMenuView *)menu
+{
+     _showBar = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+-(void)menuViewDidAppear:(LSYMenuView *)menu
+{
+    _showBar = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+    
 }
 #pragma mark - Create Read View Controller
 
@@ -109,5 +137,6 @@
 {
     [super viewDidLayoutSubviews];
     _pageViewController.view.frame = self.view.frame;
+    _menuView.frame = self.view.frame;
 }
 @end
