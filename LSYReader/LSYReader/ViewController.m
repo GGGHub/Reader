@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "LSYReadViewController.h"
 #import "LSYReadPageViewController.h"
+#import "LSYReadUtilites.h"
 @interface ViewController ()
 
 @end
@@ -22,7 +23,7 @@
 }
 - (IBAction)begin:(id)sender {
     LSYReadPageViewController *pageView = [[LSYReadPageViewController alloc] init];
-    pageView.resourceURL = [[NSBundle mainBundle] URLForResource:@"Chapter1" withExtension:@"txt"];
+    pageView.resourceURL = [[NSBundle mainBundle] URLForResource:@"mdjyml"withExtension:@"txt"];
     [self presentViewController:pageView animated:YES completion:nil];
 }
 

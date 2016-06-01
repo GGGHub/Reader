@@ -7,13 +7,13 @@
 //
 
 #import "LSYReadView.h"
-
+#import "LSYReadConfig.h"
 @implementation LSYReadView
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        [self setBackgroundColor:[LSYReadConfig shareInstance].theme];
     }
     return self;
 }
@@ -39,6 +39,7 @@
     if (!_frameRef) {
         return;
     }
+    [self setBackgroundColor:[LSYReadConfig shareInstance].theme];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
     CGContextTranslateCTM(ctx, 0, self.bounds.size.height);

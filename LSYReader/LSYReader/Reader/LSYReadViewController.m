@@ -10,6 +10,8 @@
 #import "LSYReadView.h"
 #import "LSYReadParser.h"
 #import "LSYReadConfig.h"
+
+
 @interface LSYReadViewController ()
 @property (nonatomic,strong) LSYReadView *readView;
 @end
@@ -18,19 +20,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self prefersStatusBarHidden];
     [self.view addSubview:self.readView];
 }
+
 -(LSYReadView *)readView
 {
     if (!_readView) {
-        _readView = [[LSYReadView alloc] init];
+        _readView = [[LSYReadView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height)];
         LSYReadConfig *config = [LSYReadConfig shareInstance];
-        _readView.frame = self.view.frame;
-        _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:self.view.bounds];
+        _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:CGRectMake(LeftSpacing,TopSpacing, _readView.frame.size.width-LeftSpacing-RightSpacing, _readView.frame.size.height-TopSpacing-BottomSpacing)];
     }
     return _readView;
 }
-
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+}
 
 /*
 #pragma mark - Navigation

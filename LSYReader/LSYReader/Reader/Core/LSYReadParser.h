@@ -10,4 +10,5 @@
 #import "LSYReadConfig.h"
 @interface LSYReadParser : NSObject
 +(CTFrameRef)parserContent:(NSString *)content config:(LSYReadConfig *)parser bouds:(CGRect)bounds;
++(NSDictionary *)parserAttribute:(LSYReadConfig *)config;
 @end
