@@ -8,7 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */; };
-		87D8BD271CFFE44A0087D8DA /* LSYViewPagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD261CFFE44A0087D8DA /* LSYViewPagerVC.m */; };
+		87D8BD2B1CFFE5100087D8DA /* LSYViewPagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */; };
+		87D8BD2E1CFFE5880087D8DA /* LSYCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD2D1CFFE5880087D8DA /* LSYCatalogViewController.m */; };
+		87D8BD311CFFE68E0087D8DA /* LSYReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD301CFFE68E0087D8DA /* LSYReadView.m */; };
+		87D8BD381D0013CC0087D8DA /* LSYChapterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD371D0013CC0087D8DA /* LSYChapterVC.m */; };
+		87D8BD3B1D0013DF0087D8DA /* LSYNoteVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD3A1D0013DF0087D8DA /* LSYNoteVC.m */; };
+		87D8BD3E1D0013ED0087D8DA /* LSYMarkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD3D1D0013ED0087D8DA /* LSYMarkVC.m */; };
+		87D8BD411D002C4E0087D8DA /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD401D002C4E0087D8DA /* UIImage+ImageEffects.m */; };
 		AB9A96BC1CFC2EE80066030C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BB1CFC2EE80066030C /* main.m */; };
 		AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BE1CFC2EE80066030C /* AppDelegate.m */; };
 		AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96C11CFC2EE80066030C /* ViewController.m */; };
@@ -17,7 +23,6 @@
 		AB9A96CA1CFC2EE80066030C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96C81CFC2EE80066030C /* LaunchScreen.storyboard */; };
 		AB9A96D41CFC2F480066030C /* LSYReadPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D31CFC2F480066030C /* LSYReadPageViewController.m */; };
 		AB9A96D71CFC2F6C0066030C /* LSYReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */; };
-		AB9A96DA1CFC39290066030C /* LSYReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D91CFC39290066030C /* LSYReadView.m */; };
 		AB9A96DE1CFC3A4D0066030C /* LSYReadConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96DD1CFC3A4D0066030C /* LSYReadConfig.m */; };
 		AB9A96E11CFC3A6A0066030C /* LSYReadParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96E01CFC3A6A0066030C /* LSYReadParser.m */; };
 		AB9A96E41CFC4C8F0066030C /* Chapter1.txt in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96E31CFC4C8F0066030C /* Chapter1.txt */; };
@@ -38,8 +43,20 @@
 
 /* Begin PBXFileReference section */
 		87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader_cover@2x.png"; sourceTree = "<group>"; };
-		87D8BD251CFFE44A0087D8DA /* LSYViewPagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYViewPagerVC.h; sourceTree = "<group>"; };
-		87D8BD261CFFE44A0087D8DA /* LSYViewPagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYViewPagerVC.m; sourceTree = "<group>"; };
+		87D8BD291CFFE5100087D8DA /* LSYViewPagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYViewPagerVC.h; sourceTree = "<group>"; };
+		87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYViewPagerVC.m; sourceTree = "<group>"; };
+		87D8BD2C1CFFE5880087D8DA /* LSYCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYCatalogViewController.h; sourceTree = "<group>"; };
+		87D8BD2D1CFFE5880087D8DA /* LSYCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYCatalogViewController.m; sourceTree = "<group>"; };
+		87D8BD2F1CFFE68E0087D8DA /* LSYReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSYReadView.h; path = ../LSYReadView.h; sourceTree = "<group>"; };
+		87D8BD301CFFE68E0087D8DA /* LSYReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSYReadView.m; path = ../LSYReadView.m; sourceTree = "<group>"; };
+		87D8BD361D0013CC0087D8DA /* LSYChapterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYChapterVC.h; sourceTree = "<group>"; };
+		87D8BD371D0013CC0087D8DA /* LSYChapterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYChapterVC.m; sourceTree = "<group>"; };
+		87D8BD391D0013DF0087D8DA /* LSYNoteVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYNoteVC.h; sourceTree = "<group>"; };
+		87D8BD3A1D0013DF0087D8DA /* LSYNoteVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYNoteVC.m; sourceTree = "<group>"; };
+		87D8BD3C1D0013ED0087D8DA /* LSYMarkVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYMarkVC.h; sourceTree = "<group>"; };
+		87D8BD3D1D0013ED0087D8DA /* LSYMarkVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYMarkVC.m; sourceTree = "<group>"; };
+		87D8BD3F1D002C4E0087D8DA /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		87D8BD401D002C4E0087D8DA /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		AB9A96B71CFC2EE70066030C /* LSYReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSYReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB9A96BB1CFC2EE80066030C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB9A96BD1CFC2EE80066030C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,8 +71,6 @@
 		AB9A96D31CFC2F480066030C /* LSYReadPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadPageViewController.m; sourceTree = "<group>"; };
 		AB9A96D51CFC2F6C0066030C /* LSYReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadViewController.h; sourceTree = "<group>"; };
 		AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadViewController.m; sourceTree = "<group>"; };
-		AB9A96D81CFC39290066030C /* LSYReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadView.h; sourceTree = "<group>"; };
-		AB9A96D91CFC39290066030C /* LSYReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadView.m; sourceTree = "<group>"; };
 		AB9A96DC1CFC3A4D0066030C /* LSYReadConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadConfig.h; sourceTree = "<group>"; };
 		AB9A96DD1CFC3A4D0066030C /* LSYReadConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadConfig.m; sourceTree = "<group>"; };
 		AB9A96DF1CFC3A6A0066030C /* LSYReadParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadParser.h; sourceTree = "<group>"; };
@@ -97,6 +112,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		87D8BD281CFFE5100087D8DA /* Third */ = {
+			isa = PBXGroup;
+			children = (
+				87D8BD291CFFE5100087D8DA /* LSYViewPagerVC.h */,
+				87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */,
+				87D8BD3F1D002C4E0087D8DA /* UIImage+ImageEffects.h */,
+				87D8BD401D002C4E0087D8DA /* UIImage+ImageEffects.m */,
+			);
+			path = Third;
+			sourceTree = "<group>";
+		};
+		87D8BD321D00137A0087D8DA /* CatalogVC */ = {
+			isa = PBXGroup;
+			children = (
+				87D8BD361D0013CC0087D8DA /* LSYChapterVC.h */,
+				87D8BD371D0013CC0087D8DA /* LSYChapterVC.m */,
+				87D8BD391D0013DF0087D8DA /* LSYNoteVC.h */,
+				87D8BD3A1D0013DF0087D8DA /* LSYNoteVC.m */,
+				87D8BD3C1D0013ED0087D8DA /* LSYMarkVC.h */,
+				87D8BD3D1D0013ED0087D8DA /* LSYMarkVC.m */,
+			);
+			path = CatalogVC;
+			sourceTree = "<group>";
+		};
 		AB9A96AE1CFC2EE70066030C = {
 			isa = PBXGroup;
 			children = (
@@ -142,7 +181,8 @@
 		AB9A96D11CFC2F1F0066030C /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				ABE8ABE51CFEDC9200693078 /* Third */,
+				87D8BD321D00137A0087D8DA /* CatalogVC */,
+				87D8BD281CFFE5100087D8DA /* Third */,
 				ABE8ABDE1CFED82600693078 /* Resource */,
 				ABE8ABD41CFEBAD400693078 /* View */,
 				AB9A96E81CFD27AE0066030C /* Model */,
@@ -151,10 +191,8 @@
 				AB9A96D31CFC2F480066030C /* LSYReadPageViewController.m */,
 				AB9A96D51CFC2F6C0066030C /* LSYReadViewController.h */,
 				AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */,
-				AB9A96D81CFC39290066030C /* LSYReadView.h */,
-				AB9A96D91CFC39290066030C /* LSYReadView.m */,
-				87D8BD251CFFE44A0087D8DA /* LSYViewPagerVC.h */,
-				87D8BD261CFFE44A0087D8DA /* LSYViewPagerVC.m */,
+				87D8BD2C1CFFE5880087D8DA /* LSYCatalogViewController.h */,
+				87D8BD2D1CFFE5880087D8DA /* LSYCatalogViewController.m */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -198,6 +236,8 @@
 				ABE8ABD91CFEBB7600693078 /* LSYTopMenuView.m */,
 				ABE8ABDB1CFEBB8300693078 /* LSYBottomMenuView.h */,
 				ABE8ABDC1CFEBB8300693078 /* LSYBottomMenuView.m */,
+				87D8BD2F1CFFE68E0087D8DA /* LSYReadView.h */,
+				87D8BD301CFFE68E0087D8DA /* LSYReadView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -213,13 +253,6 @@
 				87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		ABE8ABE51CFEDC9200693078 /* Third */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Third;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +286,7 @@
 				TargetAttributes = {
 					AB9A96B61CFC2EE70066030C = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = ATEPY6RDV8;
 					};
 				};
 			};
@@ -298,22 +332,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87D8BD2B1CFFE5100087D8DA /* LSYViewPagerVC.m in Sources */,
 				AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */,
 				AB9A96F41CFD27FC0066030C /* LSYChapterModel.mm in Sources */,
-				AB9A96DA1CFC39290066030C /* LSYReadView.m in Sources */,
+				87D8BD311CFFE68E0087D8DA /* LSYReadView.m in Sources */,
 				AB9A96D71CFC2F6C0066030C /* LSYReadViewController.m in Sources */,
 				AB9A96E11CFC3A6A0066030C /* LSYReadParser.m in Sources */,
+				87D8BD3E1D0013ED0087D8DA /* LSYMarkVC.m in Sources */,
+				87D8BD2E1CFFE5880087D8DA /* LSYCatalogViewController.m in Sources */,
 				AB9A96F11CFD27ED0066030C /* LSYNoteModel.m in Sources */,
 				ABE8ABDA1CFEBB7600693078 /* LSYTopMenuView.m in Sources */,
+				87D8BD381D0013CC0087D8DA /* LSYChapterVC.m in Sources */,
 				AB9A96EE1CFD27D90066030C /* LSYMarkModel.m in Sources */,
 				AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */,
 				ABE8ABDD1CFEBB8300693078 /* LSYBottomMenuView.m in Sources */,
-				87D8BD271CFFE44A0087D8DA /* LSYViewPagerVC.m in Sources */,
 				AB9A96D41CFC2F480066030C /* LSYReadPageViewController.m in Sources */,
+				87D8BD411D002C4E0087D8DA /* UIImage+ImageEffects.m in Sources */,
 				AB9A96F71CFD2EC70066030C /* LSYRecordModel.m in Sources */,
 				AB9A96EB1CFD27C70066030C /* LSYReadModel.m in Sources */,
 				AB9A96E71CFD25190066030C /* LSYReadUtilites.m in Sources */,
 				ABE8ABD71CFEBB2400693078 /* LSYMenuView.m in Sources */,
+				87D8BD3B1D0013DF0087D8DA /* LSYNoteVC.m in Sources */,
 				AB9A96BC1CFC2EE80066030C /* main.m in Sources */,
 				AB9A96DE1CFC3A4D0066030C /* LSYReadConfig.m in Sources */,
 			);
@@ -427,6 +466,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "LSYReader/LSYReader-Prefix.pch";
 				INFOPLIST_FILE = LSYReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -439,6 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "LSYReader/LSYReader-Prefix.pch";
 				INFOPLIST_FILE = LSYReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -10,10 +10,16 @@
 #import "LSYReadViewController.h"
 #import "LSYChapterModel.h"
 #import "LSYMenuView.h"
-@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate>
+#import "LSYCatalogViewController.h"
+#import "UIImage+ImageEffects.h"
+#define AnimationDelay 0.3
+
+@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic,strong) UIPageViewController *pageViewController;
 @property (nonatomic,getter=isShowBar) BOOL showBar; //是否显示状态栏
 @property (nonatomic,strong) LSYMenuView *menuView; //菜单栏
+@property (nonatomic,strong) LSYCatalogViewController *catalogVC;   //侧边栏
+@property (nonatomic,strong) UIView * catalogView;  //侧边栏背景
 @end
 
 @implementation LSYReadPageViewController
@@ -23,8 +29,16 @@
     [self fetchData];
     [self addChildViewController:self.pageViewController];
     [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showToolMenu)]];
+    [self.view addGestureRecognizer:({
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showToolMenu)];
+        tap.delegate = self;
+        tap;
+    })];
     [self.view addSubview:self.menuView];
+    
+    [self addChildViewController:self.catalogVC];
+    [self.view addSubview:self.catalogView];
+    [self.catalogView addSubview:self.catalogVC.view];
 }
 -(BOOL)prefersStatusBarHidden
 {
@@ -36,7 +50,7 @@
 }
 -(void)showToolMenu
 {
-    
+
     [self.menuView showAnimation:YES];
     
 }
@@ -46,6 +60,7 @@
         _model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:_resourceURL]];
     }
 }
+#pragma mark - init
 -(LSYMenuView *)menuView
 {
     if (!_menuView) {
@@ -65,6 +80,74 @@
     }
     return _pageViewController;
 }
+-(LSYCatalogViewController *)catalogVC
+{
+    if (!_catalogVC) {
+        _catalogVC = [[LSYCatalogViewController alloc] init];
+        _catalogVC.readModel = _model;
+    }
+    return _catalogVC;
+}
+-(UIView *)catalogView
+{
+    if (!_catalogView) {
+        _catalogView = [[UIView alloc] init];
+        _catalogView.backgroundColor = [UIColor clearColor];
+        _catalogView.hidden = YES;
+        [_catalogView addGestureRecognizer:({
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenCatalog)];
+            tap.delegate = self;
+            tap;
+        })];
+    }
+    return _catalogView;
+}
+#pragma mark -  UIGestureRecognizer Delegate
+//解决TabView与Tap手势冲突
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    return  YES;
+}
+#pragma mark - Privite Method
+-(void)catalogShowState:(BOOL)show
+{
+    show?({
+        _catalogView.hidden = !show;
+        [UIView animateWithDuration:AnimationDelay animations:^{
+            _catalogView.frame = CGRectMake(0, 0,2*ViewSize(self.view).width, ViewSize(self.view).height);
+            
+        } completion:^(BOOL finished) {
+            [_catalogView insertSubview:[[UIImageView alloc] initWithImage:[self blurredSnapshot]] atIndex:0];
+        }];
+        
+    }):({
+        if ([_catalogView.subviews.firstObject isKindOfClass:[UIImageView class]]) {
+            [_catalogView.subviews.firstObject removeFromSuperview];
+        }
+        [UIView animateWithDuration:AnimationDelay animations:^{
+             _catalogView.frame = CGRectMake(-ViewSize(self.view).width, 0, 2*ViewSize(self.view).width, ViewSize(self.view).height);
+        } completion:^(BOOL finished) {
+            _catalogView.hidden = !show;
+            
+        }];
+    });
+}
+-(void)hiddenCatalog
+{
+    [self catalogShowState:NO];
+}
+- (UIImage *)blurredSnapshot {
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)), NO, 1.0f);
+    [self.view drawViewHierarchyInRect:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)) afterScreenUpdates:NO];
+    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *blurredSnapshotImage = [snapshotImage applyLightEffect];
+    UIGraphicsEndImageContext();
+    return blurredSnapshotImage;
+}
 #pragma mark - Menu View Delegate
 -(void)menuViewDidHidden:(LSYMenuView *)menu
 {
@@ -79,7 +162,9 @@
 }
 -(void)menuViewInvokeCatalog:(LSYBottomMenuView *)bottomMenu
 {
-    [LSYReadUtilites showAlert:@"open the catalog!"];
+    [_menuView hiddenAnimation:NO];
+    [self catalogShowState:YES];
+    
 }
 #pragma mark - Create Read View Controller
 
@@ -140,7 +225,11 @@
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+
     _pageViewController.view.frame = self.view.frame;
     _menuView.frame = self.view.frame;
+    _catalogView.frame = CGRectMake(-ViewSize(self.view).width, 0, 2*ViewSize(self.view).width, ViewSize(self.view).height);
+    _catalogVC.view.frame = CGRectMake(0, 0, ViewSize(self.view).width-100, ViewSize(self.view).height);
+    [_catalogVC reload];
 }
 @end
