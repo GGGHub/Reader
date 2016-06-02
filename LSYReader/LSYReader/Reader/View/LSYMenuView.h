@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 @class LSYMenuView;
+@class LSYBottomMenuView;
+@class LSYTopMenuView;
 @protocol LSYMenuViewDelegate <NSObject>
+@optional
 -(void)menuViewDidHidden:(LSYMenuView *)menu;
 -(void)menuViewDidAppear:(LSYMenuView *)menu;
+-(void)menuViewInvokeCatalog:(LSYBottomMenuView *)bottomMenu;
 @end
 @interface LSYMenuView : UIView
 @property (nonatomic,weak) id<LSYMenuViewDelegate> delegate;
