@@ -9,7 +9,7 @@
 #import "LSYMenuView.h"
 #import "LSYTopMenuView.h"
 #import "LSYBottomMenuView.h"
-#define AnimationDelay 0.5f
+#define AnimationDelay 0.3f
 #define TopViewHeight 64.0f
 #define BottomViewHeight 200.0f
 @interface LSYMenuView ()<LSYMenuViewDelegate>

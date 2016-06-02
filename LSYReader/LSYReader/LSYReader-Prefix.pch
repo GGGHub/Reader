@@ -28,3 +28,4 @@
 #define ViewSize(view)  (view.frame.size)
 #define ScreenSize [UIScreen mainScreen].bounds.size
 #import "LSYReadUtilites.h"
+#import "LSYReadModel.h"

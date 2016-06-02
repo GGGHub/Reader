@@ -1,7 +1,7 @@
 //
 //  LSYViewPagerVC.m
 //  LSYViewPagerVC
-//
+//  github:https://github.com/GGGHub/ViewPager
 //  Created by okwei on 15/10/9.
 //  Copyright © 2015年 okwei. All rights reserved.
 //
@@ -233,6 +233,7 @@
         [self.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
 }
