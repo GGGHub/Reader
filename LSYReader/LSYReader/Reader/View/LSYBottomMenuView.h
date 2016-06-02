@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol LSYMenuViewDelegate;
 
 @interface LSYBottomMenuView : UIView
+@property (nonatomic,weak) id<LSYMenuViewDelegate>delegate;
+@end
+
+@interface LSYThemeView : UIView
+
+@end
+
+@interface LSYReadProgressView : UIView
 
 @end

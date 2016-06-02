@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */; };
+		87D8BD271CFFE44A0087D8DA /* LSYViewPagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD261CFFE44A0087D8DA /* LSYViewPagerVC.m */; };
 		AB9A96BC1CFC2EE80066030C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BB1CFC2EE80066030C /* main.m */; };
 		AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BE1CFC2EE80066030C /* AppDelegate.m */; };
 		AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96C11CFC2EE80066030C /* ViewController.m */; };
@@ -35,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader_cover@2x.png"; sourceTree = "<group>"; };
+		87D8BD251CFFE44A0087D8DA /* LSYViewPagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYViewPagerVC.h; sourceTree = "<group>"; };
+		87D8BD261CFFE44A0087D8DA /* LSYViewPagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYViewPagerVC.m; sourceTree = "<group>"; };
 		AB9A96B71CFC2EE70066030C /* LSYReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSYReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB9A96BB1CFC2EE80066030C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB9A96BD1CFC2EE80066030C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -148,6 +153,8 @@
 				AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */,
 				AB9A96D81CFC39290066030C /* LSYReadView.h */,
 				AB9A96D91CFC39290066030C /* LSYReadView.m */,
+				87D8BD251CFFE44A0087D8DA /* LSYViewPagerVC.h */,
+				87D8BD261CFFE44A0087D8DA /* LSYViewPagerVC.m */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -203,6 +210,7 @@
 				ABE8ABE31CFED8CE00693078 /* reader_more@2x.png */,
 				ABE8ABDF1CFED88300693078 /* bg_back_white.png */,
 				ABE8ABE01CFED88300693078 /* bg_back_white@2x.png */,
+				87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -276,6 +284,7 @@
 				ABE8ABD31CFE930F00693078 /* mdjyml.txt in Resources */,
 				AB9A96C71CFC2EE80066030C /* Assets.xcassets in Resources */,
 				ABE8ABE41CFED8CE00693078 /* reader_more@2x.png in Resources */,
+				87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */,
 				ABE8ABE11CFED88300693078 /* bg_back_white.png in Resources */,
 				AB9A96E41CFC4C8F0066030C /* Chapter1.txt in Resources */,
 				AB9A96C51CFC2EE80066030C /* Main.storyboard in Resources */,
@@ -299,6 +308,7 @@
 				AB9A96EE1CFD27D90066030C /* LSYMarkModel.m in Sources */,
 				AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */,
 				ABE8ABDD1CFEBB8300693078 /* LSYBottomMenuView.m in Sources */,
+				87D8BD271CFFE44A0087D8DA /* LSYViewPagerVC.m in Sources */,
 				AB9A96D41CFC2F480066030C /* LSYReadPageViewController.m in Sources */,
 				AB9A96F71CFD2EC70066030C /* LSYRecordModel.m in Sources */,
 				AB9A96EB1CFD27C70066030C /* LSYReadModel.m in Sources */,

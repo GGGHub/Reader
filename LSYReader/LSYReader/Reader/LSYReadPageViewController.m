@@ -77,6 +77,10 @@
     [self setNeedsStatusBarAppearanceUpdate];
     
 }
+-(void)menuViewInvokeCatalog:(LSYBottomMenuView *)bottomMenu
+{
+    [LSYReadUtilites showAlert:@"open the catalog!"];
+}
 #pragma mark - Create Read View Controller
 
 -(LSYReadViewController *)readViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page{
