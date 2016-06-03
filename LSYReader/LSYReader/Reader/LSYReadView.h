@@ -10,4 +10,5 @@
 
 @interface LSYReadView : UIView
 @property (nonatomic,assign) CTFrameRef frameRef;
+-(void)cancelSelected;
 @end

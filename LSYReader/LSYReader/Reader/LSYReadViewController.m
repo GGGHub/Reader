@@ -13,7 +13,7 @@
 
 
 @interface LSYReadViewController ()
-@property (nonatomic,strong) LSYReadView *readView;
+
 @end
 
 @implementation LSYReadViewController
@@ -21,15 +21,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self prefersStatusBarHidden];
+    [self.view setBackgroundColor:[LSYReadConfig shareInstance].theme];
     [self.view addSubview:self.readView];
 }
 
 -(LSYReadView *)readView
 {
     if (!_readView) {
-        _readView = [[LSYReadView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height)];
+        _readView = [[LSYReadView alloc] initWithFrame:CGRectMake(LeftSpacing,TopSpacing, self.view.frame.size.width-LeftSpacing-RightSpacing, self.view.frame.size.height-TopSpacing-BottomSpacing)];
         LSYReadConfig *config = [LSYReadConfig shareInstance];
-        _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:CGRectMake(LeftSpacing,TopSpacing, _readView.frame.size.width-LeftSpacing-RightSpacing, _readView.frame.size.height-TopSpacing-BottomSpacing)];
+        _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:CGRectMake(0,0, _readView.frame.size.width, _readView.frame.size.height)];
     }
     return _readView;
 }

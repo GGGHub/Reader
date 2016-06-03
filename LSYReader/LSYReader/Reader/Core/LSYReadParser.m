@@ -33,4 +33,76 @@
     dict[NSParagraphStyleAttributeName] = paragraphStyle;
     return [dict copy];
 }
++(CFIndex)parserIndexWithPoint:(CGPoint)point frameRef:(CTFrameRef)frameRef
+{
+    CFIndex index = -1;
+    CGPathRef pathRef = CTFrameGetPath(frameRef);
+    CGRect bounds = CGPathGetBoundingBox(pathRef);
+    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frameRef);
+    if (!lines) {
+        return index;
+    }
+    NSInteger lineCount = [lines count];
+    CGPoint *origins = malloc(lineCount * sizeof(CGPoint)); //给每行的起始点开辟内存
+    if (lineCount) {
+        CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
+        for (int i = 0; i<lineCount; i++) {
+            CGPoint baselineOrigin = origins[i];
+            CTLineRef line = (__bridge CTLineRef)[lines objectAtIndex:i];
+            CGFloat ascent,descent,linegap; //声明字体的上行高度和下行高度和行距
+            CGFloat lineWidth = CTLineGetTypographicBounds(line, &ascent, &descent, &linegap);
+            CGRect lineFrame = CGRectMake(baselineOrigin.x, CGRectGetHeight(bounds)-baselineOrigin.y-ascent, lineWidth, ascent+descent+linegap+[LSYReadConfig shareInstance].lineSpace);    //没有转换坐标系左下角为坐标原点 字体高度为上行高度加下行高度
+            if (CGRectContainsPoint(lineFrame,point)){
+                index = CTLineGetStringIndexForPosition(line, point);
+                break;
+            }
+        }
+    }
+    free(origins);
+    return index;
+    
+}
++(CGRect)parserRectWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef
+{
+    CFIndex index = -1;
+    CGPathRef pathRef = CTFrameGetPath(frameRef);
+    CGRect bounds = CGPathGetBoundingBox(pathRef);
+    CGRect rect = CGRectZero;
+    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frameRef);
+    if (!lines) {
+        return rect;
+    }
+    NSInteger lineCount = [lines count];
+    CGPoint *origins = malloc(lineCount * sizeof(CGPoint)); //给每行的起始点开辟内存
+    if (lineCount) {
+        CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
+        for (int i = 0; i<lineCount; i++) {
+            CGPoint baselineOrigin = origins[i];
+            CTLineRef line = (__bridge CTLineRef)[lines objectAtIndex:i];
+            CGFloat ascent,descent,linegap; //声明字体的上行高度和下行高度和行距
+            CGFloat lineWidth = CTLineGetTypographicBounds(line, &ascent, &descent, &linegap);
+            CGRect lineFrame = CGRectMake(baselineOrigin.x, CGRectGetHeight(bounds)-baselineOrigin.y-ascent, lineWidth, ascent+descent+linegap+[LSYReadConfig shareInstance].lineSpace);    //没有转换坐标系左下角为坐标原点 字体高度为上行高度加下行高度
+            if (CGRectContainsPoint(lineFrame,point)){
+                CFRange stringRange = CTLineGetStringRange(line);
+                index = CTLineGetStringIndexForPosition(line, point);
+                CGFloat xStart = CTLineGetOffsetForStringIndex(line, index, NULL);
+                CGFloat xEnd;
+                //默认选中两个单位
+                if (index > stringRange.location+stringRange.length-2) {
+                    xEnd = xStart;
+                    xStart = CTLineGetOffsetForStringIndex(line,index-2,NULL);
+                }
+                else{
+                    xEnd = CTLineGetOffsetForStringIndex(line,index+2,NULL);
+                }
+                rect = CGRectMake(origins[i].x+xStart,baselineOrigin.y-descent,fabs(xStart-xEnd), ascent+descent);
+                
+                break;
+            }
+        }
+    }
+    free(origins);
+    NSLog(@"Select Rect %@",NSStringFromCGRect(rect));
+    return rect;
+}
 @end
