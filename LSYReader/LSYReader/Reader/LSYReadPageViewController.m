@@ -20,6 +20,7 @@
 @property (nonatomic,strong) LSYMenuView *menuView; //菜单栏
 @property (nonatomic,strong) LSYCatalogViewController *catalogVC;   //侧边栏
 @property (nonatomic,strong) UIView * catalogView;  //侧边栏背景
+@property (nonatomic,strong) LSYReadViewController *readView;   //当前阅读视图
 @end
 
 @implementation LSYReadPageViewController
@@ -39,6 +40,7 @@
     [self addChildViewController:self.catalogVC];
     [self.view addSubview:self.catalogView];
     [self.catalogView addSubview:self.catalogVC.view];
+
 }
 -(BOOL)prefersStatusBarHidden
 {
@@ -50,7 +52,7 @@
 }
 -(void)showToolMenu
 {
-
+    [_readView.readView cancelSelected];
     [self.menuView showAnimation:YES];
     
 }
@@ -172,10 +174,10 @@
     _model.record.chapterModel = _model.chapters[chapter];
     _model.record.chapter = chapter;
     _model.record.page = page;
-    LSYReadViewController *readView = [[LSYReadViewController alloc] init];
-    readView.recordModel = _model.record;
-    readView.content = [_model.chapters[chapter] stringOfPage:page];
-    return readView;
+    _readView = [[LSYReadViewController alloc] init];
+    _readView.recordModel = _model.record;
+    _readView.content = [_model.chapters[chapter] stringOfPage:page];
+    return _readView;
 }
 #pragma mark -PageViewController DataSource
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
