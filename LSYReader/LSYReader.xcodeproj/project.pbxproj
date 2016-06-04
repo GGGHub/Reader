@@ -39,6 +39,7 @@
 		ABE8ABE11CFED88300693078 /* bg_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE8ABDF1CFED88300693078 /* bg_back_white.png */; };
 		ABE8ABE21CFED88300693078 /* bg_back_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE8ABE01CFED88300693078 /* bg_back_white@2x.png */; };
 		ABE8ABE41CFED8CE00693078 /* reader_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE8ABE31CFED8CE00693078 /* reader_more@2x.png */; };
+		ABE8ABE71D02A99300693078 /* r_drag-dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE8ABE61D02A99300693078 /* r_drag-dot@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		ABE8ABDF1CFED88300693078 /* bg_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_back_white.png; sourceTree = "<group>"; };
 		ABE8ABE01CFED88300693078 /* bg_back_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_back_white@2x.png"; sourceTree = "<group>"; };
 		ABE8ABE31CFED8CE00693078 /* reader_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader_more@2x.png"; sourceTree = "<group>"; };
+		ABE8ABE61D02A99300693078 /* r_drag-dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r_drag-dot@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +253,7 @@
 				ABE8ABDF1CFED88300693078 /* bg_back_white.png */,
 				ABE8ABE01CFED88300693078 /* bg_back_white@2x.png */,
 				87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */,
+				ABE8ABE61D02A99300693078 /* r_drag-dot@2x.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				AB9A96CA1CFC2EE80066030C /* LaunchScreen.storyboard in Resources */,
 				ABE8ABE21CFED88300693078 /* bg_back_white@2x.png in Resources */,
 				ABE8ABD31CFE930F00693078 /* mdjyml.txt in Resources */,
+				ABE8ABE71D02A99300693078 /* r_drag-dot@2x.png in Resources */,
 				AB9A96C71CFC2EE80066030C /* Assets.xcassets in Resources */,
 				ABE8ABE41CFED8CE00693078 /* reader_more@2x.png in Resources */,
 				87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */,

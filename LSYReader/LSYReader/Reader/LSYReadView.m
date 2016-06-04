@@ -41,7 +41,7 @@
 }
 #pragma mark - Privite Method
 #pragma mark  Draw Selected Path
--(void)drawSelectedPath:(NSArray *)array{
+-(void)drawSelectedPath:(NSArray *)array LeftDot:(CGRect *)leftDot RightDot:(CGRect *)rightDot{
     if (!array.count) {
         return;
     }
@@ -50,11 +50,34 @@
     for (int i = 0; i < [array count]; i++) {
         CGRect rect = CGRectFromString([array objectAtIndex:i]);
         CGPathAddRect(_path, NULL, rect);
+        if (i == 0) {
+            *leftDot = rect;
+        }
+        if (i == [array count]-1) {
+            *rightDot = rect;
+        }
+       
     }
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextAddPath(ctx, _path);
     CGContextFillPath(ctx);
     CGPathRelease(_path);
+}
+-(void)drawDotWithLeft:(CGRect)Left right:(CGRect)right
+{
+    if (CGRectEqualToRect(CGRectZero, Left) || (CGRectEqualToRect(CGRectZero, right))){
+        return;
+    }
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGMutablePathRef _path = CGPathCreateMutable();
+    [[UIColor orangeColor] setFill];
+     CGPathAddRect(_path, NULL, CGRectMake(CGRectGetMinX(Left)-2, CGRectGetMinY(Left),2, CGRectGetHeight(Left)));
+     CGPathAddRect(_path, NULL, CGRectMake(CGRectGetMaxX(right), CGRectGetMinY(right),2, CGRectGetHeight(right)));
+    CGContextAddPath(ctx, _path);
+    CGContextFillPath(ctx);
+    CGPathRelease(_path);
+    CGContextDrawImage(ctx,CGRectMake(CGRectGetMinX(Left)-7.5, CGRectGetMinY(Left)-7.5, 15, 15),[UIImage imageNamed:@"r_drag-dot"].CGImage);
+    CGContextDrawImage(ctx, CGRectMake(CGRectGetMaxX(right)-7.5, CGRectGetMaxY(right)-7.5, 15, 15),[UIImage imageNamed:@"r_drag-dot"].CGImage);
 }
 #pragma mark - Privite Method
 #pragma mark Cancel Draw
@@ -93,9 +116,10 @@
     CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
     CGContextTranslateCTM(ctx, 0, self.bounds.size.height);
     CGContextScaleCTM(ctx, 1.0, -1.0);
-    [self drawSelectedPath:_pathArray];
+    CGRect leftDot,rightDot = CGRectZero;
+    [self drawSelectedPath:_pathArray LeftDot:&leftDot RightDot:&rightDot];
     CTFrameDraw(_frameRef, ctx);
-    
+    [self drawDotWithLeft:leftDot right:rightDot];
 }
 
 @end
