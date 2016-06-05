@@ -12,6 +12,7 @@
 {
     NSRange _selectRange;
     NSArray *_pathArray;
+    //滑动手势有效区间
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -21,6 +22,10 @@
         [self addGestureRecognizer:({
             UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
             longPress;
+        })];
+        [self addGestureRecognizer:({
+            UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+            pan;
         })];
         
     }
@@ -38,6 +43,16 @@
             [self setNeedsDisplay];
         }
     }
+}
+-(void)pan:(UIPanGestureRecognizer *)pan
+{
+    CGPoint point = [pan locationInView:self];
+    if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
+        NSArray *path = [LSYReadParser parserRectsWithPoint:point range:&_selectRange frameRef:_frameRef];
+        _pathArray = path;
+        [self setNeedsDisplay];
+    }
+    
 }
 #pragma mark - Privite Method
 #pragma mark  Draw Selected Path

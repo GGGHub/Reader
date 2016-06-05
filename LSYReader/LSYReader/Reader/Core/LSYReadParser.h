@@ -19,4 +19,10 @@
  *  @return 选中区域
  */
 +(CGRect)parserRectWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef;
+/**
+ *  根据触碰点获取默认选中区域
+ *  @range 选中范围
+ *  @return 选中区域的集合
+ */
++(NSArray *)parserRectsWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef;
 @end
