@@ -12,9 +12,10 @@
 #import "LSYMenuView.h"
 #import "LSYCatalogViewController.h"
 #import "UIImage+ImageEffects.h"
+#import "LSYNoteModel.h"
 #define AnimationDelay 0.3
 
-@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate>
+@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate,LSYCatalogViewControllerDelegate>
 @property (nonatomic,strong) UIPageViewController *pageViewController;
 @property (nonatomic,getter=isShowBar) BOOL showBar; //是否显示状态栏
 @property (nonatomic,strong) LSYMenuView *menuView; //菜单栏
@@ -40,8 +41,18 @@
     [self addChildViewController:self.catalogVC];
     [self.view addSubview:self.catalogView];
     [self.catalogView addSubview:self.catalogVC.view];
+    //添加笔记
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNotes:) name:LSYNoteNotification object:nil];
 
 }
+
+-(void)addNotes:(NSNotification *)no
+{
+    LSYNoteModel *model = no.object;
+    model.recordModel = [_model.record copy];
+    [[_model mutableArrayValueForKey:@"notes"] addObject:model];    //这样写才能KVO数组变化
+}
+
 -(BOOL)prefersStatusBarHidden
 {
     return !_showBar;
@@ -87,6 +98,7 @@
     if (!_catalogVC) {
         _catalogVC = [[LSYCatalogViewController alloc] init];
         _catalogVC.readModel = _model;
+        _catalogVC.catalogDelegate = self;
     }
     return _catalogVC;
 }
@@ -103,6 +115,13 @@
         })];
     }
     return _catalogView;
+}
+#pragma mark - CatalogViewController Delegate
+-(void)catalog:(LSYCatalogViewController *)catalog didSelectChapter:(NSUInteger)chapter page:(NSUInteger)page
+{
+     [_pageViewController setViewControllers:@[[self readViewWithChapter:chapter page:page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    [self hiddenCatalog];
+    
 }
 #pragma mark -  UIGestureRecognizer Delegate
 //解决TabView与Tap手势冲突
@@ -124,7 +143,6 @@
         } completion:^(BOOL finished) {
             [_catalogView insertSubview:[[UIImageView alloc] initWithImage:[self blurredSnapshot]] atIndex:0];
         }];
-        
     }):({
         if ([_catalogView.subviews.firstObject isKindOfClass:[UIImageView class]]) {
             [_catalogView.subviews.firstObject removeFromSuperview];

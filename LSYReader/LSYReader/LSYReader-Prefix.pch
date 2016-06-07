@@ -30,3 +30,6 @@
 #import "LSYReadUtilites.h"
 #import "LSYReadModel.h"
 #import "LSYReadParser.h"
+
+#define LSYNoteNotification @"LSYNoteNotification"
+

@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "LSYRecordModel.h"
 @interface LSYNoteModel : NSObject
-
+@property (nonatomic,strong) NSDate *date;
+@property (nonatomic,copy) NSString *note;
+@property (nonatomic,copy) NSString *content;
+@property (nonatomic,strong) LSYRecordModel *recordModel;
 @end

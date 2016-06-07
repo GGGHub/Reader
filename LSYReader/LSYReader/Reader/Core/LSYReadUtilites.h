@@ -13,5 +13,5 @@
 +(NSString *)encodeWithURL:(NSURL *)url;
 +(UIButton *)commonButtonSEL:(SEL)sel target:(id)target;
 +(UIViewController *)getCurrentVC;
-+(void)showAlert:(NSString *)string;
++(void)showAlertTitle:(NSString *)title content:(NSString *)string;
 @end

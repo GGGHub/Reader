@@ -15,6 +15,15 @@
 @end
 
 @implementation LSYChapterModel
+-(id)copyWithZone:(NSZone *)zone
+{
+    LSYChapterModel *model = [[LSYChapterModel allocWithZone:zone] init];
+    model.content = self.content;
+    model.title = self.title;
+    model.pageCount = self.pageCount;
+    return model;
+    
+}
 -(void)setContent:(NSString *)content
 {
     _content = content;

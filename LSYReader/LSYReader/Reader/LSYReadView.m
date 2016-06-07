@@ -8,6 +8,7 @@
 
 #import "LSYReadView.h"
 #import "LSYReadConfig.h"
+#import "LSYNoteModel.h"
 @implementation LSYReadView
 {
     NSRange _selectRange;
@@ -19,6 +20,7 @@
     CGRect _leftRect;
     CGRect _rightRect;
     
+    CGRect _menuRect;
     //是否进入选择状态
     BOOL _selectState;
 }
@@ -38,6 +40,7 @@
             pan;
         })];
         
+        
     }
     return self;
 }
@@ -45,6 +48,7 @@
 -(void)longPress:(UILongPressGestureRecognizer *)longPress
 {
     CGPoint point = [longPress locationInView:self];
+    [self hiddenMenu];
     if (longPress.state == UIGestureRecognizerStateBegan || longPress.state == UIGestureRecognizerStateChanged) {
         CGRect rect = [LSYReadParser parserRectWithPoint:point range:&_selectRange frameRef:_frameRef];
         
@@ -54,12 +58,17 @@
            
         }
     }
+    if (longPress.state == UIGestureRecognizerStateEnded) {
+        if (!CGRectEqualToRect(_menuRect, CGRectZero)) {
+            [self showMenu];
+        }
+    }
 }
 -(void)pan:(UIPanGestureRecognizer *)pan
 {
    
     CGPoint point = [pan locationInView:self];
- 
+    [self hiddenMenu];
     if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
         if (CGRectContainsPoint(_rightRect, point)||CGRectContainsPoint(_leftRect, point)) {
             _selectState = YES;
@@ -73,6 +82,9 @@
     }
     if (pan.state == UIGestureRecognizerStateEnded) {
         _selectState = NO;
+        if (!CGRectEqualToRect(_menuRect, CGRectZero)) {
+            [self showMenu];
+        }
     }
     
 }
@@ -92,10 +104,10 @@
         CGPathAddRect(_path, NULL, rect);
         if (i == 0) {
             *leftDot = rect;
+            _menuRect = rect;
         }
         if (i == [array count]-1) {
             *rightDot = rect;
-//            NSLog(@"RECT == %@",NSStringFromCGRect(rect));
         }
        
     }
@@ -103,6 +115,7 @@
     CGContextAddPath(ctx, _path);
     CGContextFillPath(ctx);
     CGPathRelease(_path);
+    
 }
 -(void)drawDotWithLeft:(CGRect)Left right:(CGRect)right
 {
@@ -129,9 +142,73 @@
 {
     if (_pathArray) {
         _pathArray = nil;
+        [self hiddenMenu];
         [self setNeedsDisplay];
     }
     
+}
+#pragma mark Show Menu
+-(void)showMenu
+{
+    if ([self becomeFirstResponder]) {
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        UIMenuItem *menuItemCopy = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(menuCopy:)];
+        UIMenuItem *menuItemNote = [[UIMenuItem alloc] initWithTitle:@"笔记" action:@selector(menuNote:)];
+        UIMenuItem *menuItemShare = [[UIMenuItem alloc] initWithTitle:@"分享" action:@selector(menuShare:)];
+        NSArray *menus = @[menuItemCopy,menuItemNote,menuItemShare];
+        [menuController setMenuItems:menus];
+        [menuController setTargetRect:CGRectMake(CGRectGetMidX(_menuRect), ViewSize(self).height-CGRectGetMidY(_menuRect), CGRectGetHeight(_menuRect), CGRectGetWidth(_menuRect)) inView:self];
+        [menuController setMenuVisible:YES animated:YES];
+        
+    }
+}
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+#pragma mark Hidden Menu
+-(void)hiddenMenu
+{
+     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
+}
+#pragma mark Menu Function
+-(void)menuCopy:(id)sender
+{
+    [self hiddenMenu];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    [pasteboard setString:[_content substringWithRange:_selectRange]];
+    [LSYReadUtilites showAlertTitle:@"成功复制以下内容" content:pasteboard.string];
+    
+}
+-(void)menuNote:(id)sender
+{
+    [self hiddenMenu];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"笔记" message:[_content substringWithRange:_selectRange]  preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+       textField.placeholder = @"输入内容";
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        LSYNoteModel *model = [[LSYNoteModel alloc] init];
+        model.content = [_content substringWithRange:_selectRange];
+        model.note = alertController.textFields.firstObject.text;
+        model.date = [NSDate date];
+        [[NSNotificationCenter defaultCenter] postNotificationName:LSYNoteNotification object:model];
+    }];
+    [alertController addAction:cancel];
+    [alertController addAction:confirm];
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder* nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            [(UIViewController *)nextResponder presentViewController:alertController animated:YES completion:nil];
+            break;
+        }
+    }
+}
+
+-(void)menuShare:(id)sender
+{
+    [self hiddenMenu];
 }
 -(void)setFrameRef:(CTFrameRef)frameRef
 {
@@ -161,6 +238,7 @@
     CGContextTranslateCTM(ctx, 0, self.bounds.size.height);
     CGContextScaleCTM(ctx, 1.0, -1.0);
     CGRect leftDot,rightDot = CGRectZero;
+    _menuRect = CGRectZero;
     [self drawSelectedPath:_pathArray LeftDot:&leftDot RightDot:&rightDot];
     CTFrameDraw(_frameRef, ctx);
     [self drawDotWithLeft:leftDot right:rightDot];

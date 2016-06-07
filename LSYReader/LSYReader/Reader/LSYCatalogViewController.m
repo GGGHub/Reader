@@ -10,7 +10,7 @@
 #import "LSYChapterVC.h"
 #import "LSYNoteVC.h"
 #import "LSYMarkVC.h"
-@interface LSYCatalogViewController ()<LSYViewPagerVCDelegate,LSYViewPagerVCDataSource>
+@interface LSYCatalogViewController ()<LSYViewPagerVCDelegate,LSYViewPagerVCDataSource,LSYCatalogViewControllerDelegate>
 @property (nonatomic,copy) NSArray *titleArray;
 @property (nonatomic,copy) NSArray *VCArray;
 @end
@@ -23,10 +23,12 @@
     _VCArray = @[({
         LSYChapterVC *chapterVC = [[LSYChapterVC alloc]init];
         chapterVC.readModel = _readModel;
+        chapterVC.delegate = self;
         chapterVC;
     }),({
         LSYNoteVC *noteVC = [[LSYNoteVC alloc] init];
         noteVC.readModel = _readModel;
+        noteVC.delegate = self;
         noteVC;
     }),({
         LSYMarkVC *markVC =[[LSYMarkVC alloc] init];
@@ -53,7 +55,12 @@
 {
     return 40.0f;
 }
-
+-(void)catalog:(LSYCatalogViewController *)catalog didSelectChapter:(NSUInteger)chapter page:(NSUInteger)page
+{
+    if ([self.catalogDelegate respondsToSelector:@selector(catalog:didSelectChapter:page:)]) {
+        [self.catalogDelegate catalog:self didSelectChapter:chapter page:page];
+    }
+}
 /*
 #pragma mark - Navigation
 
