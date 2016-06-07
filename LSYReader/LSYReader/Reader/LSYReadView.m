@@ -11,8 +11,16 @@
 @implementation LSYReadView
 {
     NSRange _selectRange;
+    NSRange _calRange;
     NSArray *_pathArray;
+    
+    UIPanGestureRecognizer *_pan;
     //滑动手势有效区间
+    CGRect _leftRect;
+    CGRect _rightRect;
+    
+    //是否进入选择状态
+    BOOL _selectState;
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -25,6 +33,8 @@
         })];
         [self addGestureRecognizer:({
             UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+            pan.enabled = NO;
+            _pan = pan;
             pan;
         })];
         
@@ -41,25 +51,40 @@
         if (!CGRectEqualToRect(rect, CGRectZero)) {
             _pathArray = @[NSStringFromCGRect(rect)];
             [self setNeedsDisplay];
+           
         }
     }
 }
 -(void)pan:(UIPanGestureRecognizer *)pan
 {
+   
     CGPoint point = [pan locationInView:self];
+ 
     if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
-        NSArray *path = [LSYReadParser parserRectsWithPoint:point range:&_selectRange frameRef:_frameRef];
-        _pathArray = path;
-        [self setNeedsDisplay];
+        if (CGRectContainsPoint(_rightRect, point)||CGRectContainsPoint(_leftRect, point)) {
+            _selectState = YES;
+        }
+        if (_selectState) {
+            NSArray *path = [LSYReadParser parserRectsWithPoint:point range:&_selectRange frameRef:_frameRef paths:_pathArray];
+            _pathArray = path;
+            [self setNeedsDisplay];
+        }
+       
+    }
+    if (pan.state == UIGestureRecognizerStateEnded) {
+        _selectState = NO;
     }
     
 }
+
 #pragma mark - Privite Method
 #pragma mark  Draw Selected Path
 -(void)drawSelectedPath:(NSArray *)array LeftDot:(CGRect *)leftDot RightDot:(CGRect *)rightDot{
     if (!array.count) {
+        _pan.enabled = NO;
         return;
     }
+    _pan.enabled = YES;
     CGMutablePathRef _path = CGPathCreateMutable();
     [[UIColor cyanColor]setFill];
     for (int i = 0; i < [array count]; i++) {
@@ -70,6 +95,7 @@
         }
         if (i == [array count]-1) {
             *rightDot = rect;
+//            NSLog(@"RECT == %@",NSStringFromCGRect(rect));
         }
        
     }
@@ -91,8 +117,11 @@
     CGContextAddPath(ctx, _path);
     CGContextFillPath(ctx);
     CGPathRelease(_path);
-    CGContextDrawImage(ctx,CGRectMake(CGRectGetMinX(Left)-7.5, CGRectGetMinY(Left)-7.5, 15, 15),[UIImage imageNamed:@"r_drag-dot"].CGImage);
-    CGContextDrawImage(ctx, CGRectMake(CGRectGetMaxX(right)-7.5, CGRectGetMaxY(right)-7.5, 15, 15),[UIImage imageNamed:@"r_drag-dot"].CGImage);
+    CGFloat dotSize = 15;
+    _leftRect = CGRectMake(CGRectGetMinX(Left)-dotSize/2-10, ViewSize(self).height-(CGRectGetMaxY(Left)-dotSize/2-10)-(dotSize+20), dotSize+20, dotSize+20);
+    _rightRect = CGRectMake(CGRectGetMaxX(right)-dotSize/2-10,ViewSize(self).height- (CGRectGetMinY(right)-dotSize/2-10)-(dotSize+20), dotSize+20, dotSize+20);
+    CGContextDrawImage(ctx,CGRectMake(CGRectGetMinX(Left)-dotSize/2, CGRectGetMaxY(Left)-dotSize/2, dotSize, dotSize),[UIImage imageNamed:@"r_drag-dot"].CGImage);
+    CGContextDrawImage(ctx,CGRectMake(CGRectGetMaxX(right)-dotSize/2, CGRectGetMinY(right)-dotSize/2, dotSize, dotSize),[UIImage imageNamed:@"r_drag-dot"].CGImage);
 }
 #pragma mark - Privite Method
 #pragma mark Cancel Draw
