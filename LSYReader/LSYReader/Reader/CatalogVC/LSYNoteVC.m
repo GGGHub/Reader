@@ -14,12 +14,19 @@ static  NSString *noteCell = @"noteCell";
 @end
 
 @implementation LSYNoteVC
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self addObserver:self forKeyPath:@"readModel.notes" options:NSKeyValueObservingOptionNew context:NULL];
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.tabView];
-    [self addObserver:self forKeyPath:@"readModel.notes" options:NSKeyValueObservingOptionNew context:NULL];
+    
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
