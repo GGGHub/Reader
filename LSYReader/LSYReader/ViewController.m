@@ -19,7 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
 }
 - (IBAction)begin:(id)sender {
     LSYReadPageViewController *pageView = [[LSYReadPageViewController alloc] init];

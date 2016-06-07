@@ -105,11 +105,11 @@
     
     return result;
 }
-+(void)showAlert:(NSString *)string
++(void)showAlertTitle:(NSString *)title content:(NSString *)string
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:string delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:string delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 #pragma clang diagnostic pop
     

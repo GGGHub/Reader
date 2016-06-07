@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "LSYReadModel.h"
+@protocol LSYCatalogViewControllerDelegate;
 @interface LSYNoteVC : UIViewController
 @property (nonatomic,strong) LSYReadModel *readModel;
+@property (nonatomic,weak) id<LSYCatalogViewControllerDelegate>delegate;
 @end

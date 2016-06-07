@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LSYReader/Reader/Core/LSYReadParser.m"
-            timestampString = "486904842.079539"
+            filePath = "LSYReader/Reader/LSYReadView.m"
+            timestampString = "486980953.752516"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "+parserRectsWithPoint:range:frameRef:paths:calRange:"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "-menuNote:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

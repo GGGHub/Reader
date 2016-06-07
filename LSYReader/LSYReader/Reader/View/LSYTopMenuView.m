@@ -44,7 +44,7 @@
 }
 -(void)moreOption
 {
-    [LSYReadUtilites showAlert:@"more click!"];
+    [LSYReadUtilites showAlertTitle:nil content:@"more click!"];
 }
 -(void)backView
 {

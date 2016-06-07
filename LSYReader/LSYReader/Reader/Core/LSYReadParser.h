@@ -24,7 +24,5 @@
  *  @range 选中范围
  *  @return 选中区域的集合
  */
-+(NSArray *)parserRectsWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef paths:(NSArray *)paths calRange:(NSRange *)range;
-
 +(NSArray *)parserRectsWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef paths:(NSArray *)paths;
 @end
