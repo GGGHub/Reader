@@ -177,6 +177,7 @@
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
     _readView.content = [_model.chapters[chapter] stringOfPage:page];
+    NSLog(@"_readVreate");
     return _readView;
 }
 #pragma mark -PageViewController DataSource
@@ -195,6 +196,7 @@
     else{
         page--;
     }
+    NSLog(@"BeforeViewControlle");
     return [self readViewWithChapter:chapter page:page];
     
 }
@@ -214,6 +216,7 @@
     else{
         page++;
     }
+    NSLog(@"AfterViewController");
     return [self readViewWithChapter:chapter page:page];
 }
 #pragma mark -PageViewController Delegate
