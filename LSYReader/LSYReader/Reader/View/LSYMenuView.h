@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LSYRecordModel.h"
 @class LSYMenuView;
 @class LSYBottomMenuView;
 @class LSYTopMenuView;
@@ -15,9 +16,11 @@
 -(void)menuViewDidHidden:(LSYMenuView *)menu;
 -(void)menuViewDidAppear:(LSYMenuView *)menu;
 -(void)menuViewInvokeCatalog:(LSYBottomMenuView *)bottomMenu;
+-(void)menuViewJumpChapter:(NSUInteger)chapter page:(NSUInteger)page;
 @end
 @interface LSYMenuView : UIView
 @property (nonatomic,weak) id<LSYMenuViewDelegate> delegate;
+@property (nonatomic,strong) LSYRecordModel *recordModel;
 -(void)showAnimation:(BOOL)animation;
 -(void)hiddenAnimation:(BOOL)animation;
 @end

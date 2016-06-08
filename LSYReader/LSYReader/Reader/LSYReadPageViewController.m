@@ -80,6 +80,7 @@
         _menuView = [[LSYMenuView alloc] init];
         _menuView.hidden = YES;
         _menuView.delegate = self;
+        _menuView.recordModel = _model.record;
     }
     return _menuView;
 }
@@ -185,6 +186,10 @@
     [_menuView hiddenAnimation:NO];
     [self catalogShowState:YES];
     
+}
+-(void)menuViewJumpChapter:(NSUInteger)chapter page:(NSUInteger)page
+{
+    [_pageViewController setViewControllers:@[[self readViewWithChapter:chapter page:page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 #pragma mark - Create Read View Controller
 
