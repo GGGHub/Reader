@@ -32,4 +32,7 @@
 #import "LSYReadParser.h"
 
 #define LSYNoteNotification @"LSYNoteNotification"
+#define LSYThemeNotification @"LSYThemeNotification"
 
+#define MinFontSize 11.0f
+#define MaxFontSize 20.0f

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8726DA4B1D07FF830072323A /* bt_tjcp_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8726DA4A1D07FF830072323A /* bt_tjcp_no@2x.png */; };
+		8726DA4F1D0800A10072323A /* ic_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 8726DA4E1D0800A10072323A /* ic_add.png */; };
+		8726DA511D08021E0072323A /* sale_discount_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8726DA501D08021E0072323A /* sale_discount_yellow.png */; };
 		87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */; };
 		87D8BD2B1CFFE5100087D8DA /* LSYViewPagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */; };
 		87D8BD2E1CFFE5880087D8DA /* LSYCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD2D1CFFE5880087D8DA /* LSYCatalogViewController.m */; };
@@ -25,7 +28,6 @@
 		AB9A96D71CFC2F6C0066030C /* LSYReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96D61CFC2F6C0066030C /* LSYReadViewController.m */; };
 		AB9A96DE1CFC3A4D0066030C /* LSYReadConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96DD1CFC3A4D0066030C /* LSYReadConfig.m */; };
 		AB9A96E11CFC3A6A0066030C /* LSYReadParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96E01CFC3A6A0066030C /* LSYReadParser.m */; };
-		AB9A96E41CFC4C8F0066030C /* Chapter1.txt in Resources */ = {isa = PBXBuildFile; fileRef = AB9A96E31CFC4C8F0066030C /* Chapter1.txt */; };
 		AB9A96E71CFD25190066030C /* LSYReadUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96E61CFD25190066030C /* LSYReadUtilites.m */; };
 		AB9A96EB1CFD27C70066030C /* LSYReadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96EA1CFD27C70066030C /* LSYReadModel.m */; };
 		AB9A96EE1CFD27D90066030C /* LSYMarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96ED1CFD27D90066030C /* LSYMarkModel.m */; };
@@ -43,6 +45,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8726DA4A1D07FF830072323A /* bt_tjcp_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bt_tjcp_no@2x.png"; path = "../View/bt_tjcp_no@2x.png"; sourceTree = "<group>"; };
+		8726DA4E1D0800A10072323A /* ic_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_add.png; sourceTree = "<group>"; };
+		8726DA501D08021E0072323A /* sale_discount_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sale_discount_yellow.png; sourceTree = "<group>"; };
 		87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader_cover@2x.png"; sourceTree = "<group>"; };
 		87D8BD291CFFE5100087D8DA /* LSYViewPagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYViewPagerVC.h; sourceTree = "<group>"; };
 		87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYViewPagerVC.m; sourceTree = "<group>"; };
@@ -77,7 +82,6 @@
 		AB9A96DF1CFC3A6A0066030C /* LSYReadParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadParser.h; sourceTree = "<group>"; };
 		AB9A96E01CFC3A6A0066030C /* LSYReadParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadParser.m; sourceTree = "<group>"; };
 		AB9A96E21CFC3AC60066030C /* LSYReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LSYReader-Prefix.pch"; sourceTree = "<group>"; };
-		AB9A96E31CFC4C8F0066030C /* Chapter1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Chapter1.txt; path = ../../Chapter1.txt; sourceTree = "<group>"; };
 		AB9A96E51CFD25190066030C /* LSYReadUtilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadUtilites.h; sourceTree = "<group>"; };
 		AB9A96E61CFD25190066030C /* LSYReadUtilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYReadUtilites.m; sourceTree = "<group>"; };
 		AB9A96E91CFD27C70066030C /* LSYReadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYReadModel.h; sourceTree = "<group>"; };
@@ -248,12 +252,14 @@
 			isa = PBXGroup;
 			children = (
 				ABE8ABD21CFE930F00693078 /* mdjyml.txt */,
-				AB9A96E31CFC4C8F0066030C /* Chapter1.txt */,
+				8726DA501D08021E0072323A /* sale_discount_yellow.png */,
+				8726DA4E1D0800A10072323A /* ic_add.png */,
 				ABE8ABE31CFED8CE00693078 /* reader_more@2x.png */,
 				ABE8ABDF1CFED88300693078 /* bg_back_white.png */,
 				ABE8ABE01CFED88300693078 /* bg_back_white@2x.png */,
 				87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */,
 				ABE8ABE61D02A99300693078 /* r_drag-dot@2x.png */,
+				8726DA4A1D07FF830072323A /* bt_tjcp_no@2x.png */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -317,6 +323,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB9A96CA1CFC2EE80066030C /* LaunchScreen.storyboard in Resources */,
+				8726DA4F1D0800A10072323A /* ic_add.png in Resources */,
+				8726DA4B1D07FF830072323A /* bt_tjcp_no@2x.png in Resources */,
+				8726DA511D08021E0072323A /* sale_discount_yellow.png in Resources */,
 				ABE8ABE21CFED88300693078 /* bg_back_white@2x.png in Resources */,
 				ABE8ABD31CFE930F00693078 /* mdjyml.txt in Resources */,
 				ABE8ABE71D02A99300693078 /* r_drag-dot@2x.png in Resources */,
@@ -324,7 +333,6 @@
 				ABE8ABE41CFED8CE00693078 /* reader_more@2x.png in Resources */,
 				87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */,
 				ABE8ABE11CFED88300693078 /* bg_back_white.png in Resources */,
-				AB9A96E41CFC4C8F0066030C /* Chapter1.txt in Resources */,
 				AB9A96C51CFC2EE80066030C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

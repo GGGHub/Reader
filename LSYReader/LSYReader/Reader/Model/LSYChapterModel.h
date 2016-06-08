@@ -14,4 +14,5 @@
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic) NSUInteger pageCount;
 -(NSString *)stringOfPage:(NSUInteger)index;
+-(void)updateFont;
 @end

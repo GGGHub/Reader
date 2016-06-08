@@ -7,6 +7,7 @@
 //
 
 #import "LSYTopMenuView.h"
+#import "LSYMenuView.h"
 @interface LSYTopMenuView ()
 @property (nonatomic,strong) UIButton *back;
 @property (nonatomic,strong) UIButton *more;
@@ -38,13 +39,17 @@
 {
     if (!_more) {
         _more = [LSYReadUtilites commonButtonSEL:@selector(moreOption) target:self];
-        [_more setImage:[UIImage imageNamed:@"reader_more"] forState:UIControlStateNormal];
+        [_more setImage:[UIImage imageNamed:@"sale_discount_yellow"] forState:UIControlStateNormal];
+        [_more setImageEdgeInsets:UIEdgeInsetsMake(5, 10, 5, 10)];
     }
     return _more;
 }
 -(void)moreOption
 {
-    [LSYReadUtilites showAlertTitle:nil content:@"more click!"];
+    if ([self.delegate respondsToSelector:@selector(menuViewMark:)]) {
+        [self.delegate menuViewMark:self];
+    }
+    [LSYReadUtilites showAlertTitle:nil content:@"保存书签成功"];
 }
 -(void)backView
 {

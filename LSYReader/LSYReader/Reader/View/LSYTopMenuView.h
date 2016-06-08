@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol LSYMenuViewDelegate;
 @interface LSYTopMenuView : UIView
-
+@property (nonatomic,weak) id<LSYMenuViewDelegate>delegate;
 @end

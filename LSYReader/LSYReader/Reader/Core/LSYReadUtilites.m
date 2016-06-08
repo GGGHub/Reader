@@ -68,7 +68,7 @@
 }
 +(UIButton *)commonButtonSEL:(SEL)sel target:(id)target
 {
-    UIButton *button = [[UIButton alloc] init];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
     [button setTintColor:[UIColor whiteColor]];
     [button addTarget:target action:sel forControlEvents:UIControlEventTouchUpInside];

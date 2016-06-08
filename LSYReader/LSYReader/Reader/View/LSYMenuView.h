@@ -17,6 +17,8 @@
 -(void)menuViewDidAppear:(LSYMenuView *)menu;
 -(void)menuViewInvokeCatalog:(LSYBottomMenuView *)bottomMenu;
 -(void)menuViewJumpChapter:(NSUInteger)chapter page:(NSUInteger)page;
+-(void)menuViewFontSize:(LSYBottomMenuView *)bottomMenu;
+-(void)menuViewMark:(LSYTopMenuView *)topMenu;
 @end
 @interface LSYMenuView : UIView
 @property (nonatomic,weak) id<LSYMenuViewDelegate> delegate;
