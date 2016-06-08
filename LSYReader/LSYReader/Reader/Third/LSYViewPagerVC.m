@@ -57,6 +57,18 @@
     [self reload];
     
 }
+-(void)setForbidGesture:(BOOL)forbidGesture
+{
+    _forbidGesture = forbidGesture;
+    for (UIScrollView *view in self.pageViewController.view.subviews) {
+        
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            
+            view.scrollEnabled = !forbidGesture;
+        }
+    }
+    
+}
 -(void)reload
 {
     if ([self.dataSource respondsToSelector:@selector(numberOfViewControllersInViewPager:)]) {

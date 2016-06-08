@@ -70,6 +70,7 @@
 }
 -(void)fetchData
 {
+    _model =[LSYReadModel getLocalModel:_model];
     if (!_model) {
         _model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:_resourceURL]];
     }
@@ -222,6 +223,7 @@
     _readView.recordModel = _model.record;
     _readView.content = [_model.chapters[chapter] stringOfPage:page];
     NSLog(@"_readVreate");
+    [LSYReadModel updateLocalModel:_model];
     return _readView;
 }
 #pragma mark -PageViewController DataSource

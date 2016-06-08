@@ -61,6 +61,7 @@
 @interface LSYViewPagerVC : UIViewController
 @property (nonatomic,weak) id<LSYViewPagerVCDataSource>dataSource;
 @property (nonatomic,weak) id<LSYViewPagerVCDelegate>delegate;
+@property (nonatomic) BOOL forbidGesture;
 /**
  用来刷新ViewPager
  */

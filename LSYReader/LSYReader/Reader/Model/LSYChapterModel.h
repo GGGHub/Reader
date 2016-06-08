@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
-@interface LSYChapterModel : NSObject<NSCopying>
+@interface LSYChapterModel : NSObject<NSCopying,NSCoding>
 @property (nonatomic,strong) NSString *content;
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic) NSUInteger pageCount;

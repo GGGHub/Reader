@@ -36,6 +36,7 @@
         markVC.delegate = self;
         markVC;
     })];
+    self.forbidGesture = YES;
     self.delegate = self;
     self.dataSource = self;
 }
