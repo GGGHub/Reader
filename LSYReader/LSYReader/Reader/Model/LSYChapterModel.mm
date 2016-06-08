@@ -110,4 +110,32 @@
     }
     return [_content substringWithRange:NSMakeRange(local, length)];
 }
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.content forKey:@"content"];
+    [aCoder encodeObject:self.title forKey:@"title"];
+    [aCoder encodeInteger:self.pageCount forKey:@"pageCount"];
+//    [NSValue value:&cValue withObjCType:@encode(typeof(cValue))];
+    NSMutableArray *array = [NSMutableArray array];
+    for(int i = 0; i < _pages.size(); i++){
+       [array addObject:[NSValue value:&_pages[i] withObjCType:@encode(int)]];
+    }
+//    [aCoder encodeObject:MyGetArrayFromVector(_pages) forKey:@"pages"];
+    [aCoder encodeObject:array forKey:@"pages"];
+}
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super init];
+    if (self) {
+        _content = [aDecoder decodeObjectForKey:@"content"];
+        NSArray *page = [aDecoder decodeObjectForKey:@"pages"];
+        for (int i = 0; i<page.count; i++) {
+            int value;
+            [page[i] getValue:&value];
+            _pages.push_back(value);
+        }
+        self.title = [aDecoder decodeObjectForKey:@"title"];
+        self.pageCount = [aDecoder decodeIntegerForKey:@"pageCount"];
+    }
+    return self;
+}
 @end
