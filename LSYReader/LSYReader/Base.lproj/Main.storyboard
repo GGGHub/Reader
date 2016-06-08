@@ -19,7 +19,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBD-86-EJT">
                                 <rect key="frame" x="44" y="28" width="84" height="30"/>
-                                <state key="normal" title="Begin"/>
+                                <state key="normal" title="Begin">
+                                    <color key="titleColor" red="0.73895936783082949" green="0.69885305612258175" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="begin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xZ8-YQ-BKZ"/>
                                 </connections>

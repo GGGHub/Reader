@@ -23,8 +23,13 @@
     [self prefersStatusBarHidden];
     [self.view setBackgroundColor:[LSYReadConfig shareInstance].theme];
     [self.view addSubview:self.readView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTheme:) name:LSYThemeNotification object:nil];
 }
-
+-(void)changeTheme:(NSNotification *)no
+{
+    [LSYReadConfig shareInstance].theme = no.object;
+    [self.view setBackgroundColor:[LSYReadConfig shareInstance].theme];
+}
 -(LSYReadView *)readView
 {
     if (!_readView) {
@@ -34,6 +39,10 @@
         _readView.content = _content;
     }
     return _readView;
+}
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 -(void)viewDidLayoutSubviews
 {

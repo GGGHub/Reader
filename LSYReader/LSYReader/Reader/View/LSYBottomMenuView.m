@@ -9,9 +9,6 @@
 #import "LSYBottomMenuView.h"
 #import "LSYMenuView.h"
 @interface LSYBottomMenuView ()
-@property (nonatomic,strong) UIButton *bigFont;
-@property (nonatomic,strong) UIButton *smallFont;
-@property (nonatomic,strong) UILabel *fontLabel;
 @property (nonatomic,strong) LSYReadProgressView *progressView;
 @property (nonatomic,strong) LSYThemeView *themeView;
 @property (nonatomic,strong) UIButton *minSpacing;
@@ -21,6 +18,9 @@
 @property (nonatomic,strong) UISlider *slider;
 @property (nonatomic,strong) UIButton *lastChapter;
 @property (nonatomic,strong) UIButton *nextChapter;
+@property (nonatomic,strong) UIButton *increaseFont;
+@property (nonatomic,strong) UIButton *decreaseFont;
+@property (nonatomic,strong) UILabel *fontLabel;
 @end
 @implementation LSYBottomMenuView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -38,8 +38,13 @@
     [self addSubview:self.progressView];
     [self addSubview:self.lastChapter];
     [self addSubview:self.nextChapter];
+    [self addSubview:self.increaseFont];
+    [self addSubview:self.decreaseFont];
+    [self addSubview:self.fontLabel];
+    [self addSubview:self.themeView];
     [self addObserver:self forKeyPath:@"readModel.chapter" options:NSKeyValueObservingOptionNew context:NULL];
     [self addObserver:self forKeyPath:@"readModel.page" options:NSKeyValueObservingOptionNew context:NULL];
+    [[LSYReadConfig shareInstance] addObserver:self forKeyPath:@"fontSize" options:NSKeyValueObservingOptionNew context:NULL];
 }
 -(UIButton *)catalog
 {
@@ -90,6 +95,47 @@
     }
     return _lastChapter;
 }
+-(UIButton *)increaseFont
+{
+    if (!_increaseFont) {
+        _increaseFont = [LSYReadUtilites commonButtonSEL:@selector(changeFont:) target:self];
+        [_increaseFont setTitle:@"A+" forState:UIControlStateNormal];
+        [_increaseFont.titleLabel setFont:[UIFont systemFontOfSize:17]];
+        _increaseFont.layer.borderWidth = 1;
+        _increaseFont.layer.borderColor = [UIColor whiteColor].CGColor;
+    }
+    return _increaseFont;
+}
+-(UIButton *)decreaseFont
+{
+    if (!_decreaseFont) {
+        _decreaseFont = [LSYReadUtilites commonButtonSEL:@selector(changeFont:) target:self];
+        [_decreaseFont setTitle:@"A-" forState:UIControlStateNormal];
+        [_decreaseFont.titleLabel setFont:[UIFont systemFontOfSize:17]];
+        _decreaseFont.layer.borderWidth = 1;
+        _decreaseFont.layer.borderColor = [UIColor whiteColor].CGColor;
+    }
+    return _decreaseFont;
+}
+-(UILabel *)fontLabel
+{
+    if (!_fontLabel) {
+        _fontLabel = [[UILabel alloc] init];
+        _fontLabel.font = [UIFont systemFontOfSize:14];
+        _fontLabel.textColor = [UIColor whiteColor];
+        _fontLabel.textAlignment = NSTextAlignmentCenter;
+        _fontLabel.text = [NSString stringWithFormat:@"%d",(int)[LSYReadConfig shareInstance].fontSize];
+    }
+    return _fontLabel;
+}
+-(LSYThemeView *)themeView
+{
+    if (!_themeView) {
+        _themeView = [[LSYThemeView alloc] init];
+    }
+    return _themeView;
+}
+#pragma mark - Button Click
 -(void)jumpChapter:(UIButton *)sender
 {
     if (sender == _nextChapter) {
@@ -102,6 +148,27 @@
             [self.delegate menuViewJumpChapter:_readModel.chapter?_readModel.chapter-1:0 page:0];
         }
         
+    }
+}
+-(void)changeFont:(UIButton *)sender
+{
+
+    if (sender == _increaseFont) {
+
+        if (floor([LSYReadConfig shareInstance].fontSize) == floor(MaxFontSize)) {
+            return;
+        }
+        [LSYReadConfig shareInstance].fontSize++;
+    }
+    else{
+        if (floor([LSYReadConfig shareInstance].fontSize) == floor(MinFontSize)){
+            return;
+        }
+        [LSYReadConfig shareInstance].fontSize--;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(menuViewFontSize:)]) {
+        [self.delegate menuViewFontSize:self];
     }
 }
 #pragma mark showMsg
@@ -119,8 +186,11 @@
 {
     
     if ([keyPath isEqualToString:@"readModel.chapter"] || [keyPath isEqualToString:@"readModel.page"]) {
-        _slider.value = _readModel.page/((float)_readModel.chapterModel.pageCount)*100;
+        _slider.value = _readModel.page/((float)(_readModel.chapterModel.pageCount-1))*100;
         [_progressView title:_readModel.chapterModel.title progress:[NSString stringWithFormat:@"%.1f%%",_slider.value]];
+    }
+    else if ([keyPath isEqualToString:@"fontSize"]){
+        _fontLabel.text = [NSString stringWithFormat:@"%d",(int)[LSYReadConfig shareInstance].fontSize];
     }
     else{
         if (_slider.state == UIControlStateNormal) {
@@ -161,8 +231,11 @@
     _slider.frame = CGRectMake(50, 20, ViewSize(self).width-100, 30);
     _lastChapter.frame = CGRectMake(5, 20, 40, 30);
     _nextChapter.frame = CGRectMake(DistanceFromLeftGuiden(_slider)+5, 20, 40, 30);
-    
-    _catalog.frame = CGRectMake(10, DistanceFromTopGuiden(_slider), 30, 30);
+    _decreaseFont.frame = CGRectMake(10, DistanceFromTopGuiden(_slider)+10, (ViewSize(self).width-20)/3, 30);
+    _fontLabel.frame = CGRectMake(DistanceFromLeftGuiden(_decreaseFont), DistanceFromTopGuiden(_slider)+10, (ViewSize(self).width-20)/3,  30);
+    _increaseFont.frame = CGRectMake(DistanceFromLeftGuiden(_fontLabel), DistanceFromTopGuiden(_slider)+10,  (ViewSize(self).width-20)/3, 30);
+    _themeView.frame = CGRectMake(0, DistanceFromTopGuiden(_increaseFont)+10, ViewSize(self).width, 40);
+    _catalog.frame = CGRectMake(10, DistanceFromTopGuiden(_themeView), 30, 30);
     _progressView.frame = CGRectMake(60, -60, ViewSize(self).width-120, 50);
     
 }
@@ -171,11 +244,67 @@
     [_slider removeObserver:self forKeyPath:@"highlighted"];
     [self removeObserver:self forKeyPath:@"readModel.chapter"];
     [self removeObserver:self forKeyPath:@"readModel.page"];
+    [[LSYReadConfig shareInstance] removeObserver:self forKeyPath:@"fontSize"];
 }
 @end
-
+@interface LSYThemeView ()
+@property (nonatomic,strong) UIView *theme1;
+@property (nonatomic,strong) UIView *theme2;
+@property (nonatomic,strong) UIView *theme3;
+@end
 @implementation LSYThemeView
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+-(void)setup{
+    [self setBackgroundColor:[UIColor clearColor]];
+    [self addSubview:self.theme1];
+    [self addSubview:self.theme2];
+    [self addSubview:self.theme3];
+}
+-(UIView *)theme1
+{
+    if (!_theme1) {
+        _theme1 = [[UIView alloc] init];
+        _theme1.backgroundColor = [UIColor whiteColor];
+        [_theme1 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeTheme:)]];
+    }
+    return _theme1;
+}
+-(UIView *)theme2
+{
+    if (!_theme2) {
+        _theme2 = [[UIView alloc] init];
+        _theme2.backgroundColor = RGB(188, 178, 190);
+        [_theme2 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeTheme:)]];
+    }
+    return _theme2;
+}
+-(UIView *)theme3
+{
+    if (!_theme3) {
+        _theme3 = [[UIView alloc] init];
+        _theme3.backgroundColor = RGB(190, 182, 162);
+        [_theme3 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeTheme:)]];
+    }
+    return _theme3;
+}
+-(void)changeTheme:(UITapGestureRecognizer *)tap
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:LSYThemeNotification object:tap.view.backgroundColor];
+}
+-(void)layoutSubviews
+{
+    CGFloat spacing = (ViewSize(self).width-40*3)/4;
+    _theme1.frame = CGRectMake(spacing, 0, 40, 40);
+    _theme2.frame = CGRectMake(DistanceFromLeftGuiden(_theme1)+spacing, 0, 40, 40);
+    _theme3.frame = CGRectMake(DistanceFromLeftGuiden(_theme2)+spacing, 0, 40, 40);
+}
 @end
 @interface LSYReadProgressView ()
 @property (nonatomic,strong) UILabel *label;

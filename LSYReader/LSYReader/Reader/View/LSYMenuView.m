@@ -36,6 +36,7 @@
 {
     if (!_topView) {
         _topView = [[LSYTopMenuView alloc] init];
+        _topView.delegate = self;
     }
     return _topView;
 }
@@ -64,6 +65,18 @@
 {
     if ([self.delegate respondsToSelector:@selector(menuViewJumpChapter:page:)]) {
         [self.delegate menuViewJumpChapter:chapter page:page];
+    }
+}
+-(void)menuViewFontSize:(LSYBottomMenuView *)bottomMenu
+{
+    if ([self.delegate respondsToSelector:@selector(menuViewFontSize:)]) {
+        [self.delegate menuViewFontSize:bottomMenu];
+    }
+}
+-(void)menuViewMark:(LSYTopMenuView *)topMenu
+{
+    if ([self.delegate respondsToSelector:@selector(menuViewMark:)]) {
+        [self.delegate menuViewMark:topMenu];
     }
 }
 #pragma mark -

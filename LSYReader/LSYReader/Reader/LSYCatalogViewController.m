@@ -33,6 +33,7 @@
     }),({
         LSYMarkVC *markVC =[[LSYMarkVC alloc] init];
         markVC.readModel = _readModel;
+        markVC.delegate = self;
         markVC;
     })];
     self.delegate = self;

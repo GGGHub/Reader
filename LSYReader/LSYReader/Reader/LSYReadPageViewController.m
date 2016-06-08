@@ -13,6 +13,7 @@
 #import "LSYCatalogViewController.h"
 #import "UIImage+ImageEffects.h"
 #import "LSYNoteModel.h"
+#import "LSYMarkModel.h"
 #define AnimationDelay 0.3
 
 @interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate,LSYCatalogViewControllerDelegate>
@@ -187,14 +188,34 @@
     [self catalogShowState:YES];
     
 }
+
 -(void)menuViewJumpChapter:(NSUInteger)chapter page:(NSUInteger)page
 {
     [_pageViewController setViewControllers:@[[self readViewWithChapter:chapter page:page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
+-(void)menuViewFontSize:(LSYBottomMenuView *)bottomMenu
+{
+
+    [_model.record.chapterModel updateFont];
+    [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:(_model.record.page>_model.record.chapterModel.pageCount-1)?_model.record.chapterModel.pageCount-1:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+-(void)menuViewMark:(LSYTopMenuView *)topMenu
+{
+
+    LSYMarkModel *model = [[LSYMarkModel alloc] init];
+    model.date = [NSDate date];
+    model.recordModel = [_model.record copy];
+    [[_model mutableArrayValueForKey:@"marks"] addObject:model];
+
+}
 #pragma mark - Create Read View Controller
 
 -(LSYReadViewController *)readViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page{
+
     _model.record.chapterModel = _model.chapters[chapter];
+    if (_model.record.chapter != chapter) {
+        [_model.record.chapterModel updateFont];
+    }
     _model.record.chapter = chapter;
     _model.record.page = page;
     _readView = [[LSYReadViewController alloc] init];
