@@ -47,6 +47,11 @@
     }
     return _bottomView;
 }
+-(void)setRecordModel:(LSYRecordModel *)recordModel
+{
+    _recordModel = recordModel;
+    _bottomView.readModel = recordModel;
+}
 #pragma mark - LSYMenuViewDelegate
 
 -(void)menuViewInvokeCatalog:(LSYBottomMenuView *)bottomMenu
@@ -55,7 +60,12 @@
         [self.delegate menuViewInvokeCatalog:bottomMenu];
     }
 }
-
+-(void)menuViewJumpChapter:(NSUInteger)chapter page:(NSUInteger)page
+{
+    if ([self.delegate respondsToSelector:@selector(menuViewJumpChapter:page:)]) {
+        [self.delegate menuViewJumpChapter:chapter page:page];
+    }
+}
 #pragma mark -
 -(void)hiddenSelf
 {

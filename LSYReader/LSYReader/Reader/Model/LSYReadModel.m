@@ -21,6 +21,7 @@
         _marks = [NSMutableArray array];
         _record = [[LSYRecordModel alloc] init];
         _record.chapterModel = charpter.firstObject;
+        _record.chapterCount = _chapters.count;
     }
     return self;
 }

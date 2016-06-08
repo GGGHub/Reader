@@ -11,6 +11,7 @@
 #import "LSYReadPageViewController.h"
 #import "LSYReadUtilites.h"
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *begin;
 
 @end
 
@@ -18,8 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+//    [self addObserver:self forKeyPath:@"begin.state" options:NSKeyValueObservingOptionNew context:NULL];
 }
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+//{
+//    NSLog(@"change");
+//}
 - (IBAction)begin:(id)sender {
     LSYReadPageViewController *pageView = [[LSYReadPageViewController alloc] init];
     pageView.resourceURL = [[NSBundle mainBundle] URLForResource:@"mdjyml"withExtension:@"txt"];
