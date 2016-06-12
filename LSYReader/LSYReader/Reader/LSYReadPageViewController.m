@@ -56,7 +56,7 @@
     LSYNoteModel *model = no.object;
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"notes"] addObject:model];    //这样写才能KVO数组变化
-    [LSYReadModel updateLocalModel:_model]; //本地保存
+    [LSYReadModel updateLocalModel:_model url:_resourceURL.path]; //本地保存
     [LSYReadUtilites showAlertTitle:nil content:@"保存笔记成功"];
 }
 
@@ -76,9 +76,10 @@
 }
 -(void)fetchData
 {
-    _model =[LSYReadModel getLocalModel:_model];
+    _model =[LSYReadModel getLocalModelWithURL:_resourceURL.path];
     if (!_model) {
         _model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:_resourceURL]];
+        [LSYReadModel updateLocalModel:_model url:_resourceURL.path];
     }
 }
 #pragma mark - init
@@ -216,7 +217,7 @@
     model.date = [NSDate date];
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"marks"] addObject:model];
-    [LSYReadModel updateLocalModel:_model]; //本地保存
+    [LSYReadModel updateLocalModel:_model url:_resourceURL.path]; //本地保存
 
 }
 #pragma mark - Create Read View Controller
@@ -232,7 +233,7 @@
     _readView.recordModel = _model.record;
     _readView.content = [_model.chapters[chapter] stringOfPage:page];
     _readView.delegate = self;
-    NSLog(@"_readVreate");
+    NSLog(@"_readGreate");
     
     return _readView;
 }
@@ -241,7 +242,7 @@
     _model.record.chapterModel = _model.chapters[chapter];
     _model.record.chapter = chapter;
     _model.record.page = page;
-    [LSYReadModel updateLocalModel:_model];
+    [LSYReadModel updateLocalModel:_model url:_resourceURL.path];
 }
 #pragma mark - Read View Controller Delegate
 -(void)readViewEndEdit:(LSYReadViewController *)readView
@@ -265,9 +266,12 @@
 #pragma mark -PageViewController DataSource
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    LSYReadViewController *readViewController = (LSYReadViewController *)viewController;
-    NSUInteger page = readViewController.recordModel.page;
-    NSUInteger chapter = readViewController.recordModel.chapter;
+//    LSYReadViewController *readViewController = (LSYReadViewController *)viewController;
+//    NSUInteger page = readViewController.recordModel.page;
+//    NSUInteger chapter = readViewController.recordModel.chapter;
+    NSUInteger page = _page;
+    NSUInteger chapter = _chapter;
+
     if (chapter==0 &&page == 0) {
         return nil;
     }
@@ -283,9 +287,12 @@
 }
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    LSYReadViewController *readViewController = (LSYReadViewController *)viewController;
-    NSUInteger page = readViewController.recordModel.page;
-    NSUInteger chapter = readViewController.recordModel.chapter;
+//    LSYReadViewController *readViewController = (LSYReadViewController *)viewController;
+//    NSUInteger page = readViewController.recordModel.page;
+//    NSUInteger chapter = readViewController.recordModel.chapter;
+    NSUInteger page = _page;
+    NSUInteger chapter = _chapter;
+
     
     if (page == _model.chapters.lastObject.pageCount-1 && chapter == _model.chapters.count-1) {
         return nil;
@@ -304,7 +311,10 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     if (!completed) {
-        _readView = previousViewControllers.firstObject;
+        LSYReadViewController *readView = previousViewControllers.firstObject;
+        _readView = readView;
+        _page = readView.recordModel.page;
+        _chapter = readView.recordModel.chapter;
     }
     else{
         [self updateReadModelWithChapter:_chapter page:_page];
