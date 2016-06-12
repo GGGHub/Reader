@@ -18,6 +18,6 @@
 @property (nonatomic,strong) NSMutableArray <LSYChapterModel *>*chapters;
 @property (nonatomic,strong) LSYRecordModel *record;
 -(instancetype)initWithContent:(NSString *)content;
-+(void)updateLocalModel:(LSYReadModel *)readModel;
-+(id)getLocalModel:(LSYReadModel *)readModel;
++(void)updateLocalModel:(LSYReadModel *)readModel url:(NSString *)url;
++(id)getLocalModelWithURL:(NSString *)url;
 @end

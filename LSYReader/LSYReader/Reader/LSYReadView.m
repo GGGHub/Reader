@@ -10,6 +10,10 @@
 #import "LSYReadConfig.h"
 #import "LSYNoteModel.h"
 #import "LSYReadViewController.h"
+#import "LSYMagnifierView.h"
+@interface LSYReadView ()
+@property (nonatomic,strong) LSYMagnifierView *magnifierView;
+@end
 @implementation LSYReadView
 {
     NSRange _selectRange;
@@ -46,6 +50,22 @@
     }
     return self;
 }
+#pragma mark - Magnifier View
+-(void)showMagnifier
+{
+    if (!_magnifierView) {
+        self.magnifierView = [[LSYMagnifierView alloc] init];
+        self.magnifierView.readView = self;
+        [self addSubview:self.magnifierView];
+    }
+}
+-(void)hiddenMagnifier
+{
+    if (_magnifierView) {
+        [self.magnifierView removeFromSuperview];
+        self.magnifierView = nil;
+    }
+}
 #pragma -mark Gesture Recognizer
 -(void)longPress:(UILongPressGestureRecognizer *)longPress
 {
@@ -53,7 +73,8 @@
     [self hiddenMenu];
     if (longPress.state == UIGestureRecognizerStateBegan || longPress.state == UIGestureRecognizerStateChanged) {
         CGRect rect = [LSYReadParser parserRectWithPoint:point range:&_selectRange frameRef:_frameRef];
-        
+        [self showMagnifier];
+        self.magnifierView.touchPoint = point;
         if (!CGRectEqualToRect(rect, CGRectZero)) {
             _pathArray = @[NSStringFromCGRect(rect)];
             [self setNeedsDisplay];
@@ -61,6 +82,7 @@
         }
     }
     if (longPress.state == UIGestureRecognizerStateEnded) {
+        [self hiddenMagnifier];
         if (!CGRectEqualToRect(_menuRect, CGRectZero)) {
             [self showMenu];
         }
@@ -72,6 +94,8 @@
     CGPoint point = [pan locationInView:self];
     [self hiddenMenu];
     if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
+        [self showMagnifier];
+        self.magnifierView.touchPoint = point;
         if (CGRectContainsPoint(_rightRect, point)||CGRectContainsPoint(_leftRect, point)) {
             if (CGRectContainsPoint(_leftRect, point)) {
                 _direction = NO;   //从左侧滑动
@@ -90,6 +114,7 @@
        
     }
     if (pan.state == UIGestureRecognizerStateEnded) {
+        [self hiddenMagnifier];
         _selectState = NO;
         if (!CGRectEqualToRect(_menuRect, CGRectZero)) {
             [self showMenu];

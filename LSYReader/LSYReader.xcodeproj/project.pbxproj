@@ -18,6 +18,7 @@
 		87D8BD3B1D0013DF0087D8DA /* LSYNoteVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD3A1D0013DF0087D8DA /* LSYNoteVC.m */; };
 		87D8BD3E1D0013ED0087D8DA /* LSYMarkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD3D1D0013ED0087D8DA /* LSYMarkVC.m */; };
 		87D8BD411D002C4E0087D8DA /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD401D002C4E0087D8DA /* UIImage+ImageEffects.m */; };
+		AB905C751D0D1BC400F3B2C9 /* LSYMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB905C741D0D1BC400F3B2C9 /* LSYMagnifierView.m */; };
 		AB9A96BC1CFC2EE80066030C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BB1CFC2EE80066030C /* main.m */; };
 		AB9A96BF1CFC2EE80066030C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96BE1CFC2EE80066030C /* AppDelegate.m */; };
 		AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96C11CFC2EE80066030C /* ViewController.m */; };
@@ -63,6 +64,8 @@
 		87D8BD3D1D0013ED0087D8DA /* LSYMarkVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYMarkVC.m; sourceTree = "<group>"; };
 		87D8BD3F1D002C4E0087D8DA /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		87D8BD401D002C4E0087D8DA /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		AB905C731D0D1BC400F3B2C9 /* LSYMagnifierView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYMagnifierView.h; sourceTree = "<group>"; };
+		AB905C741D0D1BC400F3B2C9 /* LSYMagnifierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYMagnifierView.m; sourceTree = "<group>"; };
 		AB9A96B71CFC2EE70066030C /* LSYReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSYReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB9A96BB1CFC2EE80066030C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB9A96BD1CFC2EE80066030C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 				ABE8ABD91CFEBB7600693078 /* LSYTopMenuView.m */,
 				ABE8ABDB1CFEBB8300693078 /* LSYBottomMenuView.h */,
 				ABE8ABDC1CFEBB8300693078 /* LSYBottomMenuView.m */,
+				AB905C731D0D1BC400F3B2C9 /* LSYMagnifierView.h */,
+				AB905C741D0D1BC400F3B2C9 /* LSYMagnifierView.m */,
 				87D8BD2F1CFFE68E0087D8DA /* LSYReadView.h */,
 				87D8BD301CFFE68E0087D8DA /* LSYReadView.m */,
 			);
@@ -362,6 +367,7 @@
 				87D8BD411D002C4E0087D8DA /* UIImage+ImageEffects.m in Sources */,
 				AB9A96F71CFD2EC70066030C /* LSYRecordModel.m in Sources */,
 				AB9A96EB1CFD27C70066030C /* LSYReadModel.m in Sources */,
+				AB905C751D0D1BC400F3B2C9 /* LSYMagnifierView.m in Sources */,
 				AB9A96E71CFD25190066030C /* LSYReadUtilites.m in Sources */,
 				ABE8ABD71CFEBB2400693078 /* LSYMenuView.m in Sources */,
 				87D8BD3B1D0013DF0087D8DA /* LSYNoteVC.m in Sources */,
