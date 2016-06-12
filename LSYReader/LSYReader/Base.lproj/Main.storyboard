@@ -31,15 +31,26 @@
                                     <action selector="begin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xZ8-YQ-BKZ"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="LWz-nr-1SF">
+                                <rect key="frame" x="290" y="51" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="9nL-4D-biV"/>
+                                    <constraint firstAttribute="height" constant="20" id="sjI-zE-co1"/>
+                                </constraints>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kBD-86-EJT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Elo-I7-R87"/>
+                            <constraint firstItem="LWz-nr-1SF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MY1-Qd-Pu9"/>
                             <constraint firstItem="kBD-86-EJT" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="U96-wL-yqo"/>
+                            <constraint firstItem="LWz-nr-1SF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="ayR-Nu-wOz"/>
                             <constraint firstItem="kBD-86-EJT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="qFK-gg-bXe"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activity" destination="LWz-nr-1SF" id="PjH-Ry-1OF"/>
                         <outlet property="begin" destination="kBD-86-EJT" id="XFI-de-hAf"/>
                     </connections>
                 </viewController>

@@ -10,8 +10,10 @@
 #import "LSYReadViewController.h"
 #import "LSYReadPageViewController.h"
 #import "LSYReadUtilites.h"
+#import "LSYReadModel.h"
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *begin;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
 
 @end
 
@@ -19,16 +21,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self addObserver:self forKeyPath:@"begin.state" options:NSKeyValueObservingOptionNew context:NULL];
+    _activity.hidesWhenStopped = YES;
+    
 }
-//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
-//{
-//    NSLog(@"change");
-//}
+
 - (IBAction)begin:(id)sender {
+    [_activity startAnimating];
+   [_begin setTitle:@"" forState:UIControlStateNormal];
     LSYReadPageViewController *pageView = [[LSYReadPageViewController alloc] init];
-    pageView.resourceURL = [[NSBundle mainBundle] URLForResource:@"mdjyml"withExtension:@"txt"];
-    [self presentViewController:pageView animated:YES completion:nil];
+    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"mdjyml"withExtension:@"txt"];
+    
+    pageView.resourceURL = fileURL;    //文件位置
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        pageView.model = [LSYReadModel getLocalModelWithURL:fileURL];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_activity stopAnimating];
+             [_begin setTitle:@"Beign Read" forState:UIControlStateNormal];
+            
+            [self presentViewController:pageView animated:YES completion:nil];
+        });
+    });
+    
+    
+   
+    
 }
 
 - (void)didReceiveMemoryWarning {
