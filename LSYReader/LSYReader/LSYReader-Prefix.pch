@@ -33,28 +33,9 @@
 
 #define LSYNoteNotification @"LSYNoteNotification"
 #define LSYThemeNotification @"LSYThemeNotification"
+#define LSYEditingNotification @"LSYEditingNotification"
+#define LSYEndEditNotification @"LSYEndEditNotification"
 
 #define MinFontSize 11.0f
 #define MaxFontSize 20.0f
 
-#define MyGetNSValueFromCType(cValue) ([NSValue value:&cValue withObjCType:@encode(typeof(cValue))])
-#define MySetCValueFromNSValue(ocValue, cValue) [ocValue getValue:&cValue]
-
-#define MyGetArrayFromVector(vec) ({\
-NSMutableArray *arr = [NSMutableArray array];\
-for(int i = 0; i < vec.size(); i++)\
-{\
-NSValue *value = MyGetNSValueFromCType(vec[i]);\
-if (value != nil)\
-[arr addObject:value];\
-}\
-[arr count] == 0 ? nil : arr;\
-})
-#define MySetVectorFromArray(vec, type, arr) {\
-for(int i = 0; i < [arr count]; i++)\
-{\
-type _value;\
-MySetCValueFromNSValue([arr objectAtIndex:i], _value);\
-vec.push_back(_value);\
-}\
-}

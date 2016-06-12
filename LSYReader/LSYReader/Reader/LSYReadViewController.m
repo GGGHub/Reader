@@ -12,7 +12,7 @@
 #import "LSYReadConfig.h"
 
 
-@interface LSYReadViewController ()
+@interface LSYReadViewController ()<LSYReadViewControllerDelegate>
 
 @end
 
@@ -37,9 +37,23 @@
         LSYReadConfig *config = [LSYReadConfig shareInstance];
         _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:CGRectMake(0,0, _readView.frame.size.width, _readView.frame.size.height)];
         _readView.content = _content;
+        _readView.delegate = self;
     }
     return _readView;
 }
+-(void)readViewEditeding:(LSYReadViewController *)readView
+{
+    if ([self.delegate respondsToSelector:@selector(readViewEditeding:)]) {
+        [self.delegate readViewEditeding:self];
+    }
+}
+-(void)readViewEndEdit:(LSYReadViewController *)readView
+{
+    if ([self.delegate respondsToSelector:@selector(readViewEndEdit:)]) {
+        [self.delegate readViewEndEdit:self];
+    }
+}
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

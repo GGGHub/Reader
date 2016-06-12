@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "LSYRecordModel.h"
 #import "LSYReadView.h"
+@class LSYReadViewController;
+@protocol LSYReadViewControllerDelegate <NSObject>
+-(void)readViewEditeding:(LSYReadViewController *)readView;
+-(void)readViewEndEdit:(LSYReadViewController *)readView;
+@end
 @interface LSYReadViewController : UIViewController
 @property (nonatomic,strong) NSString *content; //显示的内容
 @property (nonatomic,strong) LSYRecordModel *recordModel;   //阅读进度
 @property (nonatomic,strong) LSYReadView *readView;
+@property (nonatomic,weak) id<LSYReadViewControllerDelegate>delegate;
 @end

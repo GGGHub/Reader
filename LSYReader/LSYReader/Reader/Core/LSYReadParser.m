@@ -156,6 +156,63 @@
 }
     return muArr;
 }
++(NSArray *)parserRectsWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef paths:(NSArray *)paths direction:(BOOL) direction
+{
+    CFIndex index = -1;
+    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frameRef);
+    NSMutableArray *muArr = [NSMutableArray array];
+    NSInteger lineCount = [lines count];
+    CGPoint *origins = malloc(lineCount * sizeof(CGPoint)); //给每行的起始点开辟内存
+    index = [self parserIndexWithPoint:point frameRef:frameRef];
+    if (index == -1) {
+        return paths;
+    }
+    if (direction) //从右侧滑动
+    {
+        if (!(index>(*selectRange).location)) {
+            (*selectRange).length = (*selectRange).location-index+(*selectRange).length;
+            (*selectRange).location = index;
+        }
+        else{
+            (*selectRange).length = index-(*selectRange).location;
+        }
+    }
+    else    //从左侧滑动
+    {
+        if (!(index>(*selectRange).location+(*selectRange).length)) {
+            (*selectRange).length = (*selectRange).location-index+(*selectRange).length;
+            (*selectRange).location = index;
+        }
+    }
+    //    NSLog(@"selectRange - %@",NSStringFromRange((*selectRange)));
+    if (lineCount) {
+        
+        CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
+        for (int i = 0; i<lineCount; i++){
+            CGPoint baselineOrigin = origins[i];
+            CTLineRef line = (__bridge CTLineRef)[lines objectAtIndex:i];
+            CGFloat ascent,descent,linegap; //声明字体的上行高度和下行高度和行距
+            CTLineGetTypographicBounds(line, &ascent, &descent, &linegap);
+            CFRange stringRange = CTLineGetStringRange(line);
+            CGFloat xStart;
+            CGFloat xEnd;
+            NSRange drawRange = [self selectRange:NSMakeRange((*selectRange).location, (*selectRange).length) lineRange:NSMakeRange(stringRange.location, stringRange.length)];
+            
+            if (drawRange.length) {
+                xStart = CTLineGetOffsetForStringIndex(line, drawRange.location, NULL);
+                xEnd = CTLineGetOffsetForStringIndex(line, drawRange.location+drawRange.length, NULL);
+                CGRect rect = CGRectMake(xStart, baselineOrigin.y-descent, fabs(xStart-xEnd), ascent+descent);
+                if (rect.size.width ==0 || rect.size.height == 0) {
+                    continue;
+                }
+                [muArr addObject:NSStringFromCGRect(rect)];
+            }
+            
+        }
+        
+    }
+    return muArr;
+}
 +(NSRange)selectRange:(NSRange)selectRange lineRange:(NSRange)lineRange
 {
     NSRange range = NSMakeRange(NSNotFound, 0);

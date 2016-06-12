@@ -9,6 +9,7 @@
 #import "LSYReadView.h"
 #import "LSYReadConfig.h"
 #import "LSYNoteModel.h"
+#import "LSYReadViewController.h"
 @implementation LSYReadView
 {
     NSRange _selectRange;
@@ -23,6 +24,7 @@
     CGRect _menuRect;
     //是否进入选择状态
     BOOL _selectState;
+    BOOL _direction; //滑动方向  (0---左侧滑动 1 ---右侧滑动)
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -71,10 +73,17 @@
     [self hiddenMenu];
     if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
         if (CGRectContainsPoint(_rightRect, point)||CGRectContainsPoint(_leftRect, point)) {
+            if (CGRectContainsPoint(_leftRect, point)) {
+                _direction = NO;   //从左侧滑动
+            }
+            else{
+                _direction=  YES;    //从右侧滑动
+            }
             _selectState = YES;
         }
         if (_selectState) {
-            NSArray *path = [LSYReadParser parserRectsWithPoint:point range:&_selectRange frameRef:_frameRef paths:_pathArray];
+//            NSArray *path = [LSYReadParser parserRectsWithPoint:point range:&_selectRange frameRef:_frameRef paths:_pathArray];
+            NSArray *path = [LSYReadParser parserRectsWithPoint:point range:&_selectRange frameRef:_frameRef paths:_pathArray direction:_direction];
             _pathArray = path;
             [self setNeedsDisplay];
         }
@@ -94,7 +103,13 @@
 -(void)drawSelectedPath:(NSArray *)array LeftDot:(CGRect *)leftDot RightDot:(CGRect *)rightDot{
     if (!array.count) {
         _pan.enabled = NO;
+        if ([self.delegate respondsToSelector:@selector(readViewEndEdit:)]) {
+            [self.delegate readViewEndEdit:nil];
+        }
         return;
+    }
+    if ([self.delegate respondsToSelector:@selector(readViewEditeding:)]) {
+        [self.delegate readViewEditeding:nil];
     }
     _pan.enabled = YES;
     CGMutablePathRef _path = CGPathCreateMutable();
@@ -232,7 +247,7 @@
     if (!_frameRef) {
         return;
     }
-    [self setBackgroundColor:[LSYReadConfig shareInstance].theme];
+
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
     CGContextTranslateCTM(ctx, 0, self.bounds.size.height);
