@@ -44,21 +44,24 @@
     }
     return self;
 }
-+(void)updateLocalModel:(LSYReadModel *)readModel url:(NSString *)url
++(void)updateLocalModel:(LSYReadModel *)readModel url:(NSURL *)url
 {
-    NSString *key = [url componentsSeparatedByString:@"/"].lastObject;
+    
+    NSString *key = [url.path componentsSeparatedByString:@"/"].lastObject;
     NSMutableData *data=[[NSMutableData alloc]init];
     NSKeyedArchiver *archiver=[[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
     [archiver encodeObject:readModel forKey:key];
     [archiver finishEncoding];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
 }
-+(id)getLocalModelWithURL:(NSString *)url
++(id)getLocalModelWithURL:(NSURL *)url
 {
-    NSString *key = [url componentsSeparatedByString:@"/"].lastObject;
+    NSString *key = [url.path componentsSeparatedByString:@"/"].lastObject;
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     if (!data) {
-        return nil;
+        LSYReadModel *model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:url]];
+        [LSYReadModel updateLocalModel:model url:url];
+        return model;
     }
     NSKeyedUnarchiver *unarchive = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
     LSYReadModel *model = [unarchive decodeObjectForKey:key];

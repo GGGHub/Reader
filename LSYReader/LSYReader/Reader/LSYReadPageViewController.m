@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self fetchData];
     [self addChildViewController:self.pageViewController];
     [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     [self.view addGestureRecognizer:({
@@ -56,7 +55,7 @@
     LSYNoteModel *model = no.object;
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"notes"] addObject:model];    //这样写才能KVO数组变化
-    [LSYReadModel updateLocalModel:_model url:_resourceURL.path]; //本地保存
+    [LSYReadModel updateLocalModel:_model url:_resourceURL]; //本地保存
     [LSYReadUtilites showAlertTitle:nil content:@"保存笔记成功"];
 }
 
@@ -74,14 +73,7 @@
     [self.menuView showAnimation:YES];
     
 }
--(void)fetchData
-{
-    _model =[LSYReadModel getLocalModelWithURL:_resourceURL.path];
-    if (!_model) {
-        _model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:_resourceURL]];
-        [LSYReadModel updateLocalModel:_model url:_resourceURL.path];
-    }
-}
+
 #pragma mark - init
 -(LSYMenuView *)menuView
 {
@@ -217,7 +209,7 @@
     model.date = [NSDate date];
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"marks"] addObject:model];
-    [LSYReadModel updateLocalModel:_model url:_resourceURL.path]; //本地保存
+    [LSYReadModel updateLocalModel:_model url:_resourceURL]; //本地保存
 
 }
 #pragma mark - Create Read View Controller
@@ -242,7 +234,7 @@
     _model.record.chapterModel = _model.chapters[chapter];
     _model.record.chapter = chapter;
     _model.record.page = page;
-    [LSYReadModel updateLocalModel:_model url:_resourceURL.path];
+    [LSYReadModel updateLocalModel:_model url:_resourceURL];
 }
 #pragma mark - Read View Controller Delegate
 -(void)readViewEndEdit:(LSYReadViewController *)readView
