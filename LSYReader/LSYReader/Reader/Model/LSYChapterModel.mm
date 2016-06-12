@@ -12,9 +12,18 @@
 #include <vector>
 @interface LSYChapterModel ()
 @property (nonatomic) std::vector<NSUInteger> pages;
+@property (nonatomic,strong) NSMutableArray *pageArray;
 @end
 
 @implementation LSYChapterModel
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _pageArray = [NSMutableArray array];
+    }
+    return self;
+}
 -(id)copyWithZone:(NSZone *)zone
 {
     LSYChapterModel *model = [[LSYChapterModel allocWithZone:zone] init];
@@ -35,7 +44,8 @@
 }
 -(void)paginateWithBounds:(CGRect)bounds
 {
-    _pages.clear();
+//    _pages.clear();
+    [_pageArray removeAllObjects];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString  alloc] initWithString:self.content];
     NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
     [attrString setAttributes:attribute range:NSMakeRange(0, attrString.length)];
@@ -61,23 +71,30 @@
         
         if (samePlaceRepeatCount > 1) {
             // 退出循环前检查一下最后一页是否已经加上
-            if (_pages.size() == 0) {
+//            if (_pages.size() == 0) {
+//                
+//                _pages.push_back(currentOffset);
+//                
+//            }
+            if (_pageArray.count == 0) {
+                [_pageArray addObject:@(currentOffset)];
+            }
+            else {
                 
-                _pages.push_back(currentOffset);
-                
-            } else {
-                
-                NSUInteger lastOffset = _pages.back();
+//                NSUInteger lastOffset = _pages.back();
+                NSUInteger lastOffset = [[_pageArray lastObject] integerValue];
                 
                 if (lastOffset != currentOffset) {
                     
-                    _pages.push_back(currentOffset);
+//                    _pages.push_back(currentOffset);
+                    [_pageArray addObject:@(currentOffset)];
                 }
             }
             break;
         }
         
-        _pages.push_back(currentOffset);
+//        _pages.push_back(currentOffset);
+        [_pageArray addObject:@(currentOffset)];
         
         CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(currentInnerOffset, 0), path, NULL);
         CFRange range = CTFrameGetVisibleStringRange(frame);
@@ -96,17 +113,21 @@
     
     CGPathRelease(path);
     CFRelease(frameSetter);
-    _pageCount = _pages.size();
+//    _pageCount = _pages.size();
+    _pageCount = _pageArray.count;
 }
 -(NSString *)stringOfPage:(NSUInteger)index
 {
-    NSUInteger local = _pages[index];
+//    NSUInteger local = _pages[index];
+    NSUInteger local = [_pageArray[index] integerValue];
     NSUInteger length;
     if (index<self.pageCount-1) {
-        length = _pages[index+1]-_pages[index];
+//        length = _pages[index+1] -_pages[index];
+        length=  [_pageArray[index+1] integerValue] - [_pageArray[index] integerValue];
     }
     else{
-        length = _content.length-_pages[index];
+//        length = _content.length-_pages[index];
+        length = _content.length - [_pageArray[index] integerValue];
     }
     return [_content substringWithRange:NSMakeRange(local, length)];
 }
@@ -115,26 +136,18 @@
     [aCoder encodeObject:self.content forKey:@"content"];
     [aCoder encodeObject:self.title forKey:@"title"];
     [aCoder encodeInteger:self.pageCount forKey:@"pageCount"];
-//    [NSValue value:&cValue withObjCType:@encode(typeof(cValue))];
-    NSMutableArray *array = [NSMutableArray array];
-    for(int i = 0; i < _pages.size(); i++){
-       [array addObject:[NSValue value:&_pages[i] withObjCType:@encode(int)]];
-    }
-//    [aCoder encodeObject:MyGetArrayFromVector(_pages) forKey:@"pages"];
-    [aCoder encodeObject:array forKey:@"pages"];
+//    for(int i = 0; i < _pages.size(); i++){
+//       [array addObject:[NSValue value:&_pages[i] withObjCType:@encode(int)]];
+//    }
+    [aCoder encodeObject:self.pageArray forKey:@"pageArray"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
     if (self) {
         _content = [aDecoder decodeObjectForKey:@"content"];
-        NSArray *page = [aDecoder decodeObjectForKey:@"pages"];
-        for (int i = 0; i<page.count; i++) {
-            int value;
-            [page[i] getValue:&value];
-            _pages.push_back(value);
-        }
         self.title = [aDecoder decodeObjectForKey:@"title"];
         self.pageCount = [aDecoder decodeIntegerForKey:@"pageCount"];
+        self.pageArray = [aDecoder decodeObjectForKey:@"pageArray"];
     }
     return self;
 }

@@ -16,7 +16,11 @@
 #import "LSYMarkModel.h"
 #define AnimationDelay 0.3
 
-@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate,LSYCatalogViewControllerDelegate>
+@interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate,LSYCatalogViewControllerDelegate,LSYReadViewControllerDelegate>
+{
+    NSUInteger _chapter;    //当前显示的章节
+    NSUInteger _page;       //当前显示的页数
+}
 @property (nonatomic,strong) UIPageViewController *pageViewController;
 @property (nonatomic,getter=isShowBar) BOOL showBar; //是否显示状态栏
 @property (nonatomic,strong) LSYMenuView *menuView; //菜单栏
@@ -52,6 +56,8 @@
     LSYNoteModel *model = no.object;
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"notes"] addObject:model];    //这样写才能KVO数组变化
+    [LSYReadModel updateLocalModel:_model]; //本地保存
+    [LSYReadUtilites showAlertTitle:nil content:@"保存笔记成功"];
 }
 
 -(BOOL)prefersStatusBarHidden
@@ -123,6 +129,7 @@
 -(void)catalog:(LSYCatalogViewController *)catalog didSelectChapter:(NSUInteger)chapter page:(NSUInteger)page
 {
      [_pageViewController setViewControllers:@[[self readViewWithChapter:chapter page:page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    [self updateReadModelWithChapter:chapter page:page];
     [self hiddenCatalog];
     
 }
@@ -193,12 +200,14 @@
 -(void)menuViewJumpChapter:(NSUInteger)chapter page:(NSUInteger)page
 {
     [_pageViewController setViewControllers:@[[self readViewWithChapter:chapter page:page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self updateReadModelWithChapter:chapter page:page];
 }
 -(void)menuViewFontSize:(LSYBottomMenuView *)bottomMenu
 {
 
     [_model.record.chapterModel updateFont];
     [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:(_model.record.page>_model.record.chapterModel.pageCount-1)?_model.record.chapterModel.pageCount-1:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self updateReadModelWithChapter:_model.record.chapter page:(_model.record.page>_model.record.chapterModel.pageCount-1)?_model.record.chapterModel.pageCount-1:_model.record.page];
 }
 -(void)menuViewMark:(LSYTopMenuView *)topMenu
 {
@@ -207,24 +216,51 @@
     model.date = [NSDate date];
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"marks"] addObject:model];
+    [LSYReadModel updateLocalModel:_model]; //本地保存
 
 }
 #pragma mark - Create Read View Controller
 
 -(LSYReadViewController *)readViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page{
 
-    _model.record.chapterModel = _model.chapters[chapter];
+    _chapter = chapter;
+    _page = page;
     if (_model.record.chapter != chapter) {
         [_model.record.chapterModel updateFont];
     }
-    _model.record.chapter = chapter;
-    _model.record.page = page;
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
     _readView.content = [_model.chapters[chapter] stringOfPage:page];
+    _readView.delegate = self;
     NSLog(@"_readVreate");
-    [LSYReadModel updateLocalModel:_model];
+    
     return _readView;
+}
+-(void)updateReadModelWithChapter:(NSUInteger)chapter page:(NSUInteger)page
+{
+    _model.record.chapterModel = _model.chapters[chapter];
+    _model.record.chapter = chapter;
+    _model.record.page = page;
+    [LSYReadModel updateLocalModel:_model];
+}
+#pragma mark - Read View Controller Delegate
+-(void)readViewEndEdit:(LSYReadViewController *)readView
+{
+    for (UIGestureRecognizer *ges in self.pageViewController.view.gestureRecognizers) {
+        if ([ges isKindOfClass:[UIPanGestureRecognizer class]]) {
+            ges.enabled = YES;
+            break;
+        }
+    }
+}
+-(void)readViewEditeding:(LSYReadViewController *)readView
+{
+    for (UIGestureRecognizer *ges in self.pageViewController.view.gestureRecognizers) {
+        if ([ges isKindOfClass:[UIPanGestureRecognizer class]]) {
+            ges.enabled = NO;
+            break;
+        }
+    }
 }
 #pragma mark -PageViewController DataSource
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -242,7 +278,6 @@
     else{
         page--;
     }
-    NSLog(@"BeforeViewControlle");
     return [self readViewWithChapter:chapter page:page];
     
 }
@@ -262,16 +297,22 @@
     else{
         page++;
     }
-    NSLog(@"AfterViewController");
+//    NSLog(@"AfterViewController");
     return [self readViewWithChapter:chapter page:page];
 }
 #pragma mark -PageViewController Delegate
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-
+    if (!completed) {
+        _readView = previousViewControllers.firstObject;
+    }
+    else{
+        [self updateReadModelWithChapter:_chapter page:_page];
+    }
 }
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers
 {
+    
 }
 -(void)viewDidLayoutSubviews
 {

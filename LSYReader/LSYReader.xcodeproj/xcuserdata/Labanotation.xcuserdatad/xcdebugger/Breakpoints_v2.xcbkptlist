@@ -26,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LSYReader/Reader/LSYReadView.m"
-            timestampString = "486723537.818675"
+            timestampString = "487393903.030007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "-pan:"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-longPress:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LSYReader/Reader/Core/LSYReadParser.m"
+            timestampString = "487392977.577149"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "+parserRectsWithPoint:range:frameRef:paths:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

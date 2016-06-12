@@ -40,7 +40,7 @@
     if (!_more) {
         _more = [LSYReadUtilites commonButtonSEL:@selector(moreOption) target:self];
         [_more setImage:[UIImage imageNamed:@"sale_discount_yellow"] forState:UIControlStateNormal];
-        [_more setImageEdgeInsets:UIEdgeInsetsMake(5, 10, 5, 10)];
+        [_more setImageEdgeInsets:UIEdgeInsetsMake(7.5, 12.5, 7.5, 12.5)];
     }
     return _more;
 }
