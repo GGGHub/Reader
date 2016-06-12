@@ -3,8 +3,8 @@
 基于`Core Text`实现的iOS客户端的`txt电子书阅读器`。
 
 ---
-**实现效果**</br>
-
+**部分功能实现效果**</br>
+![](https://github.com/GGGHub/Reader/blob/master/LSYReader/demo.gif "部分功能")<br>
 ---
 
 **关于Reader**</br>
