@@ -32,6 +32,7 @@
     [aCoder encodeObject:self.notes forKey:@"notes"];
     [aCoder encodeObject:self.chapters forKey:@"chapters"];
     [aCoder encodeObject:self.record forKey:@"record"];
+    [aCoder encodeObject:self.resource forKey:@"resource"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
@@ -41,6 +42,7 @@
         self.notes = [aDecoder decodeObjectForKey:@"notes"];
         self.chapters = [aDecoder decodeObjectForKey:@"chapters"];
         self.record = [aDecoder decodeObjectForKey:@"record"];
+        self.resource = [aDecoder decodeObjectForKey:@"resource"];
     }
     return self;
 }
@@ -60,6 +62,7 @@
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     if (!data) {
         LSYReadModel *model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:url]];
+        model.resource = url;
         [LSYReadModel updateLocalModel:model url:url];
         return model;
     }

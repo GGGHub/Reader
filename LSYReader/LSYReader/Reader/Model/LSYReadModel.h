@@ -12,6 +12,7 @@
 #import "LSYChapterModel.h"
 #import "LSYRecordModel.h"
 @interface LSYReadModel : NSObject<NSCoding>
+@property (nonatomic,strong) NSURL *resource;
 @property (nonatomic,copy) NSString *content;
 @property (nonatomic,strong) NSMutableArray <LSYMarkModel *>*marks;
 @property (nonatomic,strong) NSMutableArray <LSYNoteModel *>*notes;

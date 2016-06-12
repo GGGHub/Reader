@@ -31,6 +31,7 @@ static  NSString *noteCell = @"noteCell";
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     [_tabView reloadData];
+    [LSYReadModel updateLocalModel:_readModel url:_readModel.resource]; //本地保存
 }
 -(UITableView *)tabView
 {
