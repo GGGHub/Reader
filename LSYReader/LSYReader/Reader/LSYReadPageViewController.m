@@ -55,7 +55,6 @@
     LSYNoteModel *model = no.object;
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"notes"] addObject:model];    //这样写才能KVO数组变化
-    [LSYReadModel updateLocalModel:_model url:_resourceURL]; //本地保存
     [LSYReadUtilites showAlertTitle:nil content:@"保存笔记成功"];
 }
 
@@ -209,7 +208,6 @@
     model.date = [NSDate date];
     model.recordModel = [_model.record copy];
     [[_model mutableArrayValueForKey:@"marks"] addObject:model];
-    [LSYReadModel updateLocalModel:_model url:_resourceURL]; //本地保存
 
 }
 #pragma mark - Create Read View Controller
