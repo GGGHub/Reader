@@ -20,6 +20,9 @@
 {
     NSUInteger _chapter;    //当前显示的章节
     NSUInteger _page;       //当前显示的页数
+    NSUInteger _chapterChange;  //将要变化的章节
+    NSUInteger _pageChange;     //将要变化的页数
+    BOOL _isTransition;     //是否开始翻页
 }
 @property (nonatomic,strong) UIPageViewController *pageViewController;
 @property (nonatomic,getter=isShowBar) BOOL showBar; //是否显示状态栏
@@ -35,6 +38,8 @@
     [super viewDidLoad];
     [self addChildViewController:self.pageViewController];
     [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    _chapter = _model.record.chapter;
+    _page = _model.record.page;
     [self.view addGestureRecognizer:({
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showToolMenu)];
         tap.delegate = self;
@@ -214,8 +219,7 @@
 
 -(LSYReadViewController *)readViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page{
 
-    _chapter = chapter;
-    _page = page;
+    
     if (_model.record.chapter != chapter) {
         [_model.record.chapterModel updateFont];
     }
@@ -229,6 +233,8 @@
 }
 -(void)updateReadModelWithChapter:(NSUInteger)chapter page:(NSUInteger)page
 {
+    _chapter = chapter;
+    _page = page;
     _model.record.chapterModel = _model.chapters[chapter];
     _model.record.chapter = chapter;
     _model.record.page = page;
@@ -256,46 +262,40 @@
 #pragma mark -PageViewController DataSource
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-//    LSYReadViewController *readViewController = (LSYReadViewController *)viewController;
-//    NSUInteger page = readViewController.recordModel.page;
-//    NSUInteger chapter = readViewController.recordModel.chapter;
-    NSUInteger page = _page;
-    NSUInteger chapter = _chapter;
 
-    if (chapter==0 &&page == 0) {
+    _pageChange = _page;
+    _chapterChange = _chapter;
+
+    if (_chapterChange==0 &&_pageChange == 0) {
         return nil;
     }
-    if (page==0) {
-        chapter--;
-        page = _model.chapters[chapter].pageCount-1;
+    if (_pageChange==0) {
+        _chapterChange--;
+        _pageChange = _model.chapters[_chapterChange].pageCount-1;
     }
     else{
-        page--;
+        _pageChange--;
     }
-    return [self readViewWithChapter:chapter page:page];
+    
+    return [self readViewWithChapter:_chapterChange page:_pageChange];
     
 }
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-//    LSYReadViewController *readViewController = (LSYReadViewController *)viewController;
-//    NSUInteger page = readViewController.recordModel.page;
-//    NSUInteger chapter = readViewController.recordModel.chapter;
-    NSUInteger page = _page;
-    NSUInteger chapter = _chapter;
 
-    
-    if (page == _model.chapters.lastObject.pageCount-1 && chapter == _model.chapters.count-1) {
+    _pageChange = _page;
+    _chapterChange = _chapter;
+    if (_pageChange == _model.chapters.lastObject.pageCount-1 && _chapterChange == _model.chapters.count-1) {
         return nil;
     }
-    if (page == _model.chapters[chapter].pageCount-1) {
-        chapter++;
-        page = 0;
+    if (_pageChange == _model.chapters[_chapterChange].pageCount-1) {
+        _chapterChange++;
+        _pageChange = 0;
     }
     else{
-        page++;
+        _pageChange++;
     }
-//    NSLog(@"AfterViewController");
-    return [self readViewWithChapter:chapter page:page];
+    return [self readViewWithChapter:_chapterChange page:_pageChange];
 }
 #pragma mark -PageViewController Delegate
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
@@ -312,7 +312,8 @@
 }
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers
 {
-    
+    _chapter = _chapterChange;
+    _page = _pageChange;
 }
 -(void)viewDidLayoutSubviews
 {
