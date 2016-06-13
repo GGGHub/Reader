@@ -12,7 +12,7 @@
 +(void)separateChapter:(NSMutableArray **)chapters content:(NSString *)content
 {
     [*chapters removeAllObjects];
-    NSString *parten = @"第[0-9一二三四五六七八九十百千]*[章回]";
+    NSString *parten = @"第[0-9一二三四五六七八九十百千]*[章回].*";
     NSError* error = NULL;
     NSRegularExpression *reg = [NSRegularExpression regularExpressionWithPattern:parten options:NSRegularExpressionCaseInsensitive error:&error];
     
