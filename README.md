@@ -28,3 +28,5 @@
     pageView.model = [LSYReadModel getLocalModelWithURL:fileURL];  //阅读模型
     [self presentViewController:pageView animated:YES completion:nil];
 ```
+###提示
+**之前安装过的下载最新版，应把之前安装的卸载后再安装**
