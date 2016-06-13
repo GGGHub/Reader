@@ -24,6 +24,14 @@
         [match enumerateObjectsUsingBlock:^(NSTextCheckingResult *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSRange range = [obj range];
             NSInteger local = range.location;
+            if (idx == 0) {
+                LSYChapterModel *model = [[LSYChapterModel alloc] init];
+                model.title = @"开始";
+                NSUInteger len = local;
+                model.content = [content substringWithRange:NSMakeRange(0, len)];
+                [*chapters addObject:model];
+                
+            }
             if (idx > 0 ) {
                 LSYChapterModel *model = [[LSYChapterModel alloc] init];
                 model.title = [content substringWithRange:lastRange];
@@ -42,7 +50,7 @@
         }];
     }
     else{
-         LSYChapterModel *model = [[LSYChapterModel alloc] init];
+        LSYChapterModel *model = [[LSYChapterModel alloc] init];
         model.content = content;
         [*chapters addObject:model];
     }
