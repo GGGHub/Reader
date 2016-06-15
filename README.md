@@ -2,6 +2,7 @@
 ---
 基于`Core Text`实现的iOS客户端的`txt电子书阅读器`。</br>
 **注:即将添加对epub格式的支持**
+
 ---
 **部分功能实现效果**</br>
 ![](https://github.com/GGGHub/Reader/blob/master/LSYReader/demo.gif "部分功能")<br>
