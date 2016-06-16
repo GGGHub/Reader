@@ -15,4 +15,5 @@
 @property (nonatomic) NSUInteger pageCount;
 -(NSString *)stringOfPage:(NSUInteger)index;
 -(void)updateFont;
++(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title;
 @end

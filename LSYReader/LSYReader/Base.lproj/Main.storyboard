@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -24,7 +23,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="Mib-Pq-lZZ"/>
                                 </constraints>
-                                <state key="normal" title="Begin Read">
+                                <state key="normal" title="Begin txt Read">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -39,19 +38,50 @@
                                 </constraints>
                                 <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWr-Zc-5gW">
+                                <rect key="frame" x="20" y="114" width="560" height="65"/>
+                                <color key="backgroundColor" red="0.66438872869999999" green="0.77749971289999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="0Tf-uJ-19r"/>
+                                    <constraint firstAttribute="height" constant="65" id="cdE-VT-Z9j"/>
+                                </constraints>
+                                <state key="normal" title="Begin ePub Read">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="beginEPub:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y0e-rG-fJe"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TR4-K5-05E">
+                                <rect key="frame" x="290" y="137" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="pdh-4n-NBR"/>
+                                    <constraint firstAttribute="width" constant="20" id="qaG-0N-Yfl"/>
+                                    <constraint firstAttribute="height" constant="20" id="yKw-OH-VV5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="yqK-T1-JvR"/>
+                                </constraints>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="TR4-K5-05E" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6MX-mH-shM"/>
+                            <constraint firstItem="tWr-Zc-5gW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="6vM-1A-TOw"/>
                             <constraint firstItem="kBD-86-EJT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Elo-I7-R87"/>
+                            <constraint firstItem="tWr-Zc-5gW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="LVH-Zt-4A1"/>
                             <constraint firstItem="LWz-nr-1SF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MY1-Qd-Pu9"/>
                             <constraint firstItem="kBD-86-EJT" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="U96-wL-yqo"/>
                             <constraint firstItem="LWz-nr-1SF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="ayR-Nu-wOz"/>
+                            <constraint firstItem="TR4-K5-05E" firstAttribute="top" secondItem="kBD-86-EJT" secondAttribute="bottom" constant="44" id="fkG-rI-Qp3"/>
                             <constraint firstItem="kBD-86-EJT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="qFK-gg-bXe"/>
+                            <constraint firstItem="tWr-Zc-5gW" firstAttribute="top" secondItem="kBD-86-EJT" secondAttribute="bottom" constant="21" id="yNg-Xl-J7B"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activity" destination="LWz-nr-1SF" id="PjH-Ry-1OF"/>
                         <outlet property="begin" destination="kBD-86-EJT" id="XFI-de-hAf"/>
+                        <outlet property="beginEpub" destination="tWr-Zc-5gW" id="fO3-Jc-zPJ"/>
+                        <outlet property="epubActivity" destination="TR4-K5-05E" id="gS7-1R-7cL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
