@@ -25,7 +25,19 @@
     }
     return self;
 }
-
+-(instancetype)initWithePub:(NSString *)ePubPath;
+{
+    self = [super init];
+    if (self) {
+        _chapters = [LSYReadUtilites ePubFileHandle:ePubPath];;
+        _notes = [NSMutableArray array];
+        _marks = [NSMutableArray array];
+        _record = [[LSYRecordModel alloc] init];
+        _record.chapterModel = _chapters.firstObject;
+        _record.chapterCount = _chapters.count;
+    }
+    return self;
+}
 -(void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.content forKey:@"content"];
     [aCoder encodeObject:self.marks forKey:@"marks"];
@@ -49,7 +61,7 @@
 +(void)updateLocalModel:(LSYReadModel *)readModel url:(NSURL *)url
 {
     
-    NSString *key = [url.path componentsSeparatedByString:@"/"].lastObject;
+    NSString *key = [url.path lastPathComponent];
     NSMutableData *data=[[NSMutableData alloc]init];
     NSKeyedArchiver *archiver=[[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
     [archiver encodeObject:readModel forKey:key];
@@ -58,13 +70,26 @@
 }
 +(id)getLocalModelWithURL:(NSURL *)url
 {
-    NSString *key = [url.path componentsSeparatedByString:@"/"].lastObject;
+    NSString *key = [url.path lastPathComponent];
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     if (!data) {
-        LSYReadModel *model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:url]];
-        model.resource = url;
-        [LSYReadModel updateLocalModel:model url:url];
-        return model;
+        if ([[key pathExtension] isEqualToString:@"txt"]) {
+            LSYReadModel *model = [[LSYReadModel alloc] initWithContent:[LSYReadUtilites encodeWithURL:url]];
+            model.resource = url;
+            [LSYReadModel updateLocalModel:model url:url];
+            return model;
+        }
+        else if ([[key pathExtension] isEqualToString:@"epub"]){
+            NSLog(@"this is epub");
+            LSYReadModel *model = [[LSYReadModel alloc] initWithePub:url.path];
+            model.resource = url;
+            [LSYReadModel updateLocalModel:model url:url];
+            return model;
+        }
+        else{
+            @throw [NSException exceptionWithName:@"FileException" reason:@"文件格式错误" userInfo:nil];
+        }
+        
     }
     NSKeyedUnarchiver *unarchive = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
     LSYReadModel *model = [unarchive decodeObjectForKey:key];

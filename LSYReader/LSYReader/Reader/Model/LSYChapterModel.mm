@@ -9,6 +9,7 @@
 #import "LSYChapterModel.h"
 #import "LSYReadConfig.h"
 #import "LSYReadParser.h"
+#import "NSString+HTML.h"
 #include <vector>
 @interface LSYChapterModel ()
 @property (nonatomic) std::vector<NSUInteger> pages;
@@ -23,6 +24,14 @@
         _pageArray = [NSMutableArray array];
     }
     return self;
+}
++(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title
+{
+    LSYChapterModel *model = [[LSYChapterModel alloc] init];
+    model.title = title;
+    NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
+    model.content = [html stringByConvertingHTMLToPlainText];
+    return model;
 }
 -(id)copyWithZone:(NSZone *)zone
 {
