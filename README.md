@@ -31,7 +31,7 @@
 //在.pch中这里写引用的.h文件与宏
 #endif
 ```
-3. 需要导入`libz.tbd`库
+3.需要导入`libz.tbd`库
 
 ###使用
 text文件</br>
