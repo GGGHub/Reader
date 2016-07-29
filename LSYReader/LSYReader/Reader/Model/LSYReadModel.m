@@ -22,6 +22,7 @@
         _record = [[LSYRecordModel alloc] init];
         _record.chapterModel = charpter.firstObject;
         _record.chapterCount = _chapters.count;
+        _marksRecord = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -35,6 +36,7 @@
         _record = [[LSYRecordModel alloc] init];
         _record.chapterModel = _chapters.firstObject;
         _record.chapterCount = _chapters.count;
+        _marksRecord = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -45,6 +47,7 @@
     [aCoder encodeObject:self.chapters forKey:@"chapters"];
     [aCoder encodeObject:self.record forKey:@"record"];
     [aCoder encodeObject:self.resource forKey:@"resource"];
+    [aCoder encodeObject:self.marksRecord forKey:@"marksRecord"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
@@ -55,6 +58,7 @@
         self.chapters = [aDecoder decodeObjectForKey:@"chapters"];
         self.record = [aDecoder decodeObjectForKey:@"record"];
         self.resource = [aDecoder decodeObjectForKey:@"resource"];
+        self.marksRecord = [aDecoder decodeObjectForKey:@"marksRecord"];
     }
     return self;
 }
