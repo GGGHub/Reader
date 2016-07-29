@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "LSYRecordModel.h"
+#import "LSYTopMenuView.h"
 @class LSYMenuView;
 @class LSYBottomMenuView;
-@class LSYTopMenuView;
 @protocol LSYMenuViewDelegate <NSObject>
 @optional
 -(void)menuViewDidHidden:(LSYMenuView *)menu;
@@ -23,6 +23,8 @@
 @interface LSYMenuView : UIView
 @property (nonatomic,weak) id<LSYMenuViewDelegate> delegate;
 @property (nonatomic,strong) LSYRecordModel *recordModel;
+@property (nonatomic,strong) LSYTopMenuView *topView;
+@property (nonatomic,strong) LSYBottomMenuView *bottomView;
 -(void)showAnimation:(BOOL)animation;
 -(void)hiddenAnimation:(BOOL)animation;
 @end

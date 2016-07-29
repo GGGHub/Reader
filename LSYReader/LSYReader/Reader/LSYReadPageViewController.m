@@ -14,6 +14,7 @@
 #import "UIImage+ImageEffects.h"
 #import "LSYNoteModel.h"
 #import "LSYMarkModel.h"
+#import <objc/runtime.h>
 #define AnimationDelay 0.3
 
 @interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate,LSYCatalogViewControllerDelegate,LSYReadViewControllerDelegate>
@@ -74,6 +75,10 @@
 -(void)showToolMenu
 {
     [_readView.readView cancelSelected];
+    NSString * key = [NSString stringWithFormat:@"%d_%d",(int)_model.record.chapter,(int)_model.record.page];
+    
+    id state = _model.marksRecord[key];
+    state?(_menuView.topView.state=1): (_menuView.topView.state=0);
     [self.menuView showAnimation:YES];
     
 }
@@ -206,13 +211,28 @@
     [_pageViewController setViewControllers:@[[self readViewWithChapter:_model.record.chapter page:(_model.record.page>_model.record.chapterModel.pageCount-1)?_model.record.chapterModel.pageCount-1:_model.record.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self updateReadModelWithChapter:_model.record.chapter page:(_model.record.page>_model.record.chapterModel.pageCount-1)?_model.record.chapterModel.pageCount-1:_model.record.page];
 }
+
 -(void)menuViewMark:(LSYTopMenuView *)topMenu
 {
 
-    LSYMarkModel *model = [[LSYMarkModel alloc] init];
-    model.date = [NSDate date];
-    model.recordModel = [_model.record copy];
-    [[_model mutableArrayValueForKey:@"marks"] addObject:model];
+
+    NSString * key = [NSString stringWithFormat:@"%d_%d",(int)_model.record.chapter,(int)_model.record.page];
+    id state = _model.marksRecord[key];
+    if (state) {
+//如果存在移除书签信息
+        [_model.marksRecord removeObjectForKey:key];
+        [[_model mutableArrayValueForKey:@"marks"] removeObject:state];
+    }
+    else{
+//记录书签信息
+        LSYMarkModel *model = [[LSYMarkModel alloc] init];
+        model.date = [NSDate date];
+        model.recordModel = [_model.record copy];
+        [[_model mutableArrayValueForKey:@"marks"] addObject:model];
+        [_model.marksRecord setObject:model forKey:key];
+    }
+    _menuView.topView.state = !state;
+
 
 }
 #pragma mark - Create Read View Controller

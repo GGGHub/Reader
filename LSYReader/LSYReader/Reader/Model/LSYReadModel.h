@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSMutableArray <LSYMarkModel *>*marks;
 @property (nonatomic,strong) NSMutableArray <LSYNoteModel *>*notes;
 @property (nonatomic,strong) NSMutableArray <LSYChapterModel *>*chapters;
+@property (nonatomic,strong) NSMutableDictionary *marksRecord;
 @property (nonatomic,strong) LSYRecordModel *record;
 -(instancetype)initWithContent:(NSString *)content;
 -(instancetype)initWithePub:(NSString *)ePubPath;

@@ -13,8 +13,7 @@
 #define TopViewHeight 64.0f
 #define BottomViewHeight 200.0f
 @interface LSYMenuView ()<LSYMenuViewDelegate>
-@property (nonatomic,strong) LSYTopMenuView *topView;
-@property (nonatomic,strong) LSYBottomMenuView *bottomView;
+
 @end
 @implementation LSYMenuView
 - (instancetype)initWithFrame:(CGRect)frame

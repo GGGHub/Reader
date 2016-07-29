@@ -27,6 +27,15 @@
     [self addSubview:self.back];
     [self addSubview:self.more];
 }
+-(void)setState:(BOOL)state
+{
+    _state = state;
+    if (state) {
+        [_more setImage:[[UIImage imageNamed:@"sale_discount_yellow"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]forState:UIControlStateNormal];
+        return;
+    }
+    [_more setImage:[[UIImage imageNamed:@"sale_discount_yellow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]forState:UIControlStateNormal];
+}
 -(UIButton *)back
 {
     if (!_back) {
@@ -39,7 +48,7 @@
 {
     if (!_more) {
         _more = [LSYReadUtilites commonButtonSEL:@selector(moreOption) target:self];
-        [_more setImage:[UIImage imageNamed:@"sale_discount_yellow"] forState:UIControlStateNormal];
+        [_more setImage:[[UIImage imageNamed:@"sale_discount_yellow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]forState:UIControlStateNormal];
         [_more setImageEdgeInsets:UIEdgeInsetsMake(7.5, 12.5, 7.5, 12.5)];
     }
     return _more;
@@ -49,7 +58,6 @@
     if ([self.delegate respondsToSelector:@selector(menuViewMark:)]) {
         [self.delegate menuViewMark:self];
     }
-    [LSYReadUtilites showAlertTitle:nil content:@"保存书签成功"];
 }
 -(void)backView
 {
