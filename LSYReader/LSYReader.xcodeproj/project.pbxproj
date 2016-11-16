@@ -33,6 +33,7 @@
 		8726DA4B1D07FF830072323A /* bt_tjcp_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8726DA4A1D07FF830072323A /* bt_tjcp_no@2x.png */; };
 		8726DA4F1D0800A10072323A /* ic_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 8726DA4E1D0800A10072323A /* ic_add.png */; };
 		8726DA511D08021E0072323A /* sale_discount_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8726DA501D08021E0072323A /* sale_discount_yellow.png */; };
+		877ABAA51DDC8F9F004A8254 /* 每天懂一点好玩心理学.epub in Resources */ = {isa = PBXBuildFile; fileRef = 877ABAA41DDC8F8F004A8254 /* 每天懂一点好玩心理学.epub */; };
 		87D8BD241CFFDB2E0087D8DA /* reader_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */; };
 		87D8BD2B1CFFE5100087D8DA /* LSYViewPagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */; };
 		87D8BD2E1CFFE5880087D8DA /* LSYCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D8BD2D1CFFE5880087D8DA /* LSYCatalogViewController.m */; };
@@ -119,6 +120,7 @@
 		8726DA4A1D07FF830072323A /* bt_tjcp_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bt_tjcp_no@2x.png"; path = "../View/bt_tjcp_no@2x.png"; sourceTree = "<group>"; };
 		8726DA4E1D0800A10072323A /* ic_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_add.png; sourceTree = "<group>"; };
 		8726DA501D08021E0072323A /* sale_discount_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sale_discount_yellow.png; sourceTree = "<group>"; };
+		877ABAA41DDC8F8F004A8254 /* 每天懂一点好玩心理学.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "每天懂一点好玩心理学.epub"; sourceTree = "<group>"; };
 		87D8BD231CFFDB2E0087D8DA /* reader_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader_cover@2x.png"; sourceTree = "<group>"; };
 		87D8BD291CFFE5100087D8DA /* LSYViewPagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYViewPagerVC.h; sourceTree = "<group>"; };
 		87D8BD2A1CFFE5100087D8DA /* LSYViewPagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYViewPagerVC.m; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				871E61CF1D1285EC0047AAFE /* 细说明朝.epub */,
+				877ABAA41DDC8F8F004A8254 /* 每天懂一点好玩心理学.epub */,
 				ABE8ABD21CFE930F00693078 /* mdjyml.txt */,
 				8726DA501D08021E0072323A /* sale_discount_yellow.png */,
 				8726DA4E1D0800A10072323A /* ic_add.png */,
@@ -493,6 +496,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				877ABAA51DDC8F9F004A8254 /* 每天懂一点好玩心理学.epub in Resources */,
 				871E61D01D128E900047AAFE /* 细说明朝.epub in Resources */,
 				AB9A96CA1CFC2EE80066030C /* LaunchScreen.storyboard in Resources */,
 				8726DA4F1D0800A10072323A /* ic_add.png in Resources */,
