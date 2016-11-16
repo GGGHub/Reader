@@ -19,6 +19,7 @@
 @property (nonatomic,strong) NSMutableArray <LSYChapterModel *>*chapters;
 @property (nonatomic,strong) NSMutableDictionary *marksRecord;
 @property (nonatomic,strong) LSYRecordModel *record;
+//@property (nonatomic,copy)  NSString *imageFullpath;    //图片的相对路径
 -(instancetype)initWithContent:(NSString *)content;
 -(instancetype)initWithePub:(NSString *)ePubPath;
 +(void)updateLocalModel:(LSYReadModel *)readModel url:(NSURL *)url;

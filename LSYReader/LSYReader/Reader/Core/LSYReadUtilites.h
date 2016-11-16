@@ -19,4 +19,5 @@
  * 返回章节信息数组
  */
 +(NSMutableArray *)ePubFileHandle:(NSString *)path;
+//+(NSString *)ePubImageRelatePath:(NSString *)epubPath;  //epub图片的相对路径
 @end

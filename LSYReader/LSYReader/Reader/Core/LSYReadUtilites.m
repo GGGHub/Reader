@@ -163,13 +163,31 @@
         CXMLDocument* document = [[CXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:containerPath] options:0 error:nil];
         CXMLNode* opfPath = [document nodeForXPath:@"//@full-path" error:nil];
         // xml文件中获取full-path属性的节点  full-path的属性值就是opf文件的绝对路径
-        return [NSString stringWithFormat:@"%@/%@",epubPath,[opfPath stringValue]];
+        NSString *path = [NSString stringWithFormat:@"%@/%@",epubPath,[opfPath stringValue]];
+        return path;
     } else {
         NSLog(@"ERROR: ePub not Valid");
         return nil;
     }
 
 }
+#pragma mark - 图片的相对路径
+//+(NSString *)ePubImageRelatePath:(NSString *)epubPath
+//{
+//    NSString *containerPath = [NSString stringWithFormat:@"%@/META-INF/container.xml",epubPath];
+//    //container.xml文件路径 通过container.xml获取到opf文件的路径
+//    NSFileManager *fileManager = [[NSFileManager alloc] init];
+//    if ([fileManager fileExistsAtPath:containerPath]) {
+//        CXMLDocument* document = [[CXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:containerPath] options:0 error:nil];
+//        CXMLNode* opfPath = [document nodeForXPath:@"//@full-path" error:nil];
+//        // xml文件中获取full-path属性的节点  full-path的属性值就是opf文件的绝对路径
+//        NSString *path = [NSString stringWithFormat:@"%@/%@",epubPath,[opfPath stringValue]];
+//        return [path stringByDeletingLastPathComponent];
+//    } else {
+//        NSLog(@"ERROR: ePub not Valid");
+//        return nil;
+//    }
+//}
 #pragma mark - 解析OPF文件
 +(NSMutableArray *)parseOPF:(NSString *)opfPath
 {
@@ -203,7 +221,7 @@
     NSMutableArray *chapters = [NSMutableArray array];
     for (CXMLElement* element in itemRefsArray){
         NSString* chapHref = [itemDictionary valueForKey:[[element attributeForName:@"idref"] stringValue]];
-        LSYChapterModel *model = [LSYChapterModel chapterWithEpub:[NSString stringWithFormat:@"%@/%@",absolutePath,chapHref] title:[titleDictionary valueForKey:chapHref]];
+        LSYChapterModel *model = [LSYChapterModel chapterWithEpub:[NSString stringWithFormat:@"%@/%@",absolutePath,chapHref] title:[titleDictionary valueForKey:chapHref] imagePath:[opfPath stringByDeletingLastPathComponent]];
         [chapters addObject:model];
         
     }
