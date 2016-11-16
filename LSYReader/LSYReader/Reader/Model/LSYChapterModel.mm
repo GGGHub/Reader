@@ -25,12 +25,14 @@
     }
     return self;
 }
-+(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title
++(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title imagePath:(NSString *)path
 {
     LSYChapterModel *model = [[LSYChapterModel alloc] init];
     model.title = title;
+    model.epubImagePath = path;
     NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
     model.content = [html stringByConvertingHTMLToPlainText];
+    [model parserEpubToDictionary];
     return model;
 }
 -(id)copyWithZone:(NSZone *)zone
@@ -41,6 +43,27 @@
     model.pageCount = self.pageCount;
     return model;
     
+}
+-(void)parserEpubToDictionary
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSScanner *scanner = [NSScanner scannerWithString:self.content];
+    while (![scanner isAtEnd]) {
+        if ([scanner scanString:@"<img>" intoString:NULL]) {
+            NSString *img;
+            [scanner scanUpToString:@"</img>" intoString:&img];
+            NSString *imageString = [self.epubImagePath stringByAppendingPathComponent:img];
+            [array addObject:@{@"type":@"img",@"content":imageString?imageString:@""}];
+            [scanner scanString:@"</img>" intoString:NULL];
+        }
+        else{
+            NSString *content;
+            if ([scanner scanUpToString:@"<img>" intoString:&content]) {
+                [array addObject:@{@"type":@"txt",@"content":content?content:@""}];
+            }
+        }
+    }
+    self.epubContent = [array copy];
 }
 -(void)setContent:(NSString *)content
 {
@@ -53,7 +76,6 @@
 }
 -(void)paginateWithBounds:(CGRect)bounds
 {
-//    _pages.clear();
     [_pageArray removeAllObjects];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString  alloc] initWithString:self.content];
     NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
@@ -117,15 +139,12 @@
 }
 -(NSString *)stringOfPage:(NSUInteger)index
 {
-//    NSUInteger local = _pages[index];
     NSUInteger local = [_pageArray[index] integerValue];
     NSUInteger length;
     if (index<self.pageCount-1) {
-//        length = _pages[index+1] -_pages[index];
         length=  [_pageArray[index+1] integerValue] - [_pageArray[index] integerValue];
     }
     else{
-//        length = _content.length-_pages[index];
         length = _content.length - [_pageArray[index] integerValue];
     }
     return [_content substringWithRange:NSMakeRange(local, length)];
@@ -135,9 +154,6 @@
     [aCoder encodeObject:self.content forKey:@"content"];
     [aCoder encodeObject:self.title forKey:@"title"];
     [aCoder encodeInteger:self.pageCount forKey:@"pageCount"];
-//    for(int i = 0; i < _pages.size(); i++){
-//       [array addObject:[NSValue value:&_pages[i] withObjCType:@encode(int)]];
-//    }
     [aCoder encodeObject:self.pageArray forKey:@"pageArray"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -151,3 +167,4 @@
     return self;
 }
 @end
+

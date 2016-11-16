@@ -13,7 +13,13 @@
 @property (nonatomic,strong) NSString *content;
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic) NSUInteger pageCount;
+@property (nonatomic,copy) NSString *epubImagePath;
+
+@property (nonatomic,copy) NSArray *epubContent;
 -(NSString *)stringOfPage:(NSUInteger)index;
 -(void)updateFont;
-+(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title;
++(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title imagePath:(NSString *)path;
+
+-(void)parserEpubToDictionary;
 @end
+

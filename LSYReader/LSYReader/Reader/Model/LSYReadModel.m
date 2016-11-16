@@ -30,7 +30,7 @@
 {
     self = [super init];
     if (self) {
-        _chapters = [LSYReadUtilites ePubFileHandle:ePubPath];;
+        _chapters = [LSYReadUtilites ePubFileHandle:ePubPath];
         _notes = [NSMutableArray array];
         _marks = [NSMutableArray array];
         _record = [[LSYRecordModel alloc] init];
