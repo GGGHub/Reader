@@ -57,7 +57,7 @@
     [_beginEpub setTitle:@"" forState:UIControlStateNormal];
     [_beginEpub setEnabled:NO];
     LSYReadPageViewController *pageView = [[LSYReadPageViewController alloc] init];
-    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"细说明朝"withExtension:@"epub"];
+    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"每天懂一点好玩心理学"withExtension:@"epub"];
     pageView.resourceURL = fileURL;    //文件位置
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
