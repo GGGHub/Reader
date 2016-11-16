@@ -80,29 +80,20 @@
         
         if (samePlaceRepeatCount > 1) {
             // 退出循环前检查一下最后一页是否已经加上
-//            if (_pages.size() == 0) {
-//                
-//                _pages.push_back(currentOffset);
-//                
-//            }
             if (_pageArray.count == 0) {
                 [_pageArray addObject:@(currentOffset)];
             }
             else {
                 
-//                NSUInteger lastOffset = _pages.back();
                 NSUInteger lastOffset = [[_pageArray lastObject] integerValue];
                 
                 if (lastOffset != currentOffset) {
-                    
-//                    _pages.push_back(currentOffset);
                     [_pageArray addObject:@(currentOffset)];
                 }
             }
             break;
         }
         
-//        _pages.push_back(currentOffset);
         [_pageArray addObject:@(currentOffset)];
         
         CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(currentInnerOffset, 0), path, NULL);
@@ -122,7 +113,6 @@
     
     CGPathRelease(path);
     CFRelease(frameSetter);
-//    _pageCount = _pages.size();
     _pageCount = _pageArray.count;
 }
 -(NSString *)stringOfPage:(NSUInteger)index
