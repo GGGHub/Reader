@@ -71,14 +71,36 @@
 			if ([scanner scanString:@"!--" intoString:NULL]) {
 				
 				// Comment
-				[scanner scanUpToString:@"-->" intoString:NULL]; 
+				[scanner scanUpToString:@"-->" intoString:NULL];
+                
 				[scanner scanString:@"-->" intoString:NULL];
-				
+           
 			} else {
 				
 				// Tag - remove and replace with space unless it's
+                if ([scanner scanString:@"/p>" intoString:NULL]) {
+                    [result appendString:@"\n"];
+                    
+                }
+                if ([scanner scanString:@"/h" intoString:NULL]) {
+                    [result appendString:@"\n"];
+                }
+                if ([scanner scanString:@"img" intoString:NULL]) {
+                    [scanner scanUpToString:@"src" intoString:NULL];
+                    [scanner scanString:@"src" intoString:NULL];
+                    [scanner scanString:@"=" intoString:NULL];
+                    [scanner scanString:@"\'" intoString:NULL];
+                    [scanner scanString:@"\"" intoString:NULL];
+                    NSString *imgString;
+                    if ([scanner scanUpToCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString:@"\"\'"] intoString:&imgString]) {
+                        [result appendString:[NSString stringWithFormat:@"\n<img>%@</img>\n",imgString]];
+                        imgString = nil; // reset
+                    }
+                    
+                }
 				// a closing inline tag then dont replace with a space
 				if ([scanner scanString:@"/" intoString:NULL]) {
+                    
 					
 					// Closing tag - replace with space unless it's inline
 					tagName = nil; dontReplaceTagWithSpace = NO;
@@ -104,6 +126,7 @@
 				
 				// Scan past tag
 				[scanner scanUpToString:@">" intoString:NULL];
+                
 				[scanner scanString:@">" intoString:NULL];
 				
 			}
