@@ -9,6 +9,25 @@
 #import "LSYReadParser.h"
 #import "LSYReadConfig.h"
 @implementation LSYReadParser
+
+#pragma CTRunCallBack
+
+static NSDictionary *CFRunInfo;
+
+static CGFloat ascentCallback(void *ref){
+
+    return [(NSNumber*)[(__bridge NSDictionary*)ref objectForKey:@"height"] floatValue];
+    
+}
+
+static CGFloat descentCallback(void *ref){
+    return 0;
+}
+
+static CGFloat widthCallback(void* ref){
+    return  [(NSNumber*)[(__bridge NSDictionary*)ref objectForKey:@"width"] floatValue];
+}
+
 +(CTFrameRef)parserContent:(NSString *)content config:(LSYReadConfig *)parser bouds:(CGRect)bounds
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:content];
@@ -20,6 +39,74 @@
     CFRelease(setterRef);
     CFRelease(pathRef);
     return frameRef;
+    
+}
++(CTFrameRef)parserEpub:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds
+{
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
+    
+    for (NSDictionary *dic in content) {
+        if ([dic[@"type"] isEqualToString:@"txt"]) {
+            //解析文本
+            NSDictionary *attr = [self parserAttribute:parser];
+            NSMutableAttributedString *subString = [[NSMutableAttributedString alloc] initWithString:dic[@"content"] attributes:attr];
+            [attrString appendAttributedString:subString];
+        }
+        else if ([dic[@"type"] isEqualToString:@"img"]){
+            //解析图片
+            NSAttributedString *subString = [self parserEpubImageWithSize:dic config:parser];
+            [attrString appendAttributedString:subString];
+        }
+    }
+    CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+    CGPathRef pathRef = CGPathCreateWithRect(bounds, NULL);
+    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
+    CFRelease(setterRef);
+    CFRelease(pathRef);
+    return frameRef;
+    
+}
++(NSAttributedString *)parserEpubAttribute:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds
+{
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
+    
+    for (NSDictionary *dic in content) {
+        if ([dic[@"type"] isEqualToString:@"txt"]) {
+            //解析文本
+            NSDictionary *attr = [self parserAttribute:parser];
+            NSString *string = dic[@"content"];
+            NSMutableAttributedString *subString = [[NSMutableAttributedString alloc] initWithString:string attributes:attr];
+            [attrString appendAttributedString:subString];
+        }
+        else if ([dic[@"type"] isEqualToString:@"img"]){
+            //解析图片
+            NSAttributedString *subString = [self parserEpubImageWithSize:dic config:parser];
+            [attrString appendAttributedString:subString];
+        }
+    }
+    return attrString;
+}
+
++(NSAttributedString *)parserEpubImageWithSize:(NSDictionary *)dic config:(LSYReadConfig *)config
+{
+    CTRunDelegateCallbacks callbacks;
+    
+    memset(&callbacks, 0, sizeof(CTRunDelegateCallbacks));
+    callbacks.version = kCTRunDelegateVersion1;
+    callbacks.getAscent = ascentCallback;
+    callbacks.getDescent = descentCallback;
+    callbacks.getWidth = widthCallback;
+    
+    CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (__bridge void *)(dic));
+    unichar objectReplacementChar = 0xFFFC;
+    NSDictionary *attr = [self parserAttribute:config];
+    NSString *content = [NSString stringWithCharacters:&objectReplacementChar length:1];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:content attributes:attr];
+    
+    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attrString, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
+    CFRelease(delegate);
+    return [attrString copy];
+    
     
 }
 +(NSDictionary *)parserAttribute:(LSYReadConfig *)config

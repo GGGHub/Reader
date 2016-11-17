@@ -32,4 +32,14 @@
  *  @direction 滑动方向 (0 -- 从左侧滑动 1-- 从右侧滑动)
  */
 +(NSArray *)parserRectsWithPoint:(CGPoint)point range:(NSRange *)selectRange frameRef:(CTFrameRef)frameRef paths:(NSArray *)paths direction:(BOOL) direction;
+
+/**
+ 转换epub文件成CTFrameRef对象
+
+ @param content epub文件处理后的内容
+ @param parser 字体属性
+ @param bounds 渲染区间
+ */
++(CTFrameRef)parserEpub:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds;
++(NSAttributedString *)parserEpubAttribute:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds;
 @end

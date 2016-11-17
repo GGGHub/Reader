@@ -30,9 +30,11 @@
     LSYChapterModel *model = [[LSYChapterModel alloc] init];
     model.title = title;
     model.epubImagePath = path;
+    model.isEpub = YES;
     NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
     model.content = [html stringByConvertingHTMLToPlainText];
     [model parserEpubToDictionary];
+    [model paginateWithBounds:CGRectMake(LeftSpacing, TopSpacing, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
     return model;
 }
 -(id)copyWithZone:(NSZone *)zone
@@ -48,27 +50,33 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     NSScanner *scanner = [NSScanner scannerWithString:self.content];
+    NSMutableString *newString = [[NSMutableString alloc] init];
     while (![scanner isAtEnd]) {
         if ([scanner scanString:@"<img>" intoString:NULL]) {
             NSString *img;
             [scanner scanUpToString:@"</img>" intoString:&img];
             NSString *imageString = [self.epubImagePath stringByAppendingPathComponent:img];
-            [array addObject:@{@"type":@"img",@"content":imageString?imageString:@""}];
+            UIImage *image = [UIImage imageWithContentsOfFile:imageString];
+            CGSize size = CGSizeMake(ScreenSize.width, ScreenSize.width/ScreenSize.height*image.size.width);
+            [array addObject:@{@"type":@"img",@"content":imageString?imageString:@"",@"width":@(size.width),@"height":@(size.height)}];
+            [newString appendString:@" "];
             [scanner scanString:@"</img>" intoString:NULL];
         }
         else{
             NSString *content;
             if ([scanner scanUpToString:@"<img>" intoString:&content]) {
                 [array addObject:@{@"type":@"txt",@"content":content?content:@""}];
+                [newString appendString:content?content:@""];
             }
         }
     }
     self.epubContent = [array copy];
+    self.content = [newString copy];
 }
 -(void)setContent:(NSString *)content
 {
     _content = content;
-    [self paginateWithBounds:CGRectMake(LeftSpacing, TopSpacing, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+    
 }
 -(void)updateFont
 {
@@ -77,12 +85,24 @@
 -(void)paginateWithBounds:(CGRect)bounds
 {
     [_pageArray removeAllObjects];
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString  alloc] initWithString:self.content];
-    NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
-    [attrString setAttributes:attribute range:NSMakeRange(0, attrString.length)];
-    
-    CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attrString);
-    CGPathRef path = CGPathCreateWithRect(bounds, NULL);
+    NSAttributedString *attrString;
+    CTFramesetterRef frameSetter;
+    CGPathRef path;
+    if (_isEpub) {
+        attrString = [LSYReadParser parserEpubAttribute:_epubContent config:[LSYReadConfig shareInstance] bounds:bounds];
+        frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+        path = CGPathCreateWithRect(bounds, NULL);
+    }
+    else{
+        NSMutableAttributedString *attrStr;
+        attrStr = [[NSMutableAttributedString  alloc] initWithString:self.content];
+        NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
+        [attrStr setAttributes:attribute range:NSMakeRange(0, attrString.length)];
+        attrString = [attrStr copy];
+        frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attrString);
+        path = CGPathCreateWithRect(bounds, NULL);
+    }
+
     int currentOffset = 0;
     int currentInnerOffset = 0;
     BOOL hasMorePages = YES;
@@ -149,12 +169,18 @@
     }
     return [_content substringWithRange:NSMakeRange(local, length)];
 }
+/**
+ @property (nonatomic,copy) NSString *epubImagePath;
+ @property (nonatomic,assign) BOOL isEpub;
 
+ */
 -(void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.content forKey:@"content"];
     [aCoder encodeObject:self.title forKey:@"title"];
     [aCoder encodeInteger:self.pageCount forKey:@"pageCount"];
     [aCoder encodeObject:self.pageArray forKey:@"pageArray"];
+    [aCoder encodeObject:self.epubImagePath forKey:@"epubImagePath"];
+    [aCoder encodeObject:@(self.isEpub) forKey:@"isEpub"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
@@ -163,6 +189,8 @@
         self.title = [aDecoder decodeObjectForKey:@"title"];
         self.pageCount = [aDecoder decodeIntegerForKey:@"pageCount"];
         self.pageArray = [aDecoder decodeObjectForKey:@"pageArray"];
+        self.isEpub = [[aDecoder decodeObjectForKey:@"isEpub"] boolValue];
+        self.epubImagePath = [aDecoder decodeObjectForKey:@"epubImagePath"];
     }
     return self;
 }
