@@ -14,6 +14,7 @@
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic) NSUInteger pageCount;
 @property (nonatomic,copy) NSString *epubImagePath;
+@property (nonatomic,assign) BOOL isEpub;
 
 @property (nonatomic,copy) NSArray *epubContent;
 -(NSString *)stringOfPage:(NSUInteger)index;

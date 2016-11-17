@@ -245,7 +245,8 @@
     }
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
-    _readView.content = [_model.chapters[chapter] stringOfPage:page];
+//    _readView.content = [_model.chapters[chapter] stringOfPage:page];
+    _readView.epubContent = [_model.chapters[chapter] epubContent];
     _readView.delegate = self;
     NSLog(@"_readGreate");
     
