@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "+parserIndexWithPoint:frameRef:"
+            landmarkName = "+parserEpub:config:bounds:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -32,22 +32,6 @@
             startingLineNumber = "74"
             endingLineNumber = "74"
             landmarkName = "-longPress:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LSYReader/Reader/Core/LSYReadParser.m"
-            timestampString = "487392977.577149"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "+parserRectsWithPoint:range:frameRef:paths:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

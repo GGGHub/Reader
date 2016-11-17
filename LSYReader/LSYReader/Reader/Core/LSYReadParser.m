@@ -61,7 +61,10 @@ static CGFloat widthCallback(void* ref){
     CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
     CGPathRef pathRef = CGPathCreateWithRect(bounds, NULL);
     CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
+    CFRange rang1 = CTFrameGetVisibleStringRange(frameRef);
+    CFRange rang2 = CTFrameGetStringRange(frameRef);
     CFRelease(setterRef);
+    
     CFRelease(pathRef);
     return frameRef;
     

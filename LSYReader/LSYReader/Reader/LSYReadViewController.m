@@ -37,6 +37,7 @@
         LSYReadConfig *config = [LSYReadConfig shareInstance];
         if (_epubContent) {
             _readView.frameRef = [LSYReadParser parserEpub:_epubContent config:config bounds:CGRectMake(0,0, _readView.frame.size.width, _readView.frame.size.height)];
+           
         }
         else{
              _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:CGRectMake(0,0, _readView.frame.size.width, _readView.frame.size.height)];

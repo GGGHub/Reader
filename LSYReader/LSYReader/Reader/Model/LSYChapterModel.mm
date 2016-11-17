@@ -181,6 +181,7 @@
     [aCoder encodeObject:self.pageArray forKey:@"pageArray"];
     [aCoder encodeObject:self.epubImagePath forKey:@"epubImagePath"];
     [aCoder encodeObject:@(self.isEpub) forKey:@"isEpub"];
+    [aCoder encodeObject:self.epubContent forKey:@"epubContent"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
@@ -191,6 +192,7 @@
         self.pageArray = [aDecoder decodeObjectForKey:@"pageArray"];
         self.isEpub = [[aDecoder decodeObjectForKey:@"isEpub"] boolValue];
         self.epubImagePath = [aDecoder decodeObjectForKey:@"epubImagePath"];
+        self.epubContent = [aDecoder decodeObjectForKey:@"epubContent"];
     }
     return self;
 }
