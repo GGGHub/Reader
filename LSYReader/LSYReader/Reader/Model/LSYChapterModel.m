@@ -10,9 +10,8 @@
 #import "LSYReadConfig.h"
 #import "LSYReadParser.h"
 #import "NSString+HTML.h"
-#include <vector>
+//#include <vector>
 @interface LSYChapterModel ()
-@property (nonatomic) std::vector<NSUInteger> pages;
 @property (nonatomic,strong) NSMutableArray *pageArray;
 @end
 
@@ -30,11 +29,10 @@
     LSYChapterModel *model = [[LSYChapterModel alloc] init];
     model.title = title;
     model.epubImagePath = path;
-    model.isEpub = YES;
     NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
     model.content = [html stringByConvertingHTMLToPlainText];
     [model parserEpubToDictionary];
-    [model paginateWithBounds:CGRectMake(LeftSpacing, TopSpacing, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+    [model paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
     return model;
 }
 -(id)copyWithZone:(NSZone *)zone
@@ -49,6 +47,7 @@
 -(void)parserEpubToDictionary
 {
     NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *imageArray = [NSMutableArray array];
     NSScanner *scanner = [NSScanner scannerWithString:self.content];
     NSMutableString *newString = [[NSMutableString alloc] init];
     while (![scanner isAtEnd]) {
@@ -59,6 +58,11 @@
             UIImage *image = [UIImage imageWithContentsOfFile:imageString];
             CGSize size = CGSizeMake(ScreenSize.width, ScreenSize.width/ScreenSize.height*image.size.width);
             [array addObject:@{@"type":@"img",@"content":imageString?imageString:@"",@"width":@(size.width),@"height":@(size.height)}];
+            //存储图片信息
+            LSYImageData *imageData = [[LSYImageData alloc] init];
+            imageData.url = imageString?imageString:@"";
+            [imageArray addObject:imageData];
+            
             [newString appendString:@" "];
             [scanner scanString:@"</img>" intoString:NULL];
         }
@@ -71,7 +75,56 @@
         }
     }
     self.epubContent = [array copy];
-    self.content = [newString copy];
+    self.imageArray = [imageArray copy];
+//    self.content = [newString copy];
+}
+-(void)paginateEpubWithBounds:(CGRect)bounds
+{
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
+    for (NSDictionary *dic in _epubContent) {
+        if ([dic[@"type"] isEqualToString:@"txt"]) {
+            //解析文本
+            NSDictionary *attr = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
+            NSMutableAttributedString *subString = [[NSMutableAttributedString alloc] initWithString:dic[@"content"] attributes:attr];
+            [attrString appendAttributedString:subString];
+        }
+        else if ([dic[@"type"] isEqualToString:@"img"]){
+            //解析图片
+            NSAttributedString *subString = [LSYReadParser parserEpubImageWithSize:dic config:[LSYReadConfig shareInstance]];
+            [attrString appendAttributedString:subString];
+
+        }
+    }
+    CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+    CGPathRef pathRef = CGPathCreateWithRect(bounds, NULL);
+    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
+    CFRange rang1 = CTFrameGetVisibleStringRange(frameRef);
+    CFRange rang2 = CTFrameGetStringRange(frameRef);
+    
+    NSMutableArray *array = [NSMutableArray array];
+    
+    if (rang1.length+rang1.location == rang2.location+rang2.length) {
+        CTFrameRef subFrameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(rang1.location,0), pathRef, NULL);
+        CFRange range = CTFrameGetVisibleStringRange(subFrameRef);
+        rang1 = CFRangeMake(range.location+range.length, 0);
+        [array addObject:(__bridge id)subFrameRef];
+        CFRelease(subFrameRef);
+    }
+    else{
+        while (rang1.length+rang1.location<rang2.location+rang2.length) {
+            CTFrameRef subFrameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(rang1.location,0), pathRef, NULL);
+            CFRange range = CTFrameGetVisibleStringRange(subFrameRef);
+            rang1 = CFRangeMake(range.location+range.length, 0);
+            [array addObject:(__bridge id)subFrameRef];
+            CFRelease(subFrameRef);
+            
+        }
+    }
+    
+    CFRelease(setterRef);
+    CFRelease(pathRef);
+    _epubframeRef = [array copy];
+    _pageCount = _epubframeRef.count;
 }
 -(void)setContent:(NSString *)content
 {
@@ -88,21 +141,13 @@
     NSAttributedString *attrString;
     CTFramesetterRef frameSetter;
     CGPathRef path;
-    if (_isEpub) {
-        attrString = [LSYReadParser parserEpubAttribute:_epubContent config:[LSYReadConfig shareInstance] bounds:bounds];
-        frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
-        path = CGPathCreateWithRect(bounds, NULL);
-    }
-    else{
-        NSMutableAttributedString *attrStr;
-        attrStr = [[NSMutableAttributedString  alloc] initWithString:self.content];
-        NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
-        [attrStr setAttributes:attribute range:NSMakeRange(0, attrString.length)];
-        attrString = [attrStr copy];
-        frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attrString);
-        path = CGPathCreateWithRect(bounds, NULL);
-    }
-
+    NSMutableAttributedString *attrStr;
+    attrStr = [[NSMutableAttributedString  alloc] initWithString:self.content];
+    NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
+    [attrStr setAttributes:attribute range:NSMakeRange(0, attrString.length)];
+    attrString = [attrStr copy];
+    frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attrString);
+    path = CGPathCreateWithRect(bounds, NULL);
     int currentOffset = 0;
     int currentInnerOffset = 0;
     BOOL hasMorePages = YES;
@@ -169,19 +214,15 @@
     }
     return [_content substringWithRange:NSMakeRange(local, length)];
 }
-/**
- @property (nonatomic,copy) NSString *epubImagePath;
- @property (nonatomic,assign) BOOL isEpub;
-
- */
 -(void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.content forKey:@"content"];
     [aCoder encodeObject:self.title forKey:@"title"];
     [aCoder encodeInteger:self.pageCount forKey:@"pageCount"];
     [aCoder encodeObject:self.pageArray forKey:@"pageArray"];
     [aCoder encodeObject:self.epubImagePath forKey:@"epubImagePath"];
-    [aCoder encodeObject:@(self.isEpub) forKey:@"isEpub"];
+    [aCoder encodeObject:@(self.type) forKey:@"type"];
     [aCoder encodeObject:self.epubContent forKey:@"epubContent"];
+    
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
@@ -190,7 +231,7 @@
         self.title = [aDecoder decodeObjectForKey:@"title"];
         self.pageCount = [aDecoder decodeIntegerForKey:@"pageCount"];
         self.pageArray = [aDecoder decodeObjectForKey:@"pageArray"];
-        self.isEpub = [[aDecoder decodeObjectForKey:@"isEpub"] boolValue];
+        self.type = [[aDecoder decodeObjectForKey:@"type"] integerValue];
         self.epubImagePath = [aDecoder decodeObjectForKey:@"epubImagePath"];
         self.epubContent = [aDecoder decodeObjectForKey:@"epubContent"];
     }
@@ -198,3 +239,6 @@
 }
 @end
 
+@implementation LSYImageData
+
+@end

@@ -23,6 +23,7 @@
         _record.chapterModel = charpter.firstObject;
         _record.chapterCount = _chapters.count;
         _marksRecord = [NSMutableDictionary dictionary];
+        _type = ReaderTxt;
     }
     return self;
 }
@@ -37,6 +38,7 @@
         _record.chapterModel = _chapters.firstObject;
         _record.chapterCount = _chapters.count;
         _marksRecord = [NSMutableDictionary dictionary];
+        _type = ReaderEpub;
     }
     return self;
 }
@@ -48,6 +50,7 @@
     [aCoder encodeObject:self.record forKey:@"record"];
     [aCoder encodeObject:self.resource forKey:@"resource"];
     [aCoder encodeObject:self.marksRecord forKey:@"marksRecord"];
+    [aCoder encodeObject:@(self.type) forKey:@"type"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super init];
@@ -59,6 +62,7 @@
         self.record = [aDecoder decodeObjectForKey:@"record"];
         self.resource = [aDecoder decodeObjectForKey:@"resource"];
         self.marksRecord = [aDecoder decodeObjectForKey:@"marksRecord"];
+        self.type = [[aDecoder decodeObjectForKey:@"type"] integerValue];
     }
     return self;
 }
@@ -96,6 +100,7 @@
         
     }
     NSKeyedUnarchiver *unarchive = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
+    //主线程操作
     LSYReadModel *model = [unarchive decodeObjectForKey:key];
     return model;
 }
