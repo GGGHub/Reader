@@ -42,4 +42,10 @@
  */
 +(CTFrameRef)parserEpub:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds;
 +(NSAttributedString *)parserEpubAttribute:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds;
+
+/**
+ 解析图片属性
+
+ */
++(NSAttributedString *)parserEpubImageWithSize:(NSDictionary *)dic config:(LSYReadConfig *)config;
 @end

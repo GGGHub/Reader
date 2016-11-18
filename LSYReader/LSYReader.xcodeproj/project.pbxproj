@@ -57,7 +57,7 @@
 		AB9A96EB1CFD27C70066030C /* LSYReadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96EA1CFD27C70066030C /* LSYReadModel.m */; };
 		AB9A96EE1CFD27D90066030C /* LSYMarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96ED1CFD27D90066030C /* LSYMarkModel.m */; };
 		AB9A96F11CFD27ED0066030C /* LSYNoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96F01CFD27ED0066030C /* LSYNoteModel.m */; };
-		AB9A96F41CFD27FC0066030C /* LSYChapterModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96F31CFD27FC0066030C /* LSYChapterModel.mm */; };
+		AB9A96F41CFD27FC0066030C /* LSYChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96F31CFD27FC0066030C /* LSYChapterModel.m */; };
 		AB9A96F71CFD2EC70066030C /* LSYRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A96F61CFD2EC70066030C /* LSYRecordModel.m */; };
 		ABE8ABD31CFE930F00693078 /* mdjyml.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABE8ABD21CFE930F00693078 /* mdjyml.txt */; };
 		ABE8ABD71CFEBB2400693078 /* LSYMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE8ABD61CFEBB2400693078 /* LSYMenuView.m */; };
@@ -166,7 +166,7 @@
 		AB9A96EF1CFD27ED0066030C /* LSYNoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYNoteModel.h; sourceTree = "<group>"; };
 		AB9A96F01CFD27ED0066030C /* LSYNoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYNoteModel.m; sourceTree = "<group>"; };
 		AB9A96F21CFD27FC0066030C /* LSYChapterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYChapterModel.h; sourceTree = "<group>"; };
-		AB9A96F31CFD27FC0066030C /* LSYChapterModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LSYChapterModel.mm; sourceTree = "<group>"; };
+		AB9A96F31CFD27FC0066030C /* LSYChapterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYChapterModel.m; sourceTree = "<group>"; };
 		AB9A96F51CFD2EC70066030C /* LSYRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSYRecordModel.h; sourceTree = "<group>"; };
 		AB9A96F61CFD2EC70066030C /* LSYRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSYRecordModel.m; sourceTree = "<group>"; };
 		ABE8ABD21CFE930F00693078 /* mdjyml.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mdjyml.txt; path = ../../mdjyml.txt; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 				AB9A96EF1CFD27ED0066030C /* LSYNoteModel.h */,
 				AB9A96F01CFD27ED0066030C /* LSYNoteModel.m */,
 				AB9A96F21CFD27FC0066030C /* LSYChapterModel.h */,
-				AB9A96F31CFD27FC0066030C /* LSYChapterModel.mm */,
+				AB9A96F31CFD27FC0066030C /* LSYChapterModel.m */,
 				AB9A96F51CFD2EC70066030C /* LSYRecordModel.h */,
 				AB9A96F61CFD2EC70066030C /* LSYRecordModel.m */,
 			);
@@ -524,7 +524,7 @@
 				871E610A1D1252B20047AAFE /* CXMLElement_CreationExtensions.m in Sources */,
 				871E61D61D12A66A0047AAFE /* GTMNSString+HTML.m in Sources */,
 				AB9A96C21CFC2EE80066030C /* ViewController.m in Sources */,
-				AB9A96F41CFD27FC0066030C /* LSYChapterModel.mm in Sources */,
+				AB9A96F41CFD27FC0066030C /* LSYChapterModel.m in Sources */,
 				87D8BD311CFFE68E0087D8DA /* LSYReadView.m in Sources */,
 				AB9A96D71CFC2F6C0066030C /* LSYReadViewController.m in Sources */,
 				871E61CC1D1282B80047AAFE /* unzip.c in Sources */,

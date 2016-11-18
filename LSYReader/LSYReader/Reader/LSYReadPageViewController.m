@@ -245,8 +245,19 @@
     }
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
-    _readView.content = [_model.chapters[chapter] stringOfPage:page];
-    _readView.epubContent = [_model.chapters[chapter] epubContent];
+    if (_model.type == ReaderEpub) {
+        _readView.type = ReaderEpub;
+        if (!_model.chapters[chapter].epubframeRef) {
+            [_model.chapters[chapter] parserEpubToDictionary];
+            [_model.chapters[chapter] paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+        }
+        _readView.epubFrameRef = _model.chapters[chapter].epubframeRef[page];
+        _readView.imageArray = _model.chapters[chapter].imageArray;
+    }
+    else{
+        _readView.type = ReaderTxt;
+        _readView.content = [_model.chapters[chapter] stringOfPage:page];
+    }
     _readView.delegate = self;
     NSLog(@"_readGreate");
     

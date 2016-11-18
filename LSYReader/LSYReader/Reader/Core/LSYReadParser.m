@@ -58,17 +58,16 @@ static CGFloat widthCallback(void* ref){
             [attrString appendAttributedString:subString];
         }
     }
+
     CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
     CGPathRef pathRef = CGPathCreateWithRect(bounds, NULL);
-    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
-    CFRange rang1 = CTFrameGetVisibleStringRange(frameRef);
-    CFRange rang2 = CTFrameGetStringRange(frameRef);
+    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(3, 0), pathRef, NULL);
     CFRelease(setterRef);
-    
     CFRelease(pathRef);
     return frameRef;
     
 }
+
 +(NSAttributedString *)parserEpubAttribute:(NSArray *)content config:(LSYReadConfig *)parser bounds:(CGRect)bounds
 {
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
