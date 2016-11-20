@@ -38,7 +38,6 @@
         if (_type == ReaderEpub) {
             _readView.frameRef = (__bridge CTFrameRef)_epubFrameRef;
             _readView.imageArray = _imageArray;
-           
         }
         else{
              _readView.frameRef = [LSYReadParser parserContent:_content config:config bouds:CGRectMake(0,0, _readView.frame.size.width, _readView.frame.size.height)];

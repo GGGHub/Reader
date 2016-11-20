@@ -20,6 +20,8 @@ typedef  NS_ENUM(NSInteger,ReaderType){
 @interface LSYImageData : NSObject
 @property (nonatomic,strong) NSString *url; //图片链接
 @property (nonatomic,assign) CGRect imageRect;  //图片位置
+@property (nonatomic,assign) NSInteger position;
+
 @end
 
 @interface LSYChapterModel : NSObject<NSCopying,NSCoding>
@@ -32,7 +34,11 @@ typedef  NS_ENUM(NSInteger,ReaderType){
 -(NSString *)stringOfPage:(NSUInteger)index;
 -(void)updateFont;
 
+@property (nonatomic,copy) NSString *chapterpath;
+@property (nonatomic,copy) NSString *html;
+
 @property (nonatomic,copy) NSArray *epubContent;
+@property (nonatomic,copy) NSArray *epubString;
 @property (nonatomic,copy) NSArray *epubframeRef;
 @property (nonatomic,copy) NSString *epubImagePath;
 @property (nonatomic,copy) NSArray <LSYImageData *> *imageArray;

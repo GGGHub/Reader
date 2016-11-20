@@ -216,6 +216,7 @@
 {
     [self hiddenMenu];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    
     [pasteboard setString:[_content substringWithRange:_selectRange]];
     [LSYReadUtilites showAlertTitle:@"成功复制以下内容" content:pasteboard.string];
     
@@ -281,18 +282,52 @@
     _menuRect = CGRectZero;
     [self drawSelectedPath:_pathArray LeftDot:&leftDot RightDot:&rightDot];
     CTFrameDraw(_frameRef, ctx);
-    [self fillImagePosition];
+//    [self fillImagePosition];
     if (_imageArray.count) {
         for (LSYImageData * imageData in self.imageArray) {
             UIImage *image = [UIImage imageWithContentsOfFile:imageData.url];
-            if (image) {
-                CGContextDrawImage(ctx, imageData.imageRect, image.CGImage);
+            CFRange range = CTFrameGetVisibleStringRange(_frameRef);
+            
+            if (image&&(range.location<=imageData.position&&imageData.position<=(range.length + range.location))) {
+                [self fillImagePosition:imageData];
+                if (imageData.position==(range.length + range.location)) {
+                    if ([self showImage]) {
+                        CGContextDrawImage(ctx, imageData.imageRect, image.CGImage);
+                    }
+                    else{
+                        
+                    }
+                }
+                else{
+                    CGContextDrawImage(ctx, imageData.imageRect, image.CGImage);
+                }
             }
         }
     }
     [self drawDotWithLeft:leftDot right:rightDot];
 }
-- (void)fillImagePosition {
+-(BOOL)showImage
+{
+    NSArray *lines = (NSArray *)CTFrameGetLines(self.frameRef);
+    NSUInteger lineCount = [lines count];
+    CGPoint lineOrigins[lineCount];
+    CTFrameGetLineOrigins(self.frameRef, CFRangeMake(0, 0), lineOrigins);
+    
+    CTLineRef line = (__bridge CTLineRef)lines[lineCount-1];
+    
+    NSArray * runObjArray = (NSArray *)CTLineGetGlyphRuns(line);
+    CTRunRef run = (__bridge CTRunRef)runObjArray.lastObject;
+    NSDictionary *runAttributes = (NSDictionary *)CTRunGetAttributes(run);
+    CTRunDelegateRef delegate = (__bridge CTRunDelegateRef)[runAttributes valueForKey:(id)kCTRunDelegateAttributeName];
+    if (delegate == nil) {
+        return NO;
+    }
+    else{
+        return YES;
+    }
+}
+- (void)fillImagePosition:(LSYImageData *)imageData;
+{
     if (self.imageArray.count == 0) {
         return;
     }
@@ -300,10 +335,6 @@
     NSUInteger lineCount = [lines count];
     CGPoint lineOrigins[lineCount];
     CTFrameGetLineOrigins(self.frameRef, CFRangeMake(0, 0), lineOrigins);
-    
-    int imgIndex = 0;
-    LSYImageData * imageData = self.imageArray[0];
-    
     for (int i = 0; i < lineCount; ++i) {
         if (imageData == nil) {
             break;
@@ -338,15 +369,8 @@
             CGRect colRect = CGPathGetBoundingBox(pathRef);
             
             CGRect delegateBounds = CGRectOffset(runBounds, colRect.origin.x, colRect.origin.y);
-            
             imageData.imageRect = delegateBounds;
-            imgIndex++;
-            if (imgIndex == self.imageArray.count) {
-                imageData = nil;
-                break;
-            } else {
-                imageData = self.imageArray[imgIndex];
-            }
+            break;
         }
     }
 }

@@ -29,7 +29,10 @@
     LSYChapterModel *model = [[LSYChapterModel alloc] init];
     model.title = title;
     model.epubImagePath = path;
+    model.type = ReaderEpub;
+    model.chapterpath = chapterpath;
     NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
+    model.html = html;
     model.content = [html stringByConvertingHTMLToPlainText];
     [model parserEpubToDictionary];
     [model paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
@@ -61,9 +64,11 @@
             //存储图片信息
             LSYImageData *imageData = [[LSYImageData alloc] init];
             imageData.url = imageString?imageString:@"";
+            imageData.position = newString.length;
+//            imageData.imageRect = CGRectMake(0, 0, size.width, size.height);
             [imageArray addObject:imageData];
             
-            [newString appendString:@" "];
+//            [newString appendString:@" "];
             [scanner scanString:@"</img>" intoString:NULL];
         }
         else{
@@ -94,7 +99,7 @@
             [attrString appendAttributedString:subString];
 
         }
-    }
+    }    
     CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
     CGPathRef pathRef = CGPathCreateWithRect(bounds, NULL);
     CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
@@ -102,12 +107,14 @@
     CFRange rang2 = CTFrameGetStringRange(frameRef);
     
     NSMutableArray *array = [NSMutableArray array];
-    
+    NSMutableArray *stringArr = [NSMutableArray array];
     if (rang1.length+rang1.location == rang2.location+rang2.length) {
         CTFrameRef subFrameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(rang1.location,0), pathRef, NULL);
         CFRange range = CTFrameGetVisibleStringRange(subFrameRef);
         rang1 = CFRangeMake(range.location+range.length, 0);
         [array addObject:(__bridge id)subFrameRef];
+        [stringArr addObject:[[attrString string] substringWithRange:NSMakeRange(range.location, range.length)]];
+        
         CFRelease(subFrameRef);
     }
     else{
@@ -116,6 +123,7 @@
             CFRange range = CTFrameGetVisibleStringRange(subFrameRef);
             rang1 = CFRangeMake(range.location+range.length, 0);
             [array addObject:(__bridge id)subFrameRef];
+            [stringArr addObject:[[attrString string] substringWithRange:NSMakeRange(range.location, range.length)]];
             CFRelease(subFrameRef);
             
         }
@@ -124,16 +132,27 @@
     CFRelease(setterRef);
     CFRelease(pathRef);
     _epubframeRef = [array copy];
+    _epubString = [stringArr copy];
     _pageCount = _epubframeRef.count;
+    _content = attrString.string;
 }
 -(void)setContent:(NSString *)content
 {
     _content = content;
+    if (_type == ReaderTxt) {
+         [self paginateWithBounds:CGRectMake(LeftSpacing, TopSpacing, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+    }
     
 }
 -(void)updateFont
 {
-    [self paginateWithBounds:CGRectMake(LeftSpacing, TopSpacing, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+    if (_type==ReaderEpub) {
+        [self paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+    }
+    else{
+        [self paginateWithBounds:CGRectMake(LeftSpacing, TopSpacing, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+    }
+    
 }
 -(void)paginateWithBounds:(CGRect)bounds
 {
@@ -222,6 +241,16 @@
     [aCoder encodeObject:self.epubImagePath forKey:@"epubImagePath"];
     [aCoder encodeObject:@(self.type) forKey:@"type"];
     [aCoder encodeObject:self.epubContent forKey:@"epubContent"];
+    [aCoder encodeObject:self.chapterpath forKey:@"chapterpath"];
+    [aCoder encodeObject:self.html forKey:@"html"];
+    /**
+     @property (nonatomic,copy) NSArray *epubframeRef;
+     @property (nonatomic,copy) NSString *epubImagePath;
+     @property (nonatomic,copy) NSArray <LSYImageData *> *imageArray;
+    
+     */
+//    [aCoder encodeObject:self.epubframeRef forKey:@"epubframeRef"];
+//    [aCoder encodeObject:self.epubImagePath forKey:@"epubImagePath"];
     
 }
 -(id)initWithCoder:(NSCoder *)aDecoder{
@@ -234,6 +263,10 @@
         self.type = [[aDecoder decodeObjectForKey:@"type"] integerValue];
         self.epubImagePath = [aDecoder decodeObjectForKey:@"epubImagePath"];
         self.epubContent = [aDecoder decodeObjectForKey:@"epubContent"];
+        self.chapterpath = [aDecoder decodeObjectForKey:@"chapterpath"];
+        self.html = [aDecoder decodeObjectForKey:@"html"];
+//        self.epubframeRef = [aDecoder decodeObjectForKey:@"epubframeRef"];
+        
     }
     return self;
 }

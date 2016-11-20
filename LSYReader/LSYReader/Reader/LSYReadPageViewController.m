@@ -15,6 +15,7 @@
 #import "LSYNoteModel.h"
 #import "LSYMarkModel.h"
 #import <objc/runtime.h>
+#import "NSString+HTML.h"
 #define AnimationDelay 0.3
 
 @interface LSYReadPageViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,LSYMenuViewDelegate,UIGestureRecognizerDelegate,LSYCatalogViewControllerDelegate,LSYReadViewControllerDelegate>
@@ -245,14 +246,18 @@
     }
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
+//     NSLog(@"---%@",[NSURL fileURLWithPath:_model.chapters[chapter].chapterpath]);
     if (_model.type == ReaderEpub) {
         _readView.type = ReaderEpub;
         if (!_model.chapters[chapter].epubframeRef) {
+            _model.chapters[chapter].content = [_model.chapters[chapter].html stringByConvertingHTMLToPlainText];
             [_model.chapters[chapter] parserEpubToDictionary];
             [_model.chapters[chapter] paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
         }
+        
         _readView.epubFrameRef = _model.chapters[chapter].epubframeRef[page];
         _readView.imageArray = _model.chapters[chapter].imageArray;
+        _readView.content = _model.chapters[chapter].content;
     }
     else{
         _readView.type = ReaderTxt;
