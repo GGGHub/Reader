@@ -89,6 +89,7 @@
     for (NSDictionary *dic in _epubContent) {
         if ([dic[@"type"] isEqualToString:@"txt"]) {
             //解析文本
+            NSLog(@"--%.2f",[LSYReadConfig shareInstance].fontSize);
             NSDictionary *attr = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
             NSMutableAttributedString *subString = [[NSMutableAttributedString alloc] initWithString:dic[@"content"] attributes:attr];
             [attrString appendAttributedString:subString];

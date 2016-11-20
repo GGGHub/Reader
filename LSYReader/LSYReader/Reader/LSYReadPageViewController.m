@@ -243,6 +243,9 @@
     
     if (_model.record.chapter != chapter) {
         [_model.record.chapterModel updateFont];
+        if (_model.type == ReaderEpub) {
+            [ _model.chapters[chapter] paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
+        }
     }
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
