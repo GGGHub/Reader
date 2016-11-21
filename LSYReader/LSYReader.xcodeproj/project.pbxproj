@@ -469,7 +469,7 @@
 				TargetAttributes = {
 					AB9A96B61CFC2EE70066030C = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = ATEPY6RDV8;
+						DevelopmentTeam = P348GLNLW8;
 					};
 				};
 			};
@@ -679,13 +679,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = P348GLNLW8;
 				GCC_PREFIX_HEADER = "LSYReader/LSYReader-Prefix.pch";
 				HEADER_SEARCH_PATHS = " /usr/include/libxml2";
 				INFOPLIST_FILE = LSYReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.okwei.LSYReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.renrui.LSYReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -695,13 +696,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = P348GLNLW8;
 				GCC_PREFIX_HEADER = "LSYReader/LSYReader-Prefix.pch";
 				HEADER_SEARCH_PATHS = " /usr/include/libxml2";
 				INFOPLIST_FILE = LSYReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.okwei.LSYReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.renrui.LSYReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

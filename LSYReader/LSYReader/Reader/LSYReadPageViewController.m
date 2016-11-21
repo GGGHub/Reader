@@ -244,6 +244,11 @@
     if (_model.record.chapter != chapter) {
         [_model.record.chapterModel updateFont];
         if (_model.type == ReaderEpub) {
+            if (!_model.chapters[chapter].epubframeRef) {
+                NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:_model.chapters[chapter].chapterpath]] encoding:NSUTF8StringEncoding];
+                _model.chapters[chapter].content = [html stringByConvertingHTMLToPlainText];
+                [_model.chapters[chapter] parserEpubToDictionary];
+            }
             [ _model.chapters[chapter] paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
         }
     }
@@ -253,7 +258,9 @@
     if (_model.type == ReaderEpub) {
         _readView.type = ReaderEpub;
         if (!_model.chapters[chapter].epubframeRef) {
-            _model.chapters[chapter].content = [_model.chapters[chapter].html stringByConvertingHTMLToPlainText];
+            NSLog(@"%@",_model.chapters[chapter].chapterpath);
+            NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:_model.chapters[chapter].chapterpath]] encoding:NSUTF8StringEncoding];
+            _model.chapters[chapter].content = [html stringByConvertingHTMLToPlainText];
             [_model.chapters[chapter] parserEpubToDictionary];
             [_model.chapters[chapter] paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
         }
