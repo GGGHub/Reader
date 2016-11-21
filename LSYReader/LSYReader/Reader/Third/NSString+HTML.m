@@ -98,6 +98,10 @@
                     }
                     
                 }
+                if ([scanner scanString:@"title" intoString:NULL]) {
+                    [scanner scanUpToString:@"</title>" intoString:NULL];
+                    [scanner scanString:@"</title>" intoString:NULL];
+                }
 				// a closing inline tag then dont replace with a space
 				if ([scanner scanString:@"/" intoString:NULL]) {
                     
