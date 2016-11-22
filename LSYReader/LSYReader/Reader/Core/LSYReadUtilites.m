@@ -209,9 +209,23 @@
     NSMutableDictionary* titleDictionary = [[NSMutableDictionary alloc] init];
     for (CXMLElement* element in itemsArray) {
         NSString* href = [[element attributeForName:@"href"] stringValue];
+        
         NSString* xpath = [NSString stringWithFormat:@"//ncx:content[@src='%@']/../ncx:navLabel/ncx:text", href];
         //根据opf文件的href获取到ncx文件中的中对应的目录名称
         NSArray* navPoints = [ncxDoc nodesForXPath:xpath namespaceMappings:[NSDictionary dictionaryWithObject:@"http://www.daisy.org/z3986/2005/ncx/" forKey:@"ncx"] error:nil];
+        if ([navPoints count] == 0) {
+            NSString *contentpath = @"//ncx:content";
+            NSArray *contents = [ncxDoc nodesForXPath:contentpath namespaceMappings:[NSDictionary dictionaryWithObject:@"http://www.daisy.org/z3986/2005/ncx/" forKey:@"ncx"] error:nil];
+            for (CXMLElement *element in contents) {
+                NSString *src = [[element attributeForName:@"src"] stringValue];
+                if ([src hasPrefix:href]) {
+                    xpath = [NSString stringWithFormat:@"//ncx:content[@src='%@']/../ncx:navLabel/ncx:text", src];
+                    navPoints = [ncxDoc nodesForXPath:xpath namespaceMappings:[NSDictionary dictionaryWithObject:@"http://www.daisy.org/z3986/2005/ncx/" forKey:@"ncx"] error:nil];
+                    break;
+                }
+            }
+        }
+        
         if([navPoints count]!=0){
             CXMLElement* titleElement = navPoints.firstObject;
             [titleDictionary setValue:[titleElement stringValue] forKey:href];
