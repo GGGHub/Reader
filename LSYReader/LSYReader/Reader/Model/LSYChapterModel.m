@@ -59,7 +59,11 @@
             [scanner scanUpToString:@"</img>" intoString:&img];
             NSString *imageString = [self.epubImagePath stringByAppendingPathComponent:img];
             UIImage *image = [UIImage imageWithContentsOfFile:imageString];
-            CGSize size = CGSizeMake(ScreenSize.width, ScreenSize.width/ScreenSize.height*image.size.width);
+            CGSize size = CGSizeMake((ScreenSize.width-LeftSpacing-RightSpacing), (ScreenSize.width-LeftSpacing-RightSpacing)/(ScreenSize.height-TopSpacing-BottomSpacing)*image.size.width);
+            if (size.height>(ScreenSize.height-TopSpacing-BottomSpacing-20)) {
+                size.height = ScreenSize.height-TopSpacing-BottomSpacing-20
+                ;
+            }
             [array addObject:@{@"type":@"img",@"content":imageString?imageString:@"",@"width":@(size.width),@"height":@(size.height)}];
             //存储图片信息
             LSYImageData *imageData = [[LSYImageData alloc] init];
