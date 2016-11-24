@@ -80,6 +80,7 @@
 				// Tag - remove and replace with space unless it's
                 if ([scanner scanString:@"/p>" intoString:NULL]) {
                     [result appendString:@"\n"];
+                    [result appendString:@"  "];
                     
                 }
                 if ([scanner scanString:@"/h" intoString:NULL]) {
