@@ -54,7 +54,12 @@ static  NSString *markCell = @"markCell";
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:markCell];
     }
-    cell.textLabel.text = [_readModel.marks[indexPath.row].recordModel.chapterModel stringOfPage:_readModel.marks[indexPath.row].recordModel.page];
+    if (_readModel.marks[indexPath.row].recordModel.chapterModel.type == ReaderEpub) {
+       cell.textLabel.text = _readModel.marks[indexPath.row].recordModel.chapterModel.epubString[_readModel.marks[indexPath.row].recordModel.page];
+    }
+    else{
+        cell.textLabel.text = [_readModel.marks[indexPath.row].recordModel.chapterModel stringOfPage:_readModel.marks[indexPath.row].recordModel.page];
+    }
     cell.detailTextLabel.text = _readModel.marks[indexPath.row].recordModel.chapterModel.title;
     return cell;
 }

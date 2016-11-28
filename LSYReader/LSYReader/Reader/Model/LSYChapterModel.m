@@ -38,15 +38,7 @@
     [model paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
     return model;
 }
--(id)copyWithZone:(NSZone *)zone
-{
-    LSYChapterModel *model = [[LSYChapterModel allocWithZone:zone] init];
-    model.content = self.content;
-    model.title = self.title;
-    model.pageCount = self.pageCount;
-    return model;
-    
-}
+
 -(void)parserEpubToDictionary
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -238,6 +230,19 @@
     }
     return [_content substringWithRange:NSMakeRange(local, length)];
 }
+-(id)copyWithZone:(NSZone *)zone
+{
+    LSYChapterModel *model = [[LSYChapterModel allocWithZone:zone] init];
+    model.content = self.content;
+    model.title = self.title;
+    model.pageCount = self.pageCount;
+    model.pageArray = self.pageArray;
+    model.epubImagePath = self.epubImagePath;
+    model.type = self.type;
+    model.epubString = self.epubString;
+    return model;
+    
+}
 -(void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.content forKey:@"content"];
     [aCoder encodeObject:self.title forKey:@"title"];
@@ -248,6 +253,7 @@
     [aCoder encodeObject:self.epubContent forKey:@"epubContent"];
     [aCoder encodeObject:self.chapterpath forKey:@"chapterpath"];
     [aCoder encodeObject:self.html forKey:@"html"];
+    [aCoder encodeObject:self.epubString forKey:@"epubString"];
     /**
      @property (nonatomic,copy) NSArray *epubframeRef;
      @property (nonatomic,copy) NSString *epubImagePath;
@@ -270,6 +276,7 @@
         self.epubContent = [aDecoder decodeObjectForKey:@"epubContent"];
         self.chapterpath = [aDecoder decodeObjectForKey:@"chapterpath"];
         self.html = [aDecoder decodeObjectForKey:@"html"];
+        self.epubString = [aDecoder decodeObjectForKey:@"epubString"];
 //        self.epubframeRef = [aDecoder decodeObjectForKey:@"epubframeRef"];
         
     }
