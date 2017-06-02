@@ -12,7 +12,6 @@
 +(void)separateChapter:(NSMutableArray **)chapters content:(NSString *)content;
 +(NSString *)encodeWithURL:(NSURL *)url;
 +(UIButton *)commonButtonSEL:(SEL)sel target:(id)target;
-+(UIViewController *)getCurrentVC;
 +(void)showAlertTitle:(NSString *)title content:(NSString *)string;
 /**
  * ePub格式处理
