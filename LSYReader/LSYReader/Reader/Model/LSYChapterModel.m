@@ -160,7 +160,7 @@
     NSMutableAttributedString *attrStr;
     attrStr = [[NSMutableAttributedString  alloc] initWithString:self.content];
     NSDictionary *attribute = [LSYReadParser parserAttribute:[LSYReadConfig shareInstance]];
-    [attrStr setAttributes:attribute range:NSMakeRange(0, attrString.length)];
+    [attrStr setAttributes:attribute range:NSMakeRange(0, attrStr.length)];
     attrString = [attrStr copy];
     frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attrString);
     path = CGPathCreateWithRect(bounds, NULL);
@@ -201,7 +201,6 @@
         
         CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(currentInnerOffset, 0), path, NULL);
         CFRange range = CTFrameGetVisibleStringRange(frame);
-        
         if ((range.location + range.length) != attrString.length) {
             
             currentOffset += range.length;
