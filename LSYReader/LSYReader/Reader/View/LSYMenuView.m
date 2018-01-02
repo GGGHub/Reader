@@ -34,7 +34,7 @@
 -(LSYTopMenuView *)topView
 {
     if (!_topView) {
-        _topView = [[LSYTopMenuView alloc] init];
+        _topView = [[LSYTopMenuView alloc] initWithFrame:CGRectMake(0, -TopViewHeight, ViewSize(self).width,TopViewHeight)];
         _topView.delegate = self;
     }
     return _topView;
@@ -42,7 +42,7 @@
 -(LSYBottomMenuView *)bottomView
 {
     if (!_bottomView) {
-        _bottomView = [[LSYBottomMenuView alloc] init];
+        _bottomView = [[LSYBottomMenuView alloc] initWithFrame:CGRectMake(0, ViewSize(self).height, ViewSize(self).width,BottomViewHeight)];
         _bottomView.delegate = self;
     }
     return _bottomView;
@@ -111,7 +111,5 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _topView.frame = CGRectMake(0, -TopViewHeight, ViewSize(self).width,TopViewHeight);
-    _bottomView.frame = CGRectMake(0, ViewSize(self).height, ViewSize(self).width,BottomViewHeight);
 }
 @end

@@ -88,7 +88,7 @@
 -(LSYMenuView *)menuView
 {
     if (!_menuView) {
-        _menuView = [[LSYMenuView alloc] init];
+        _menuView = [[LSYMenuView alloc] initWithFrame:self.view.frame];
         _menuView.hidden = YES;
         _menuView.delegate = self;
         _menuView.recordModel = _model.record;
@@ -367,7 +367,6 @@
     [super viewDidLayoutSubviews];
 
     _pageViewController.view.frame = self.view.frame;
-    _menuView.frame = self.view.frame;
     _catalogView.frame = CGRectMake(-ViewSize(self.view).width, 0, 2*ViewSize(self.view).width, ViewSize(self.view).height);
     _catalogVC.view.frame = CGRectMake(0, 0, ViewSize(self.view).width-100, ViewSize(self.view).height);
     [_catalogVC reload];
