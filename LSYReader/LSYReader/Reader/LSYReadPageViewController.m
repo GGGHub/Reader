@@ -117,7 +117,7 @@
 -(UIView *)catalogView
 {
     if (!_catalogView) {
-        _catalogView = [[UIView alloc] init];
+        _catalogView = [[UIView alloc] initWithFrame:CGRectMake(-ViewSize(self.view).width, 0, 2*ViewSize(self.view).width, ViewSize(self.view).height)];
         _catalogView.backgroundColor = [UIColor clearColor];
         _catalogView.hidden = YES;
         [_catalogView addGestureRecognizer:({
@@ -367,7 +367,7 @@
     [super viewDidLayoutSubviews];
 
     _pageViewController.view.frame = self.view.frame;
-    _catalogView.frame = CGRectMake(-ViewSize(self.view).width, 0, 2*ViewSize(self.view).width, ViewSize(self.view).height);
+//    _catalogView.frame = CGRectMake(-ViewSize(self.view).width, 0, 2*ViewSize(self.view).width, ViewSize(self.view).height);
     _catalogVC.view.frame = CGRectMake(0, 0, ViewSize(self.view).width-100, ViewSize(self.view).height);
     [_catalogVC reload];
 }
