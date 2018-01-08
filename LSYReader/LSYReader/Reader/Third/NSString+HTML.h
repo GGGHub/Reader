@@ -43,4 +43,6 @@
 // DEPRECIATED - Please use NSString stringByConvertingHTMLToPlainText
 - (NSString *)stringByStrippingTags; 
 
+-(NSString *)URLEncodedString;
+-(NSString *)URLDecodedString;
 @end

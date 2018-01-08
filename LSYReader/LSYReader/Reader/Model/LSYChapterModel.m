@@ -26,12 +26,13 @@
 }
 +(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title imagePath:(NSString *)path
 {
+    NSString * tmp=[chapterpath URLDecodedString];
     LSYChapterModel *model = [[LSYChapterModel alloc] init];
     model.title = title;
     model.epubImagePath = path;
     model.type = ReaderEpub;
-    model.chapterpath = chapterpath;
-    NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
+    model.chapterpath = tmp;
+    NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:tmp]] encoding:NSUTF8StringEncoding];
     model.html = html;
     model.content = [html stringByConvertingHTMLToPlainText];
     [model parserEpubToDictionary];
@@ -49,7 +50,8 @@
         if ([scanner scanString:@"<img>" intoString:NULL]) {
             NSString *img;
             [scanner scanUpToString:@"</img>" intoString:&img];
-            NSString *imageString = [self.epubImagePath stringByAppendingPathComponent:img];
+            NSString *temp = [self.epubImagePath stringByAppendingPathComponent:img];
+            NSString * imageString=[temp URLDecodedString];
             UIImage *image = [UIImage imageWithContentsOfFile:imageString];
             CGSize size = CGSizeMake((ScreenSize.width-LeftSpacing-RightSpacing), (ScreenSize.width-LeftSpacing-RightSpacing)/(ScreenSize.height-TopSpacing-BottomSpacing)*image.size.width);
             if (size.height>(ScreenSize.height-TopSpacing-BottomSpacing-20)) {
