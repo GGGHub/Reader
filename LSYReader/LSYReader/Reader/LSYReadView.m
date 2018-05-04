@@ -288,7 +288,7 @@
             UIImage *image = [UIImage imageWithContentsOfFile:imageData.url];
             CFRange range = CTFrameGetVisibleStringRange(_frameRef);
             
-            if (image&&(range.location<=imageData.position&&imageData.position<=(range.length + range.location))) {
+            if (image&&(range.location<=imageData.position&&imageData.position<(range.length + range.location))) {
                 [self fillImagePosition:imageData];
                 if (imageData.position==(range.length + range.location)) {
                     if ([self showImage]) {
