@@ -11,6 +11,7 @@
 #import "LSYReadParser.h"
 #import "NSString+HTML.h"
 //#include <vector>
+
 @interface LSYChapterModel ()
 @property (nonatomic,strong) NSMutableArray *pageArray;
 @end
@@ -24,14 +25,23 @@
     }
     return self;
 }
+//-(NSString *)chapterpath {
+//    NSLog(@"----------------------%@",_chapterpath);
+//    return [kDocuments stringByAppendingPathComponent:_chapterpath];
+//}
+//-(NSString *)epubImagePath {
+//    return [kDocuments stringByAppendingPathComponent:_epubImagePath];
+//}
 +(id)chapterWithEpub:(NSString *)chapterpath title:(NSString *)title imagePath:(NSString *)path
 {
     LSYChapterModel *model = [[LSYChapterModel alloc] init];
+
     model.title = title;
     model.epubImagePath = path;
     model.type = ReaderEpub;
     model.chapterpath = chapterpath;
-    NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:chapterpath]] encoding:NSUTF8StringEncoding];
+    NSString * fullPath= [kDocuments stringByAppendingPathComponent:chapterpath];
+    NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:fullPath]] encoding:NSUTF8StringEncoding];
     model.html = html;
     model.content = [html stringByConvertingHTMLToPlainText];
     [model parserEpubToDictionary];
@@ -49,7 +59,7 @@
         if ([scanner scanString:@"<img>" intoString:NULL]) {
             NSString *img;
             [scanner scanUpToString:@"</img>" intoString:&img];
-            NSString *imageString = [self.epubImagePath stringByAppendingPathComponent:img];
+            NSString *imageString = [[kDocuments stringByAppendingPathComponent:self.epubImagePath] stringByAppendingPathComponent:img];
             UIImage *image = [UIImage imageWithContentsOfFile:imageString];
             
             CGFloat width = ScreenSize.width - LeftSpacing - RightSpacing;

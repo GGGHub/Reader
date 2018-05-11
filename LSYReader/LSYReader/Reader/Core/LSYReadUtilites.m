@@ -10,6 +10,7 @@
 #import "LSYChapterModel.h"
 #import "ZipArchive.h"
 #import "TouchXML.h"
+
 @implementation LSYReadUtilites
 +(void)separateChapter:(NSMutableArray **)chapters content:(NSString *)content
 {
@@ -141,14 +142,14 @@
     ZipArchive *zip = [[ZipArchive alloc] init];
     NSString *zipFile = [[path stringByDeletingPathExtension] lastPathComponent];
     if ([zip UnzipOpenFile:path]) {
-        NSString *zipPath = [NSString stringWithFormat:@"%@/%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject,zipFile];
+        NSString *zipPath = [NSString stringWithFormat:@"%@/%@",kDocuments,zipFile];
         NSFileManager *filemanager=[[NSFileManager alloc] init];
         if ([filemanager fileExistsAtPath:zipPath]) {
             NSError *error;
             [filemanager removeItemAtPath:zipPath error:&error];
         }
         if ([zip UnzipFileTo:[NSString stringWithFormat:@"%@/",zipPath] overWrite:YES]) {
-            return zipPath;
+            return zipFile;
         }
     }
     return nil;
@@ -156,7 +157,8 @@
 #pragma mark - OPF文件路径
 +(NSString *)OPFPath:(NSString *)epubPath
 {
-    NSString *containerPath = [NSString stringWithFormat:@"%@/META-INF/container.xml",epubPath];
+
+    NSString *containerPath = [NSString stringWithFormat:@"%@/%@/META-INF/container.xml",kDocuments,epubPath];
     //container.xml文件路径 通过container.xml获取到opf文件的路径
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     if ([fileManager fileExistsAtPath:containerPath]) {
@@ -191,7 +193,8 @@
 #pragma mark - 解析OPF文件
 +(NSMutableArray *)parseOPF:(NSString *)opfPath
 {
-    CXMLDocument* document = [[CXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:opfPath] options:0 error:nil];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@",kDocuments,opfPath];
+    CXMLDocument* document = [[CXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fullPath] options:0 error:nil];
     NSArray* itemsArray = [document nodesForXPath:@"//opf:item" namespaceMappings:[NSDictionary dictionaryWithObject:@"http://www.idpf.org/2007/opf" forKey:@"opf"] error:nil];
     //opf文件的命名空间 xmlns="http://www.idpf.org/2007/opf" 需要取到某个节点设置命名空间的键为opf 用opf:节点来获取节点
     NSString *ncxFile;
@@ -204,7 +207,7 @@
         }
     }
     
-    NSString *absolutePath = [opfPath stringByDeletingLastPathComponent];
+    NSString *absolutePath = [fullPath stringByDeletingLastPathComponent];
     CXMLDocument *ncxDoc = [[CXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", absolutePath,ncxFile]] options:0 error:nil];
     NSMutableDictionary* titleDictionary = [[NSMutableDictionary alloc] init];
     for (CXMLElement* element in itemsArray) {
@@ -236,7 +239,8 @@
     for (CXMLElement* element in itemRefsArray){
         NSString* chapHref = [itemDictionary objectForKey:[[element attributeForName:@"idref"] stringValue]];
 //        LSYChapterModel *model = [LSYChapterModel chapterWithEpub:[NSString stringWithFormat:@"%@/%@",absolutePath,chapHref] title:[titleDictionary valueForKey:chapHref] imagePath:[opfPath stringByDeletingLastPathComponent]];
-        LSYChapterModel *model = [LSYChapterModel chapterWithEpub:[NSString stringWithFormat:@"%@/%@",absolutePath,chapHref] title:[titleDictionary objectForKey:chapHref] imagePath:[[[opfPath stringByDeletingLastPathComponent]stringByAppendingPathComponent:chapHref] stringByDeletingLastPathComponent]];
+        NSString *path = [[opfPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:chapHref];
+        LSYChapterModel *model = [LSYChapterModel chapterWithEpub:path title:[titleDictionary objectForKey:chapHref] imagePath:[path stringByDeletingLastPathComponent]];
         [chapters addObject:model];
         
     }
