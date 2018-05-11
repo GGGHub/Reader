@@ -65,7 +65,11 @@
             //存储图片信息
             LSYImageData *imageData = [[LSYImageData alloc] init];
             imageData.url = imageString?imageString:@"";
-            imageData.position = newString.length;
+            if (imageArray.count) {
+                imageData.position = newString.length + imageArray.count;
+            } else {
+                imageData.position = newString.length;
+            }
 //            imageData.imageRect = CGRectMake(0, 0, size.width, size.height);
             [imageArray addObject:imageData];
             
