@@ -41,6 +41,7 @@
 
 #define MinFontSize 11.0f
 #define MaxFontSize 20.0f
+#define kDocuments NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject
 
 #endif
 

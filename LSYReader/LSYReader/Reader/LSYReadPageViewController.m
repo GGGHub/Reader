@@ -98,7 +98,7 @@
 -(UIPageViewController *)pageViewController
 {
     if (!_pageViewController) {
-        _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+        _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
         _pageViewController.delegate = self;
         _pageViewController.dataSource = self;
         [self.view addSubview:_pageViewController.view];
@@ -245,7 +245,8 @@
         [_model.record.chapterModel updateFont];
         if (_model.type == ReaderEpub) {
             if (!_model.chapters[chapter].epubframeRef) {
-                NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:_model.chapters[chapter].chapterpath]] encoding:NSUTF8StringEncoding];
+                NSString *path = [kDocuments stringByAppendingPathComponent:_model.chapters[chapter].chapterpath];
+                NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:path]] encoding:NSUTF8StringEncoding];
                 _model.chapters[chapter].content = [html stringByConvertingHTMLToPlainText];
                 [_model.chapters[chapter] parserEpubToDictionary];
             }
@@ -258,8 +259,8 @@
     if (_model.type == ReaderEpub) {
         _readView.type = ReaderEpub;
         if (!_model.chapters[chapter].epubframeRef) {
-            NSLog(@"%@",_model.chapters[chapter].chapterpath);
-            NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:_model.chapters[chapter].chapterpath]] encoding:NSUTF8StringEncoding];
+            NSString *path = [kDocuments stringByAppendingPathComponent:_model.chapters[chapter].chapterpath];
+            NSString* html = [[NSString alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:path]] encoding:NSUTF8StringEncoding];
             _model.chapters[chapter].content = [html stringByConvertingHTMLToPlainText];
             [_model.chapters[chapter] parserEpubToDictionary];
             [_model.chapters[chapter] paginateEpubWithBounds:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width-LeftSpacing-RightSpacing, [UIScreen mainScreen].bounds.size.height-TopSpacing-BottomSpacing)];
