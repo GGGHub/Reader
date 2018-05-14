@@ -108,8 +108,6 @@ static CGFloat widthCallback(void* ref){
     CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attrString, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
     CFRelease(delegate);
     return [attrString copy];
-    
-    
 }
 +(NSDictionary *)parserAttribute:(LSYReadConfig *)config
 {
