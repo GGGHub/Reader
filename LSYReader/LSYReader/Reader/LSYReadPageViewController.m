@@ -255,7 +255,7 @@
     }
     _readView = [[LSYReadViewController alloc] init];
     _readView.recordModel = _model.record;
-//     NSLog(@"---%@",[NSURL fileURLWithPath:_model.chapters[chapter].chapterpath]);
+
     if (_model.type == ReaderEpub) {
         _readView.type = ReaderEpub;
         if (!_model.chapters[chapter].epubframeRef) {
