@@ -47,11 +47,8 @@
             [self presentViewController:pageView animated:YES completion:nil];
         });
     });
-    
-    
-   
-    
 }
+
 - (IBAction)beginEPub:(id)sender {
     [_epubActivity startAnimating];
     [_beginEpub setTitle:@"" forState:UIControlStateNormal];

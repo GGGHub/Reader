@@ -15,6 +15,7 @@
 -(void)readViewEditeding:(LSYReadViewController *)readView;
 -(void)readViewEndEdit:(LSYReadViewController *)readView;
 @end
+
 @interface LSYReadViewController : UIViewController
 @property (nonatomic,strong) NSString *content; //显示的内容
 @property (nonatomic,strong) id epubFrameRef;  //epub显示内容

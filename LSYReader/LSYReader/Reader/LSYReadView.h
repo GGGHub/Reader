@@ -13,6 +13,6 @@
 @property (nonatomic,assign) CTFrameRef frameRef;
 @property (nonatomic,strong) NSString *content;
 @property (nonatomic,strong) NSArray *imageArray;
-@property (nonatomic,strong) id<LSYReadViewControllerDelegate>delegate;
+@property (nonatomic,weak) id<LSYReadViewControllerDelegate>delegate;
 -(void)cancelSelected;
 @end

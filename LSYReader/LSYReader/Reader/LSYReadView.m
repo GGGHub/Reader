@@ -255,7 +255,7 @@
 {
     if (_frameRef != frameRef) {
         if (_frameRef) {
-            CFRelease(_frameRef);
+//            CFRelease(_frameRef);
             _frameRef = nil;
         }
         _frameRef = frameRef;
@@ -264,7 +264,7 @@
 -(void)dealloc
 {
     if (_frameRef) {
-        CFRelease(_frameRef);
+//        CFRelease(_frameRef);
         _frameRef = nil;
     }
 }
