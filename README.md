@@ -1,19 +1,5 @@
 ## Reader
 
-2020.5.4
-
-谢谢大家对我这个项目这么支持。这个阅读的项目已经很久没有更新了。
-
-很抱歉，这么多的问题我没有及时解决。
-
-这里有一个很好的小说阅读器项目，大家如果想要学习可以关注一下。
-
-<https://github.com/yuenov/reader-ios>
-
-<https://github.com/yuenov/reader-android>
-
-
----
 基于`Core Text`实现的iOS客户端的`电子书阅读器`。</br>
 **支持ePub与text格式**
 
